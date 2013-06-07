@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Owl Carousel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="jQuery Responsive Carousel - Owl Carusel">
+    <meta name="author" content="Bartosz Wojciechowski">
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600,700' rel='stylesheet' type='text/css'>
+    <link href="assets/css/bootstrapTheme.css" rel="stylesheet">
+    <link href="assets/css/custom.css" rel="stylesheet">
+
+    <!-- Owl Carousel Assets -->
+    <link href="owl-carousel/owl.carousel.css" rel="stylesheet">
+    <link href="owl-carousel/owl.theme.css" rel="stylesheet">
+
+    <!-- Prettify -->
+    <link href="assets/js/google-code-prettify/prettify.css" rel="stylesheet">
+	
+
+    <!-- Le fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="assets/ico/favicon.png">
+  </head>
+  <body>
+      <div id="top-nav" class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+          <div class="container">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+            <div class="nav-collapse collapse">
+            <ul class="nav pull-right">
+              <li><a href="#demo">Demo</a></li>
+              <li><a href="#more-demos">More Demos</a></li>
+              <li><a href="#how-to">How To</a></li>
+              <li><a href="#customizing">Customizing</a></li>
+              <li><a href="owl.carousel.v1.0.zip" class="download" data-spy="affix" data-offset-top="450">Download</a></li>
+            </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="header">
+        <div class="container">
+          <div class="row">
+            <div class="span5">
+                <img class="logo" src="assets/img/owl-logo.png" alt="Owl Logo">
+              </div>
+            <div class="span7">
+              <h1>OWL Carousel </h1>
+              <h3>Touch enabled jQuery plugin that lets you create beautiful responsive carousel slider.</h3>
+              <a class="btn btn-success btn-large" href="owl.carousel.v1.0.zip">Download for FREE</a>
+              <p class="muted">version 1.0 / <a class="muted" href="">Github</a></p> 
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="demo">
+        <div class="container">
+          <div class="row">
+            <div class="span12">
+              <h1>Demo</h1>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="span12">
+
+              <div id="owl-example" class="owl-carousel owl-theme">
+                
+                <div class="item darkCyan">
+                  <img src="assets/img/demo-slides/touch.png" alt="Touch">
+                    <h3>Touch</h3>
+                    <h4>Can touch this</h4>
+                </div>
+                <div class="item forestGreen">
+                  <img src="assets/img/demo-slides/grab.png" alt="Grab">
+                    <h3>Grab</h3>
+                    <h4>Can grab this</h4>
+                </div>
+                <div class="item orange">
+                  <img src="assets/img/demo-slides/responsive.png" alt="Responsive">
+                    <h3>Responsive</h3>
+                    <h4>Fully responsive!</h4>
+                </div>
+
+                <div class="item yellow">
+                  <img src="assets/img/demo-slides/css3.png" alt="CSS3">
+                    <h3>CSS3</h3>
+                    <h4>3D Acceleration.</h4>
+                </div>
+
+                <div class="item dodgerBlue">
+                  <img src="assets/img/demo-slides/multi.png" alt="Multi">
+                    <h3>Multiply</h3>
+                    <h4>Owls on page.</h4>
+                </div>
+
+                <div class="item skyBlue">
+                  <img src="assets/img/demo-slides/modern.png" alt="Modern Browsers">
+                    <h3>Modern</h3>
+                    <h4>Browsers Compatibility</h4>
+                </div>
+
+                <div class="item zombieGreen">
+                  <img src="assets/img/demo-slides/zombie.png" alt="Zombie Browsers - old ones">
+                    <h3>Zombie</h3>
+                    <h4>Browsers Compatibility</h4>
+                </div>
+
+                <div class="item violet">
+                  <img src="assets/img/demo-slides/controls.png" alt="Take Control">
+                    <h3>Take Control</h3>
+                    <h4>The way you you like</h4>
+                </div>
+
+                <div class="item yellowLight">
+                  <img src="assets/img/demo-slides/feather.png" alt="Light">
+                    <h3>Light</h3>
+                    <h4>As a feather</h4>
+                </div>
+
+                <div class="item steelGray">
+                  <img src="assets/img/demo-slides/tons.png" alt="Tons of Opotions">
+                    <h3>Tons</h3>
+                    <h4>of options</h4>
+                </div>
+
+              </div>
+
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    <div id="more-demos">
+      <div class="container">
+
+        <div class="row">
+          <div class="span12">
+            <h1>More Demos</h1>
+            <h2>Awesome!</h2>
+            <p>Check more demos here! See what Owl can do.</p>
+          </div>
+        </div>
+
+        <div class="row demos-row">
+          <div class="span3">
+            <a href="demos/images.html" class="demo-box">
+              <div class="demo-wrapper demo-images clearfix">
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+              </div>
+              <h3>Images</h3>
+            </a>
+          </div>
+
+          <div class="span3">
+            <a href="demos/full.html" class="demo-box">
+              <div class="demo-wrapper demo-full clearfix">
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+              </div>
+              <h3>Full Width</h3>
+            </a>
+          </div>
+
+          <div class="span3">
+            <a href="demos/custom.html" class="demo-box">
+              <div class="demo-wrapper demo-custom clearfix">
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+              </div>
+              <h3>Custom</h3>
+            </a>
+          </div>
+
+          <div class="span3">
+            <a href="demos/one.html" class="demo-box">
+              <div class="demo-wrapper demo-one clearfix">
+                <div class="demo-slide"><div class="bg"></div></div>
+              </div>
+              <h3>One Slide</h3>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div id="how-to">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <h1>How To Use</h1>
+            <h2>1. Load jQuery and include Owl Carousel plugin files</h2>
+            <p>To use Owl Carousel, you’ll need to make sure both the Owl and jQuery 1.7 or higher scripts are included. If you’ve already got jQuery, you don’t need to add it.</p>
+<pre class="pre-show prettyprint linenums">
+&lt;!-- Basic stylesheet --&gt;
+&lt;link rel="stylesheet" href="owl-carousel/owl.carousel.css"&gt;
+
+&lt;!-- Default Theme --&gt;
+&lt;link rel="stylesheet" href="owl-carousel/owl.theme.css"&gt;
+
+&lt;!-- You can use latest version of jQuery  --&gt;
+&lt;script src="jquery-1.9.1.min.js"&gt;&lt;/script&gt;
+
+&lt;!-- Include js plugin --&gt;
+&lt;script src="assets/owl-carousel/owl.carousel.v1.0.js"&gt;&lt;/script&gt;
+</pre>
+          <h2>2. Set up your HTML</h2>
+          <p>You don't need any special markup. All you need is to wrap your divs inside the container element &lt;div class="owl-carousel"&gt;. Class "owl-carousel" is mandatory to apply proper styles that come from owl.carousel.css file.</p>
+<pre class="pre-show prettyprint linenums">
+&lt;div class="owl-carousel owl-theme"&gt;
+  &lt;div&gt; Your Content &lt;/div&gt;
+  &lt;div&gt; Your Content &lt;/div&gt;
+  &lt;div&gt; Your Content &lt;/div&gt;
+  &lt;div&gt; Your Content &lt;/div&gt;
+  &lt;div&gt; Your Content &lt;/div&gt;
+  &lt;div&gt; Your Content &lt;/div&gt;
+  &lt;div&gt; Your Content &lt;/div&gt;
+  ...
+&lt;/div>
+</pre>    
+          <h2>3. Call the plugin</h2>
+          <p>Now call the Owl initializer function and your carousel is ready.</p>
+<pre class="pre-show prettyprint linenums">
+$(document).ready(function() {
+
+  $(".owl-carousel").owlCarousel();
+
+});
+</pre>  
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="customizing">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <h1>Customizing</h1>
+            <h2>1. Options</h2>
+            <p>All of the options below are available to customize Owl Carousel.</p> 
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Variable</th>
+                  <th>Default</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="text-emp">slideSpeed</span></td>
+                  <td>200</td>
+                  <td>Slide speed in milliseconds</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">paginationSpeed</span></td>
+                  <td>false</td>
+                  <td>Pagination speed in milliseconds</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">autoPlay</span></td>
+                  <td>false</td>
+                  <td>Auto play per slide. Change to any integrer for example "paginationSpeed : 8000" to play every 8 seconds</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">navigation</span></td>
+                  <td>false</td>
+                  <td>Display "next" and "prev" buttons. Fully customizable. Note that for better control over navigation the div with arrows and pagination is outside your carousel wrapper</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">navigationText</span></td>
+                  <td>["prev","next"]</td>
+                  <td>You can cusomize your own text for navigation. To get empty buttons use false : "navigationText : false"</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">pagination</span></td>
+                  <td>true</td>
+                  <td>Show pagination.</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">paginationNumbers</span></td>
+                  <td>true</td>
+                  <td>Show numbers inside pagination buttons</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">responsive</span></td>
+                  <td>true</td>
+                  <td>You can use Owl Carousel on desktop-only websites too! Just change that to "false" to disable resposive capabilities</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">items</span></td>
+                  <td>5</td>
+                  <td>This variable allows you to set the maximum amount of items displayed at a time with the widest browser width</td>
+                </tr>
+                 <tr>
+                  <td><span class="text-emp">itemsDesktop</span></td>
+                  <td>[1200,4]</td>
+                  <td>This allows you to preset the number of slides visible with a particular browser width. The format is [x,y] whereby x=browser width and y=number of slides displayed. For example [1200,4] means that if(window<=1200){ show 4 slides per page}
+                    Alternatively use "itemsDesktop: false" to override these settings.<br><br>To fully understand how it works check my <a href="demos/custom.html">Custom Demo</a></td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">itemsDesktopSmall</span></td>
+                  <td>[980,3]</td>
+                  <td>As above.</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">itemsTablet</span></td>
+                  <td>[768,2]</td>
+                  <td>As above.</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">itemsMobile</span></td>
+                  <td>[479,1]</td>
+                  <td>As above</td>
+                </tr>
+
+              </tbody>
+            </table>
+
+              <h2>2. Defaults</h2>
+              <p>Slider default settings</p>
+<pre class="pre-show prettyprint linenums">
+$(".owl-carousel").owlCarousel({
+
+    //Speeds
+    slideSpeed : 200,
+    paginationSpeed : 800,
+    autoPlay : false,
+
+    // Navigation
+    navigation : false,
+    navigationText : ["prev","next"],
+    pagination : true,
+    paginationNumbers: true,
+
+    // Responsive 
+    responsive: true,
+    items : 5,
+    itemsDesktop : [1200,4],
+    itemsDesktopSmall : [980,3],
+    itemsTablet: [768,2],
+    itemsMobile : [479,1]
+
+})
+
+</pre>   
+              <h2>3. API</h2>
+              <p>To use Owl Carousel API use delegate function, as carousel initializes after 200 milliseconds.</p>
+              
+<pre class="pre-show prettyprint linenums">
+
+//Initialize Plugin
+$(".owl-carousel").owlCarousel()
+
+//get carousel instance data and store it in variable owl
+var owl = $(".owl-carousel").data('owlCarousel');
+
+//Public methods
+owl.next()   // Go to next slide
+owl.prev()   // Go to previous slide
+owl.goTo(x)  // Go to x slide
+
+owl.update() // Update Slide
+
+owl.buildControlls()    // Build Controlls
+owl.destroyControlls()  // Remove Controlls
+
+owl.play() // Autoplay
+owl.stop() // Autoplay Stop
+
+//more to come...
+</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="footer">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <h5>Bartosz Wojciechowski 2013 @OwlFonk</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <script src="assets/js/jquery-1.9.1.min.js"></script> 
+    <script src="owl-carousel/owl.carousel.v1.0.js"></script>
+
+    <!-- Frontpage Demo -->
+    <script>
+    jQuery(document).ready(function($) {
+      $("#owl-example").owlCarousel();
+    });
+
+    $("body").data("page", "frontpage");
+
+    </script>
+    <script src="assets/js/bootstrap-collapse.js"></script>
+    <script src="assets/js/bootstrap-transition.js"></script>
+
+    <script src="assets/js/google-code-prettify/prettify.js"></script>
+	  <script src="assets/js/application.js"></script>
+
+  </body>
+</html>
