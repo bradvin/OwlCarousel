@@ -404,7 +404,14 @@ if ( typeof Object.create !== 'function' ) {
 					setTimeout(function() {
     					base.isCss3Finish = true;
     				}, base.options.paginationSpeed);
-				} else{
+
+    			} else if(pagination === "goToFirst" ){
+    				base.swapTransitionSpeed(base.options.goToFirstSpeed);
+    				setTimeout(function() {
+    					base.isCss3Finish = true;
+    				}, base.options.goToFirstSpeed);
+
+    			} else {
 					base.swapTransitionSpeed("slideSpeed");
 					setTimeout(function() {
     					base.isCss3Finish = true;
@@ -417,6 +424,9 @@ if ( typeof Object.create !== 'function' ) {
 
 			if(base.options.pagination === true){
 				base.checkPagination()
+			}
+			if(base.options.autoPlay !== false){
+				base.play()
 			}
 		},
 
@@ -436,8 +446,12 @@ if ( typeof Object.create !== 'function' ) {
 				if(base.currentSlide < base.maximumSlide && base.playDirection === "next"){
 					base.next(true);
 				} else if(base.currentSlide === base.maximumSlide){
-					base.playDirection = "prev";
-					base.prev(true);
+					if(base.options.goToFirst === true){
+						base.goTo(0,"goToFirst");
+					} else{
+						base.playDirection = "prev";
+						base.prev(true);
+					}
 				} else if(base.playDirection === "prev" && base.currentSlide > 0){
 					base.prev(true);
 				} else if(base.playDirection === "prev" && base.currentSlide === 0){
@@ -453,7 +467,9 @@ if ( typeof Object.create !== 'function' ) {
 				base.owlWrapper.css(base.addTransition(base.options.slideSpeed));
 			} else if(action === "paginationSpeed" ){
 				base.owlWrapper.css(base.addTransition(base.options.paginationSpeed));
-			} 
+			} else if(typeof action !== "string"){
+				base.owlWrapper.css(base.addTransition(action));
+			}
 		},
 
         addTransition : function(speed){
@@ -642,9 +658,6 @@ if ( typeof Object.create !== 'function' ) {
             		var newPosition = base.getNewPosition();
             		base.goTo(newPosition)
             	}
-            	if(base.options.autoPlay !== false){
-					base.play();
-				}
             };
 
 
@@ -702,8 +715,13 @@ if ( typeof Object.create !== 'function' ) {
 		moveDirection : function(){
 			var base = this,
 				direction;
-
-			base.newRelativeX < 0 ?  direction = "right" : direction = "left";
+			if(base.newRelativeX < 0 ){
+				direction = "right"
+				base.playDirection = "next"
+			} else {
+				direction = "left"
+				base.playDirection = "prev"
+			}
 			return direction
 		},
 		
@@ -728,9 +746,7 @@ if ( typeof Object.create !== 'function' ) {
     $.fn.owlCarousel = function( options ) {
         return this.each(function() {
             var carousel = Object.create( Carousel );
-            
             carousel.init( options, this );
-
             $.data( this, 'owlCarousel', carousel );
         });
     };
@@ -740,6 +756,8 @@ if ( typeof Object.create !== 'function' ) {
     	paginationSpeed : 800,
 
     	autoPlay : false,
+    	goToFirst : true,
+    	goToFirstSpeed : 1000,
 
     	navigation : false,
     	navigationText : ["prev","next"],

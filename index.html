@@ -58,7 +58,7 @@
               <h1>OWL Carousel </h1>
               <h3>Touch enabled jQuery plugin that lets you create beautiful responsive carousel slider.</h3>
               <a class="btn btn-success btn-large" href="owl.carousel.v1.0.zip">Download for FREE</a>
-              <p class="muted">version 1.0 / <a class="muted" href="https://github.com/OwlFonk/OwlCarousel">Github</a></p> 
+              <p class="muted"><a class="muted" href="https://github.com/OwlFonk/OwlCarousel">Github</a> / v1.0 </p> 
             </div>
           </div>
         </div>
@@ -216,7 +216,7 @@
           <div class="span12">
             <h1>How To Use</h1>
             <h2>1. Load jQuery and include Owl Carousel plugin files</h2>
-            <p>To use Owl Carousel, you’ll need to make sure both the Owl and jQuery 1.7 or higher scripts are included. If you’ve already got jQuery, you don’t need to add it.</p>
+            <p>To use Owl Carousel, you’ll need to make sure both the Owl and jQuery 1.7 or higher scripts are included.</p>
 <pre class="pre-show prettyprint linenums">
 &lt;!-- Basic stylesheet --&gt;
 &lt;link rel="stylesheet" href="owl-carousel/owl.carousel.css"&gt;
@@ -291,6 +291,16 @@ $(document).ready(function() {
                   <td>Auto play per slide. Change to any integrer for example "paginationSpeed : 8000" to play every 8 seconds</td>
                 </tr>
                 <tr>
+                  <td><span class="text-emp">goToFirst</span></td>
+                  <td>true</td>
+                  <td>Slide to first slide if autoPlay reach end</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">goToFirstSpeed</span></td>
+                  <td>1000</td>
+                  <td>Slide speed of goToFirst option in milliseconds</td>
+                </tr>
+                <tr>
                   <td><span class="text-emp">navigation</span></td>
                   <td>false</td>
                   <td>Display "next" and "prev" buttons. Fully customizable. Note that for better control over navigation the div with arrows and pagination is outside your carousel wrapper</td>
@@ -323,7 +333,7 @@ $(document).ready(function() {
                  <tr>
                   <td><span class="text-emp">itemsDesktop</span></td>
                   <td>[1199,4]</td>
-                  <td>This allows you to preset the number of slides visible with a particular browser width. The format is [x,y] whereby x=browser width and y=number of slides displayed. For example [1200,4] means that if(window<=1200){ show 4 slides per page}
+                  <td>This allows you to preset the number of slides visible with a particular browser width. The format is [x,y] whereby x=browser width and y=number of slides displayed. For example [1199,4] means that if(window<=1199){ show 4 slides per page}
                     Alternatively use "itemsDesktop: false" to override these settings.<br><br>To fully understand how it works check my <a href="demos/custom.html">Custom Demo</a></td>
                 </tr>
                 <tr>
@@ -346,14 +356,18 @@ $(document).ready(function() {
             </table>
 
               <h2>2. Defaults</h2>
-              <p>Slider default settings</p>
+              <p>Carousel default settings</p>
 <pre class="pre-show prettyprint linenums">
 $(".owl-carousel").owlCarousel({
 
-    //Speeds
+    //Basic Speeds
     slideSpeed : 200,
     paginationSpeed : 800,
+
+    //Autoplay
     autoPlay : false,
+    goToFirst : true,
+    goToFirstSpeed : 1000,
 
     // Navigation
     navigation : false,
@@ -364,13 +378,12 @@ $(".owl-carousel").owlCarousel({
     // Responsive 
     responsive: true,
     items : 5,
-    itemsDesktop : [1200,4],
+    itemsDesktop : [1199,4],
     itemsDesktopSmall : [980,3],
     itemsTablet: [768,2],
     itemsMobile : [479,1]
 
 })
-
 </pre>   
               <h2>3. API</h2>
               <p>To use Owl Carousel API use delegate function, as carousel initializes after 200 milliseconds.</p>
@@ -407,7 +420,7 @@ owl.stop() // Autoplay Stop
       <div class="container">
         <div class="row">
           <div class="span12">
-            <h5>Bartosz Wojciechowski 2013 @OwlFonk</h5>
+            <h5>Bartosz Wojciechowski 2013 / @OwlFonk / <a href="mailto:owl@owlgraphic.com?subject=Hey Owl!">email</a></h5>
           </div>
         </div>
       </div>
@@ -431,18 +444,6 @@ owl.stop() // Autoplay Stop
 
     <script src="assets/js/google-code-prettify/prettify.js"></script>
 	  <script src="assets/js/application.js"></script>
-
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-41541058-1', 'owlgraphic.com');
-      ga('send', 'pageview');
-
-    </script>
-
 
   </body>
 </html>

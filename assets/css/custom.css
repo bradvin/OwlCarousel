@@ -62,6 +62,7 @@
 }
 #header .btn-success {
 	padding: 15px 30px;
+	margin-bottom: 5px;
 }
 #header .logo{
 	display: block;
@@ -101,6 +102,7 @@ pre.pre-show{
 /* Footer */
 
 #footer{
+	padding: 20px;
 	background: #f3f3f3;
 	text-align: center
 }
@@ -170,7 +172,7 @@ pre.pre-show{
 /* More Demo Box */
 
 #example-info h1,
-#more-demos h1{
+#more h1{
 	margin-top: 40px;
 }
 .demos-row{
