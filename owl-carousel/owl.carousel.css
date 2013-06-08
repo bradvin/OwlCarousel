@@ -3,7 +3,6 @@
  * 	Core Owl Carousel CSS File
  */
 
-
 /* clearfix */
 .owl-carousel:after {
 	content: ".";
@@ -13,7 +12,6 @@
 	line-height: 0;
 	height: 0;
 }
-
 /* display none until init */
 .owl-carousel{
 	display: none;
@@ -21,31 +19,19 @@
 	overflow: hidden;
 	width: 100%;
 }
-
-/* mouse grab icon */
-.grabbing { 
-    cursor:url(grabbing.png) 8 8, move;
-}
-
 .owl-carousel .owl-wrapper{
 	position: absolute;
 	-webkit-transform: translate3d(0px, 0px, 0px);
 	-webkit-perspective: 1000;
 }
-
 .owl-carousel .owl-item{
 	float: left;
 }
-
-.owl-controlls a{
+.owl-controlls .owl-page,
+.owl-controlls .owl-buttons{
 	cursor: pointer;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
 }
-.owl-buttons, .owl-buttons a{
+.owl-controlls {
 	-webkit-user-select: none;
 	-khtml-user-select: none;
 	-moz-user-select: none;
@@ -53,6 +39,12 @@
 	user-select: none;
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+
+/* mouse grab icon */
+.grabbing { 
+    cursor:url(grabbing.png) 8 8, move;
+}
+
 /* fix */
 .owl-carousel  .owl-wrapper,
 .owl-carousel  .owl-item{

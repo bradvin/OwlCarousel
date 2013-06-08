@@ -246,15 +246,17 @@ if ( typeof Object.create !== 'function' ) {
 				$("<div class=\"owl-controlls\"/>")
 				.hide()
 				.insertAfter(base.$elem)
-				.fadeIn();
+				.show();
 			}
-			
+			if (base.isTouch === false){
+				base.owlControlls.addClass("clickable")
+			}
+
 			if(base.options.pagination === true){
 				base.buildPagination();
 			}
 			if(base.options.navigation === true){
 				base.buildButtons();
-
 			}
 	
 		},
@@ -264,12 +266,12 @@ if ( typeof Object.create !== 'function' ) {
 			var buttonsWrapper = $("<div class=\"owl-buttons\"/>")
 			base.owlControlls.append(buttonsWrapper)
 
-			var buttonPrev = $("<a/>",{
+			var buttonPrev = $("<div/>",{
 				"class" : "owl-prev",
 				"text" : base.options.navigationText[0] || ""
 				});
 
-			var buttonNext = $("<a/>",{
+			var buttonNext = $("<div/>",{
 				"class" : "owl-next",
 				"text" : base.options.navigationText[1] || ""
 				});
@@ -278,7 +280,7 @@ if ( typeof Object.create !== 'function' ) {
 			.append(buttonPrev)
 			.append(buttonNext);
 
-			buttonsWrapper.on( base.getEvent() , "a[class^=\"owl\"]", function(event){
+			buttonsWrapper.on( base.getEvent() , "div[class^=\"owl\"]", function(event){
 				event.preventDefault();
 				if($(this).hasClass('owl-next')){
 					base.next();
@@ -329,10 +331,15 @@ if ( typeof Object.create !== 'function' ) {
 					if(lastPage === i){
 						var lastItem = base.itemsAmount - base.options.items
 					}
-					var paginationButton = $("<a/>",{
-						"class" : "owl-page",
-						"text": base.options.paginationNumbers === true ? counter : ""
+					var paginationButton = $("<div/>",{
+						"class" : "owl-page"
 						});
+					var paginationButtonInner = $("<span></span>",{
+						"text": base.options.paginationNumbers === true ? counter : "",
+						"class": base.options.paginationNumbers === true ? "owl-numbers" : "",
+					});
+					paginationButton.append(paginationButtonInner)
+
 					paginationButton.data("owl-page",lastPage === i ? lastItem : i);
 					paginationButton.data("owl-roundPages",counter);
 
