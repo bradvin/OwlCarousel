@@ -3,7 +3,7 @@ Touch enabled jQuery plugin that lets you create beautiful responsive carousel s
 
 ## [OwlCarousel landing page](http://owlgraphic.com/owlcarousel)
 
-####Features:
+###Features:
 * Responsive
 * Touch Event 
 * Mouse Slide Events
