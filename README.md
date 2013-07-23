@@ -34,7 +34,7 @@ Load jQuery(1.7+) and include Owl Carousel plugin files
 <link rel="stylesheet" href="owl-carousel/owl.theme.css">
  
 <!-- Include js plugin -->
-<script src="assets/owl-carousel/owl.carousel.v1.0.js"></script>
+<script src="assets/owl-carousel/owl.carousel.js"></script>
 ```
 ## 2.Set up your HTML
 You don't need any special markup. All you need is to wrap your divs inside the container element <div class="owl-carousel">. Class "owl-carousel" is mandatory to apply proper styles that come from owl.carousel.css file.

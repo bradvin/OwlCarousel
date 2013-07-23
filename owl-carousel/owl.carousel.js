@@ -1,5 +1,5 @@
 /*
- *	jQuery OwlCarousel v1.0
+ *	jQuery OwlCarousel v1.1
  *  
  *	Copyright (c) 2013 Bartosz Wojciechowski
  *	http://www.owlgraphic.com/owlcarousel
@@ -266,19 +266,19 @@ if ( typeof Object.create !== 'function' ) {
 			var buttonsWrapper = $("<div class=\"owl-buttons\"/>")
 			base.owlControlls.append(buttonsWrapper)
 
-			var buttonPrev = $("<div/>",{
+			base.buttonPrev = $("<div/>",{
 				"class" : "owl-prev",
 				"text" : base.options.navigationText[0] || ""
 				});
 
-			var buttonNext = $("<div/>",{
+			base.buttonNext = $("<div/>",{
 				"class" : "owl-next",
 				"text" : base.options.navigationText[1] || ""
 				});
 
 			buttonsWrapper
-			.append(buttonPrev)
-			.append(buttonNext);
+			.append(base.buttonPrev)
+			.append(base.buttonNext);
 
 			buttonsWrapper.on( base.getEvent() , "div[class^=\"owl\"]", function(event){
 				event.preventDefault();
@@ -288,6 +288,9 @@ if ( typeof Object.create !== 'function' ) {
 					base.prev();
 				} 
 			})
+
+			//Add 'disable' class
+			base.checkNavigation();
 		},
 
 		getEvent : function(){
@@ -336,7 +339,7 @@ if ( typeof Object.create !== 'function' ) {
 						});
 					var paginationButtonInner = $("<span></span>",{
 						"text": base.options.paginationNumbers === true ? counter : "",
-						"class": base.options.paginationNumbers === true ? "owl-numbers" : "",
+						"class": base.options.paginationNumbers === true ? "owl-numbers" : ""
 					});
 					paginationButton.append(paginationButtonInner)
 
@@ -365,12 +368,30 @@ if ( typeof Object.create !== 'function' ) {
 			});
 		},
 
+		checkNavigation : function(){
+			var base = this;
+
+			if(base.currentSlide === 0){
+				base.buttonPrev.addClass('disabled');
+				base.buttonNext.removeClass('disabled');
+
+			} else if (base.currentSlide === base.maximumSlide){
+				base.buttonPrev.removeClass('disabled');
+				base.buttonNext.addClass('disabled');
+
+			} else if(base.currentSlide !== 0 && base.currentSlide !== base.maximumSlide){
+				base.buttonPrev.removeClass('disabled');
+				base.buttonNext.removeClass('disabled');
+			}
+		},
+
 		destroyControlls : function(){
 			var base = this;
 			if(base.owlControlls){
 				base.owlControlls.remove();
 			}
 		},
+
 		next : function(speed){
 			var base = this;
 			base.currentSlide += 1;
@@ -431,6 +452,9 @@ if ( typeof Object.create !== 'function' ) {
 
 			if(base.options.pagination === true){
 				base.checkPagination()
+			}
+			if(base.options.navigation === true){
+				base.checkNavigation()
 			}
 			if(base.options.autoPlay !== false){
 				base.play()
@@ -570,6 +594,8 @@ if ( typeof Object.create !== 'function' ) {
             	maxSwipe,
             	sliding;
 
+            var links = base.$elem.find('a');
+
             base.isCssFinish = true;
         
             var start = function(event){
@@ -661,10 +687,16 @@ if ( typeof Object.create !== 'function' ) {
             		$(document).off("mouseup.owl");
             	}
 
+
             	if(base.newX !== 0){
             		var newPosition = base.getNewPosition();
             		base.goTo(newPosition)
+            	} else {
+            		if(links.length>0){
+            			links.off('click.owlClick');
+            		}
             	}
+            	
             };
 
 
@@ -672,8 +704,9 @@ if ( typeof Object.create !== 'function' ) {
             	base.$elem.on("touchstart.owl", ".owl-wrapper", start);
 	    		base.$elem.on("touchend.owl", ".owl-wrapper", end);
             }else{
+            	links.on('click.owlClick', function(event){event.preventDefault();})
             	base.$elem.on("mousedown.owl", ".owl-wrapper", start);            	
-			 	base.$elem.on('dragstart.owl',"img", function(event) { event.preventDefault(); });
+			 	base.$elem.on('dragstart.owl',"img", function(event) { event.preventDefault();});
 			 	base.$elem.bind('mousedown.disableTextSelect', function() {return false;});
 			 }
 		},
