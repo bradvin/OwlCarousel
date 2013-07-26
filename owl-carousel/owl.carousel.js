@@ -55,15 +55,15 @@ if ( typeof Object.create !== 'function' ) {
 
             //setTimeout(function(){
 	        base.updateVars();
-	        //},200);
+	        //},0);
 		},
 
 		baseClass : function(){
 			var base = this;
 			var hasBaseClass = base.$elem.hasClass(base.options.baseClass);
-			var hasThemeClass = base.$elem.hasClass(base.options.baseClass);
+			var hasThemeClass = base.$elem.hasClass(base.options.theme);
 
-			if(!hasThemeClass){
+			if(!hasBaseClass){
 				base.$elem.addClass(base.options.baseClass);
 			}
 
@@ -172,7 +172,6 @@ if ( typeof Object.create !== 'function' ) {
 		wrapItems : function(){
 			var base = this;
 			base.userItems.wrapAll("<div class=\"owl-wrapper\">").wrap("<div class=\"owl-item\"></div>");
-			//base.$elem.find(".owl-wrapper").wrap("<div class=\"owl-wrapper-outer\">");
 		},
 
 		appendItemsSizes : function(){
