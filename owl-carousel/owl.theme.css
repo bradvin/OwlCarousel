@@ -1,17 +1,20 @@
 /*
 * 	Owl Carousel Owl Demo Theme 
+*	v1.15
 */
 
-.owl-controlls{
+.owl-theme .owl-controlls{
     margin-top: 10px;
 	text-align: center;
 }
 
 /* Styling Next and Prev buttons */
 
-.owl-controlls .owl-buttons div{
+.owl-theme .owl-controlls .owl-buttons div{
 	color: #FFF;
 	display: inline-block;
+	zoom: 1;
+	*display: inline;/*IE7 life-saver */
 	margin: 5px;
 	padding: 3px 10px;
 	font-size: 12px;
@@ -23,17 +26,19 @@
 }
 /* Clickable class fix problem with hover on touch devices */
 /* Use it for non-touch hover action */
-.owl-controlls.clickable .owl-buttons div:hover{
+.owl-theme .owl-controlls.clickable .owl-buttons div:hover{
 	opacity: 1;
 	text-decoration: none;
 }
 
 /* Styling Pagination*/
 
-.owl-controlls .owl-page{
+.owl-theme .owl-controlls .owl-page{
 	display: inline-block;
+	zoom: 1;
+	*display: inline;/*IE7 life-saver */
 }
-.owl-controlls .owl-page span{
+.owl-theme .owl-controlls .owl-page span{
 	display: block;
 	width: 12px;
 	height: 12px;
@@ -45,14 +50,14 @@
 	background: #869791;
 }
 
-.owl-controlls .owl-page.active span,
-.owl-controlls.clickable .owl-page:hover span{
+.owl-theme .owl-controlls .owl-page.active span,
+.owl-theme .owl-controlls.clickable .owl-page:hover span{
 	opacity: 1;
 }
 
 /* If PaginationNumbers is true */
 
-.owl-controlls .owl-page span.owl-numbers{
+.owl-theme .owl-controlls .owl-page span.owl-numbers{
 	height: auto;
 	width: auto;
 	color: #FFF;

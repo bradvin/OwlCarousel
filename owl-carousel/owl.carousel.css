@@ -1,6 +1,6 @@
 /* 
- * 	v1.0.0 
  * 	Core Owl Carousel CSS File
+ *	v1.15
  */
 
 /* clearfix */
@@ -20,7 +20,8 @@
 	width: 100%;
 }
 .owl-carousel .owl-wrapper{
-	position: absolute;
+	position: relative;
+	display: inline-block;
 	-webkit-transform: translate3d(0px, 0px, 0px);
 	-webkit-perspective: 1000;
 }

@@ -58,7 +58,7 @@
               <h1>OWL Carousel </h1>
               <h3>Touch enabled jQuery plugin that lets you create beautiful responsive carousel slider.</h3>
               <a class="btn btn-success btn-large" href="owl.carousel.zip">Download for FREE</a>
-              <p class="muted"><a class="muted" href="https://github.com/OwlFonk/OwlCarousel">Github</a> / v1.1 </p> 
+              <p class="muted"><a class="muted" href="https://github.com/OwlFonk/OwlCarousel">Github</a> / v1.15 </p> 
             </div>
           </div>
         </div>
@@ -75,7 +75,7 @@
           <div class="row">
             <div class="span12">
 
-              <div id="owl-example" class="owl-carousel owl-theme">
+              <div id="owl-example">
                 
                 <div class="item darkCyan">
                   <img src="assets/img/demo-slides/touch.png" alt="Touch">
@@ -231,9 +231,9 @@
 &lt;script src="assets/owl-carousel/owl.carousel.js"&gt;&lt;/script&gt;
 </pre>
           <h2>2. Set up your HTML</h2>
-          <p>You don't need any special markup. All you need is to wrap your divs inside the container element &lt;div class="owl-carousel"&gt;. Class "owl-carousel" is mandatory to apply proper styles that come from owl.carousel.css file.</p>
+          <p>You don't need any special markup. All you need is to wrap your divs inside the container element &lt;div id="owl-example"&gt;</p>
 <pre class="pre-show prettyprint linenums">
-&lt;div class="owl-carousel owl-theme"&gt;
+&lt;div id="owl-example"&gt;
   &lt;div&gt; Your Content &lt;/div&gt;
   &lt;div&gt; Your Content &lt;/div&gt;
   &lt;div&gt; Your Content &lt;/div&gt;
@@ -249,7 +249,7 @@
 <pre class="pre-show prettyprint linenums">
 $(document).ready(function() {
 
-  $(".owl-carousel").owlCarousel();
+  $("#owl-example").owlCarousel();
 
 });
 </pre>  
@@ -351,6 +351,17 @@ $(document).ready(function() {
                   <td>[479,1]</td>
                   <td>As above</td>
                 </tr>
+                <tr>
+                  <td><span class="text-emp">baseClass</span></td>
+                  <td>"owl-carousel"</td>
+                  <td>Automaticly added class for base CSS styles. Best not to change it if you don't need to.</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">theme</span></td>
+                  <td>"owl-theme"</td>
+                  <td>Default Owl CSS styles for navigation and buttons. Change it to match your own theme</td>
+                </tr>
+
 
               </tbody>
             </table>
@@ -358,7 +369,7 @@ $(document).ready(function() {
               <h2>2. Defaults</h2>
               <p>Carousel default settings</p>
 <pre class="pre-show prettyprint linenums">
-$(".owl-carousel").owlCarousel({
+$("#owl-example").owlCarousel({
 
     //Basic Speeds
     slideSpeed : 200,
@@ -381,12 +392,16 @@ $(".owl-carousel").owlCarousel({
     itemsDesktop : [1199,4],
     itemsDesktopSmall : [980,3],
     itemsTablet: [768,2],
-    itemsMobile : [479,1]
+    itemsMobile : [479,1],
+    
+    // CSS Styles
+    baseClass : "owl-carousel",
+    theme : "owl-theme"
 
 })
 </pre>   
               <h2>3. API</h2>
-              <p>To use Owl Carousel API use delegate function, as carousel initializes after 200 milliseconds.</p>
+              <p>To use Owl Carousel API use delegate function.</p>
               
 <pre class="pre-show prettyprint linenums">
 

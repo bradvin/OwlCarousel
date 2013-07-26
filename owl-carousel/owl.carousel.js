@@ -1,5 +1,5 @@
 /*
- *	jQuery OwlCarousel v1.1
+ *	jQuery OwlCarousel v1.15
  *  
  *	Copyright (c) 2013 Bartosz Wojciechowski
  *	http://www.owlgraphic.com/owlcarousel
@@ -27,16 +27,13 @@ if ( typeof Object.create !== 'function' ) {
             var elem = el;
             var $elem = $(el);
             base.$elem = $elem;
+
+            base.baseClass();
             
             //Hide and get Heights
             base.$elem
             .css({opacity: 0,
             	"display":"block"})
-            .height(base.$elem
-	        	.children()
-	        	.first()
-	        	.outerHeight(true)
-        	);
 
             base.checkTouch();
             base.support3d();
@@ -56,11 +53,26 @@ if ( typeof Object.create !== 'function' ) {
 
             base.onstartup = true;
 
-            setTimeout(function(){
-	            base.updateVars();
-            },200);
+            //setTimeout(function(){
+	        base.updateVars();
+	        //},200);
+		},
+
+		baseClass : function(){
+			var base = this;
+			var hasBaseClass = base.$elem.hasClass(base.options.baseClass);
+			var hasThemeClass = base.$elem.hasClass(base.options.baseClass);
+
+			if(!hasThemeClass){
+				base.$elem.addClass(base.options.baseClass);
+			}
+
+			if(!hasThemeClass){
+				base.$elem.addClass(base.options.theme);
+			}
 
 		},
+
 		updateSize : function(){
 			var base = this;
 
@@ -95,13 +107,6 @@ if ( typeof Object.create !== 'function' ) {
 			}
 
 			base.calculateAll();
-
-			base.$elem
-				.height(base.$elem
-	            	.find(".owl-item")
-	            	.first()
-	            	.outerHeight(true)
-	            );
 
 			//Only on startup
 			if(base.onstartup === true){
@@ -167,6 +172,7 @@ if ( typeof Object.create !== 'function' ) {
 		wrapItems : function(){
 			var base = this;
 			base.userItems.wrapAll("<div class=\"owl-wrapper\">").wrap("<div class=\"owl-item\"></div>");
+			//base.$elem.find(".owl-wrapper").wrap("<div class=\"owl-wrapper-outer\">");
 		},
 
 		appendItemsSizes : function(){
@@ -242,11 +248,7 @@ if ( typeof Object.create !== 'function' ) {
 			var base = this;
 
 			if(base.options.navigation === true || base.options.pagination === true){
-			base.owlControlls = 
-				$("<div class=\"owl-controlls\"/>")
-				.hide()
-				.insertAfter(base.$elem)
-				.show();
+				base.owlControlls = $("<div class=\"owl-controlls\"/>").appendTo(base.$elem)
 			}
 			if (base.isTouch === false){
 				base.owlControlls.addClass("clickable")
@@ -447,7 +449,13 @@ if ( typeof Object.create !== 'function' ) {
 				}
 				base.transition3d(goToPixel);
 			} else {
-				base.css2slide(goToPixel)
+				if(pagination === true){
+					base.css2slide(goToPixel, base.options.paginationSpeed);
+				} else if(pagination === "goToFirst" ){
+					base.css2slide(goToPixel, base.options.goToFirstSpeed);
+				} else {
+					base.css2slide(goToPixel, base.options.slideSpeed);
+				}
 			}
 
 			if(base.options.pagination === true){
@@ -548,7 +556,7 @@ if ( typeof Object.create !== 'function' ) {
 			}, {
 				duration : speed || base.options.slideSpeed ,
 			    complete : function(){
-			    base.isCssFinish = true;
+			    	base.isCssFinish = true;
 				}
 			})
 		},
@@ -810,7 +818,10 @@ if ( typeof Object.create !== 'function' ) {
     	itemsDesktop : [1199,4],
 		itemsDesktopSmall : [979,3],
 		itemsTablet: [768,2],
-		itemsMobile : [479,1]
+		itemsMobile : [479,1],
+
+		baseClass : "owl-carousel",
+		theme : "owl-theme"
     };
 
 })( jQuery, window, document );
