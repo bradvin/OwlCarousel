@@ -1,5 +1,5 @@
 /*
- *	jQuery OwlCarousel v1.15
+ *	jQuery OwlCarousel v1.16
  *  
  *	Copyright (c) 2013 Bartosz Wojciechowski
  *	http://www.owlgraphic.com/owlcarousel
@@ -32,8 +32,7 @@ if ( typeof Object.create !== 'function' ) {
             
             //Hide and get Heights
             base.$elem
-            .css({opacity: 0,
-            	"display":"block"})
+            .css({opacity: 0})
 
             base.checkTouch();
             base.support3d();
@@ -56,6 +55,14 @@ if ( typeof Object.create !== 'function' ) {
             //setTimeout(function(){
 	        base.updateVars();
 	        //},0);
+	        base.$elem.css("display","block");
+		},
+
+		wrapItems : function(){
+			var base = this;
+			base.userItems.wrapAll("<div class=\"owl-wrapper\">").wrap("<div class=\"owl-item\"></div>");
+			base.$elem.find(".owl-wrapper").wrap("<div class=\"owl-wrapper-outer\">");
+			
 		},
 
 		baseClass : function(){
@@ -70,7 +77,6 @@ if ( typeof Object.create !== 'function' ) {
 			if(!hasThemeClass){
 				base.$elem.addClass(base.options.theme);
 			}
-
 		},
 
 		updateSize : function(){
@@ -119,16 +125,19 @@ if ( typeof Object.create !== 'function' ) {
 
         		base.moveEvents();
         		base.play();
-        		base.$elem.animate({opacity: 1});
+
+        		setTimeout(function(){
+					base.calculateAll();
+					base.$elem.animate({opacity: 1},200);
+				},30);
+
         		base.onstartup = false;
         	}
-
         	base.updatePagination();
 		},
 
 		response : function(){
 			var base = this,
-				width,
 				smallDelay;
 
 			$(window).resize(function(){
@@ -137,9 +146,7 @@ if ( typeof Object.create !== 'function' ) {
 				}
 				clearTimeout(smallDelay)
 				smallDelay = setTimeout(function(){
-
 					base.update();
-						
 				},200);
 			})
 		},
@@ -166,12 +173,6 @@ if ( typeof Object.create !== 'function' ) {
 			if(base.options.autoPlay !== false){
 				base.play();
 			}
-
-		},
-
-		wrapItems : function(){
-			var base = this;
-			base.userItems.wrapAll("<div class=\"owl-wrapper\">").wrap("<div class=\"owl-item\"></div>");
 		},
 
 		appendItemsSizes : function(){
@@ -587,8 +588,6 @@ if ( typeof Object.create !== 'function' ) {
 			}
 		},
 
-		
-
 		//Touch
 		moveEvents : function(check){
 
@@ -770,22 +769,6 @@ if ( typeof Object.create !== 'function' ) {
 				base.playDirection = "prev"
 			}
 			return direction
-		},
-		
-
-		//unused
-		closest : function(a,x){
-			var base = this;
-			var theArray = a;
-			var goal = x;
-			var closestItem = 0;
-			var closest = null;
-			$.each(theArray, function(i,v){
-			  if (closest === null || Math.abs(v - goal) < Math.abs(closest - goal)) {
-			    closest = v;
-			  }
-			});
-			return closest;
 		}
     };
 

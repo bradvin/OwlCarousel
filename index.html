@@ -58,7 +58,7 @@
               <h1>OWL Carousel </h1>
               <h3>Touch enabled jQuery plugin that lets you create beautiful responsive carousel slider.</h3>
               <a class="btn btn-success btn-large" href="owl.carousel.zip">Download for FREE</a>
-              <p class="muted"><a class="muted" href="https://github.com/OwlFonk/OwlCarousel">Github</a> / v1.15 </p> 
+              <p class="muted"><a class="muted" href="https://github.com/OwlFonk/OwlCarousel">Github</a> / v1.16 </p> 
             </div>
           </div>
         </div>
@@ -461,6 +461,8 @@ owl.stop() // Autoplay Stop
 	  <script src="assets/js/application.js"></script>
 
     <script>
+    var owldomain = window.location.hostname.indexOf("owlgraphic");
+    if(owldomain !== -1){
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -468,6 +470,7 @@ owl.stop() // Autoplay Stop
 
       ga('create', 'UA-41541058-1', 'owlgraphic.com');
       ga('send', 'pageview');
+    }
 
     </script>
 

@@ -1,10 +1,10 @@
 /* 
  * 	Core Owl Carousel CSS File
- *	v1.15
+ *	v1.16
  */
 
 /* clearfix */
-.owl-carousel:after {
+.owl-carousel .owl-wrapper:after {
 	content: ".";
 	display: block;
 	clear: both;
@@ -16,12 +16,15 @@
 .owl-carousel{
 	display: none;
 	position: relative;
+	width: 100%;
+}
+.owl-carousel .owl-wrapper-outer{
 	overflow: hidden;
+	position: relative;
 	width: 100%;
 }
 .owl-carousel .owl-wrapper{
 	position: relative;
-	display: inline-block;
 	-webkit-transform: translate3d(0px, 0px, 0px);
 	-webkit-perspective: 1000;
 }
@@ -29,7 +32,7 @@
 	float: left;
 }
 .owl-controlls .owl-page,
-.owl-controlls .owl-buttons{
+.owl-controlls .owl-buttons div{
 	cursor: pointer;
 }
 .owl-controlls {
@@ -53,8 +56,3 @@
 	-moz-backface-visibility:    hidden;
 	-ms-backface-visibility:     hidden;
 }
-
-
-
-
-
