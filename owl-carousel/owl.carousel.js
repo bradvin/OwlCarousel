@@ -1,5 +1,5 @@
 /*
- *	jQuery OwlCarousel v1.16
+ *	jQuery OwlCarousel v1.17
  *  
  *	Copyright (c) 2013 Bartosz Wojciechowski
  *	http://www.owlgraphic.com/owlcarousel
@@ -51,17 +51,18 @@ if ( typeof Object.create !== 'function' ) {
             base.playDirection = "next";
 
             base.onstartup = true;
-
+            
             //setTimeout(function(){
 	        base.updateVars();
 	        //},0);
-	        base.$elem.css("display","block");
+	        
 		},
 
 		wrapItems : function(){
 			var base = this;
 			base.userItems.wrapAll("<div class=\"owl-wrapper\">").wrap("<div class=\"owl-item\"></div>");
 			base.$elem.find(".owl-wrapper").wrap("<div class=\"owl-wrapper-outer\">");
+			base.$elem.css("display","block");
 			
 		},
 
@@ -81,6 +82,10 @@ if ( typeof Object.create !== 'function' ) {
 
 		updateSize : function(){
 			var base = this;
+
+			if(base.options.responsive === false){
+				return false;
+			}
 
 			var width = $(window).width();
 
@@ -108,37 +113,44 @@ if ( typeof Object.create !== 'function' ) {
 		updateVars : function(){
 			var base = this;
 
-			if(base.options.responsive === true){
-				base.updateSize();
+			base.updateSize();
+
+			if(base.$elem.is(':visible')){
+				base.calculateAll();
+			} else {
+				window.clearInterval(base.handle);
+				base.watchVisibility();
 			}
+			base.onStartup();
+        	base.updatePagination();
+		},
 
-			base.calculateAll();
-
+		onStartup : function(){
+			var base = this;
 			//Only on startup
 			if(base.onstartup === true){
-
+				
         		base.buildControlls();
-
-        		if(base.options.responsive === true){
-        			base.response();
-        		}
-
+        		base.response();
         		base.moveEvents();
         		base.play();
-
+				base.$elem.find(".owl-wrapper").css('display','block')
         		setTimeout(function(){
 					base.calculateAll();
-					base.$elem.animate({opacity: 1},200);
-				},30);
-
+					if (base.$elem.is(':visible')) {
+						base.$elem.animate({opacity: 1},200);
+					}
+				},20);
         		base.onstartup = false;
         	}
-        	base.updatePagination();
 		},
 
 		response : function(){
 			var base = this,
 				smallDelay;
+			if(base.options.responsive !== true){
+				return false
+			}
 
 			$(window).resize(function(){
 				if(base.options.autoPlay !== false){
@@ -146,6 +158,7 @@ if ( typeof Object.create !== 'function' ) {
 				}
 				clearTimeout(smallDelay)
 				smallDelay = setTimeout(function(){
+					base.updateVars();
 					base.update();
 				},200);
 			})
@@ -154,7 +167,6 @@ if ( typeof Object.create !== 'function' ) {
 		update : function(){
 			var base = this;
 
-			base.updateVars();
 			if(base.support3d === true){
 				if(base.positionsInArray[base.currentSlide] > base.maximumPixels){
 					base.transition3d(base.positionsInArray[base.currentSlide]);
@@ -192,23 +204,50 @@ if ( typeof Object.create !== 'function' ) {
 					}
 				}
 				$(this).data("owl-roundPages",roundPages);
-				base.wrapperWidth =  base.wrapperWidth+ base.itemWidth
-			})
+			});
 		},
 
 		appendWrapperSizes : function(){
 			var base = this;
+			var width = 0;
+
+			var width = base.owlItems.length * base.itemWidth;
+
 			base.owlWrapper.css({
-				//add one more pixel to fix ie9 bug
-				"width": base.wrapperWidth+1,
+				"width": width*2,
 				"left": 0
 			});
+			base.appendItemsSizes();
+		},
+
+		reload : function(elements){
+			var base = this;
+			setTimeout(function(){
+				base.calculateAll();
+				base.update();
+				base.updatePagination();
+			},0)
+		},
+
+		watchVisibility : function(){
+			var base = this;
+
+			if(!base.$elem.is(':visible')){
+				base.$elem.css({opacity: 0});
+			}
+			base.handle = window.setInterval(function(){
+		        if (base.$elem.is(':visible')) {
+		            base.reload();
+		            base.$elem.animate({opacity: 1},200);
+		            window.clearInterval(base.handle);
+		        }
+		    }, 500);
+
 		},
 
 		calculateAll : function(){
 			var base = this;
 			base.calculateWidth();
-			base.appendItemsSizes();
 			base.appendWrapperSizes();
 			base.loops();
 			base.max();
@@ -416,6 +455,7 @@ if ( typeof Object.create !== 'function' ) {
 
 		goTo : function(position,pagination){
 			var base = this;
+
 			if(position >= base.maximumSlide){
 				position = base.maximumSlide
 			} 
@@ -479,6 +519,8 @@ if ( typeof Object.create !== 'function' ) {
 			var base = this;
 			if(base.options.autoPlay === false){
 				return false;
+			} else if(base.options.autoPlay === true){
+				base.options.autoPlay = 5000;
 			}
 			clearInterval(base.myInterval);
 			base.myInterval = setInterval(function(){
@@ -702,7 +744,6 @@ if ( typeof Object.create !== 'function' ) {
             			links.off('click.owlClick');
             		}
             	}
-            	
             };
 
 

@@ -1,6 +1,6 @@
 /* 
  * 	Core Owl Carousel CSS File
- *	v1.16
+ *	v1.17
  */
 
 /* clearfix */
@@ -18,15 +18,16 @@
 	position: relative;
 	width: 100%;
 }
+.owl-carousel .owl-wrapper{
+	display: none;
+	position: relative;
+	-webkit-transform: translate3d(0px, 0px, 0px);
+	-webkit-perspective: 1000;
+}
 .owl-carousel .owl-wrapper-outer{
 	overflow: hidden;
 	position: relative;
 	width: 100%;
-}
-.owl-carousel .owl-wrapper{
-	position: relative;
-	-webkit-transform: translate3d(0px, 0px, 0px);
-	-webkit-perspective: 1000;
 }
 .owl-carousel .owl-item{
 	float: left;
