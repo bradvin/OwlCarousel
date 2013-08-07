@@ -1,5 +1,5 @@
 /*
- *	jQuery OwlCarousel v1.17
+ *	jQuery OwlCarousel v1.18
  *  
  *	Copyright (c) 2013 Bartosz Wojciechowski
  *	http://www.owlgraphic.com/owlcarousel
@@ -23,13 +23,17 @@ if ( typeof Object.create !== 'function' ) {
 		init :function(options, el){
 			var base = this;
             base.options = $.extend({}, $.fn.owlCarousel.options, options);
-
             var elem = el;
             var $elem = $(el);
             base.$elem = $elem;
+            base.logIn();
+        },
+
+        logIn : function(){
+        	var base = this;
 
             base.baseClass();
-            
+
             //Hide and get Heights
             base.$elem
             .css({opacity: 0})
@@ -40,7 +44,7 @@ if ( typeof Object.create !== 'function' ) {
             base.wrapperWidth = 0;
             base.currentSlide = 0; //Starting Position
 
-            base.userItems = $elem.children();
+            base.userItems = base.$elem.children();
             base.itemsAmount = base.userItems.length;
             base.wrapItems();
 
@@ -50,12 +54,76 @@ if ( typeof Object.create !== 'function' ) {
             base.orignalItems = base.options.items;
             base.playDirection = "next";
 
-            base.onstartup = true;
-            
+            base.checkVisible;
+
             //setTimeout(function(){
-	        base.updateVars();
+	        base.onStartup();
 	        //},0);
+			base.customEvents();
 	        
+		},
+		
+		onStartup : function(){
+			var base = this;
+
+			base.updateItems();
+			base.calculateAll();
+    		base.buildControlls();
+    		base.response();
+    		base.moveEvents();
+    		base.stopOnHover();
+    		if(base.options.autoPlay === true){
+				base.options.autoPlay = 5000;
+			}
+    		base.play();
+			base.$elem.find(".owl-wrapper").css('display','block')
+
+			if(!base.$elem.is(':visible')){
+				base.watchVisibility();
+			} else {
+				setTimeout(function(){
+					base.calculateAll();
+					base.$elem.animate({opacity: 1},200);
+				},10);
+			}
+    		base.onstartup = false;
+		},
+
+		updateVars : function(){
+			var base = this;
+			base.watchVisibility();
+			base.updateItems();
+        	base.calculateAll();
+			base.updatePosition();
+			base.updatePagination();
+			base.checkNavigation();
+		},
+
+		reload : function(elements){
+			var base = this;
+			setTimeout(function(){
+				base.updateVars();
+			},0)
+		},
+
+		watchVisibility : function(){
+			var base = this;
+			clearInterval(base.checkVisible);
+			if(!base.$elem.is(':visible')){
+				base.$elem.css({opacity: 0});
+				//stop autoplay if not visible
+				clearInterval(base.autplaySpeed);
+			} else {
+				return false;
+			}
+			base.checkVisible = setInterval(function(){
+		        if (base.$elem.is(':visible')) {
+		            base.reload();
+		            base.$elem.animate({opacity: 1},200);
+		            clearInterval(base.checkVisible);
+		        }
+		    }, 500);
+
 		},
 
 		wrapItems : function(){
@@ -80,7 +148,7 @@ if ( typeof Object.create !== 'function' ) {
 			}
 		},
 
-		updateSize : function(){
+		updateItems : function(){
 			var base = this;
 
 			if(base.options.responsive === false){
@@ -110,40 +178,7 @@ if ( typeof Object.create !== 'function' ) {
 			}
 			
 		},
-		updateVars : function(){
-			var base = this;
-
-			base.updateSize();
-
-			if(base.$elem.is(':visible')){
-				base.calculateAll();
-			} else {
-				window.clearInterval(base.handle);
-				base.watchVisibility();
-			}
-			base.onStartup();
-        	base.updatePagination();
-		},
-
-		onStartup : function(){
-			var base = this;
-			//Only on startup
-			if(base.onstartup === true){
-				
-        		base.buildControlls();
-        		base.response();
-        		base.moveEvents();
-        		base.play();
-				base.$elem.find(".owl-wrapper").css('display','block')
-        		setTimeout(function(){
-					base.calculateAll();
-					if (base.$elem.is(':visible')) {
-						base.$elem.animate({opacity: 1},200);
-					}
-				},20);
-        		base.onstartup = false;
-        	}
-		},
+		
 
 		response : function(){
 			var base = this,
@@ -154,17 +189,16 @@ if ( typeof Object.create !== 'function' ) {
 
 			$(window).resize(function(){
 				if(base.options.autoPlay !== false){
-					clearInterval(base.myInterval);
+					clearInterval(base.autplaySpeed);
 				}
 				clearTimeout(smallDelay)
 				smallDelay = setTimeout(function(){
 					base.updateVars();
-					base.update();
 				},200);
 			})
 		},
 
-		update : function(){
+		updatePosition : function(){
 			var base = this;
 
 			if(base.support3d === true){
@@ -183,7 +217,7 @@ if ( typeof Object.create !== 'function' ) {
 				}
 			}
 			if(base.options.autoPlay !== false){
-				base.play();
+				base.checkAp();
 			}
 		},
 
@@ -218,31 +252,6 @@ if ( typeof Object.create !== 'function' ) {
 				"left": 0
 			});
 			base.appendItemsSizes();
-		},
-
-		reload : function(elements){
-			var base = this;
-			setTimeout(function(){
-				base.calculateAll();
-				base.update();
-				base.updatePagination();
-			},0)
-		},
-
-		watchVisibility : function(){
-			var base = this;
-
-			if(!base.$elem.is(':visible')){
-				base.$elem.css({opacity: 0});
-			}
-			base.handle = window.setInterval(function(){
-		        if (base.$elem.is(':visible')) {
-		            base.reload();
-		            base.$elem.animate({opacity: 1},200);
-		            window.clearInterval(base.handle);
-		        }
-		    }, 500);
-
 		},
 
 		calculateAll : function(){
@@ -412,6 +421,10 @@ if ( typeof Object.create !== 'function' ) {
 		checkNavigation : function(){
 			var base = this;
 
+			if(base.options.navigation === false){
+				return false;
+			}
+
 			if(base.currentSlide === 0){
 				base.buttonPrev.addClass('disabled');
 				base.buttonNext.removeClass('disabled');
@@ -505,25 +518,31 @@ if ( typeof Object.create !== 'function' ) {
 				base.checkNavigation()
 			}
 			if(base.options.autoPlay !== false){
-				base.play()
+				base.checkAp();
 			}
 		},
 
 		stop: function(){
 			var base = this;
-			base.options.autoPlay = false;
-			clearInterval(base.myInterval);
+			base.apStatus = "stop";
+			clearInterval(base.autplaySpeed);
+		},
+
+		checkAp : function(){
+			var base = this;
+			if(base.apStatus !== "stop"){
+				base.play();
+			}
 		},
 
 		play : function(){
 			var base = this;
+			base.apStatus = "play";
 			if(base.options.autoPlay === false){
 				return false;
-			} else if(base.options.autoPlay === true){
-				base.options.autoPlay = 5000;
 			}
-			clearInterval(base.myInterval);
-			base.myInterval = setInterval(function(){
+			clearInterval(base.autplaySpeed);
+			base.autplaySpeed = setInterval(function(){
 				if(base.currentSlide < base.maximumSlide && base.playDirection === "next"){
 					base.next(true);
 				} else if(base.currentSlide === base.maximumSlide){
@@ -659,7 +678,7 @@ if ( typeof Object.create !== 'function' ) {
                 	base.newRelativeX = 0;
 
                 if(base.options.autoPlay !== false){
-					clearInterval(base.myInterval);
+					clearInterval(base.autplaySpeed);
 				}
 				$(this)
             	.css(base.removeTransition())
@@ -735,7 +754,6 @@ if ( typeof Object.create !== 'function' ) {
             		$(document).off("mouseup.owl");
             	}
 
-
             	if(base.newX !== 0){
             		var newPosition = base.getNewPosition();
             		base.goTo(newPosition)
@@ -810,6 +828,36 @@ if ( typeof Object.create !== 'function' ) {
 				base.playDirection = "prev"
 			}
 			return direction
+		},
+		customEvents : function(){
+			var base = this;
+			base.$elem.on('owl.next',function(){
+				base.next();
+			});
+			base.$elem.on('owl.prev',function(){
+				base.prev();
+			});
+			base.$elem.on('owl.play',function(){
+				base.play();
+				base.hoverStatus = "play";
+			});
+			base.$elem.on('owl.stop',function(){
+				base.stop();
+				base.hoverStatus = "stop";
+			});
+		},
+		stopOnHover : function(){
+			var base = this;
+			if(base.options.stopOnHover === true && base.isTouch === false && base.options.autoPlay !== false){
+				base.$elem.on('mouseover', function(){
+					base.stop();
+				});
+				base.$elem.on('mouseout', function(){
+					if(base.hoverStatus !== "stop"){
+						base.play();
+					}
+				});
+			}
 		}
     };
 
@@ -829,6 +877,7 @@ if ( typeof Object.create !== 'function' ) {
     	autoPlay : false,
     	goToFirst : true,
     	goToFirstSpeed : 1000,
+    	stopOnHover : false,
 
     	navigation : false,
     	navigationText : ["prev","next"],

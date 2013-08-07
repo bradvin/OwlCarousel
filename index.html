@@ -58,7 +58,7 @@
               <h1>OWL Carousel </h1>
               <h3>Touch enabled jQuery plugin that lets you create beautiful responsive carousel slider.</h3>
               <a class="btn btn-success btn-large" href="owl.carousel.zip">Download for FREE</a>
-              <p class="muted"><a class="muted" href="https://github.com/OwlFonk/OwlCarousel">Github</a> / v1.17 </p> 
+              <p class="muted"><a class="muted" href="https://github.com/OwlFonk/OwlCarousel">Github</a> / v1.18 </p> 
             </div>
           </div>
         </div>
@@ -301,6 +301,11 @@ $(document).ready(function() {
                   <td>Slide speed of goToFirst option in milliseconds</td>
                 </tr>
                 <tr>
+                  <td><span class="text-emp">stopOnHover</span></td>
+                  <td>false</td>
+                  <td>Set true to stop slides on hover(if autoPlay is on). Works only on non-touch devices.</td>
+                </tr>
+                <tr>
                   <td><span class="text-emp">navigation</span></td>
                   <td>false</td>
                   <td>Display "next" and "prev" buttons. Fully customizable. Note that for better control over navigation the div with arrows and pagination is outside your carousel wrapper</td>
@@ -424,7 +429,6 @@ owl.destroyControlls()  // Remove Controlls
 owl.play() // Autoplay
 owl.stop() // Autoplay Stop
 
-//more to come...
 </pre>
           </div>
         </div>
