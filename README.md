@@ -61,3 +61,6 @@ $(".owl-carousel").owlCarousel();
 
 ### For more information visit [OwlCarousel landing page](http://owlgraphic.com/owlcarousel)
 
+License
+------------
+The MIT License (MIT)
