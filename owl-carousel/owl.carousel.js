@@ -296,10 +296,7 @@ if ( typeof Object.create !== 'function' ) {
 			var base = this;
 
 			if(base.options.navigation === true || base.options.pagination === true){
-				base.owlControlls = $("<div class=\"owl-controlls\"/>").appendTo(base.$elem)
-			}
-			if (base.isTouch === false){
-				base.owlControlls.addClass("clickable")
+				base.owlControlls = $("<div class=\"owl-controlls\"/>").toggleClass("clickable", !base.isTouch).appendTo(base.$elem);
 			}
 
 			if(base.options.pagination === true){
