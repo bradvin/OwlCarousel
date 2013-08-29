@@ -1,6 +1,6 @@
 # OwlCarousel #
-> v.1.18
-Touch enabled jQuery plugin that lets you create beautiful responsive carousel slider.
+> v.1.19
+>Touch enabled jQuery plugin that lets you create beautiful responsive carousel slider.
 
 ## [OwlCarousel landing page](http://owlgraphic.com/owlcarousel)
 
@@ -61,3 +61,6 @@ $(".owl-carousel").owlCarousel();
 
 ### For more information visit [OwlCarousel landing page](http://owlgraphic.com/owlcarousel)
 
+License
+------------
+The MIT License (MIT)

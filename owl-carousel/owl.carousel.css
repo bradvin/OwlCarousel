@@ -1,6 +1,6 @@
 /* 
  * 	Core Owl Carousel CSS File
- *	v1.18
+ *	v1.19
  */
 
 /* clearfix */
@@ -17,6 +17,7 @@
 	display: none;
 	position: relative;
 	width: 100%;
+	-ms-touch-action: pan-y;
 }
 .owl-carousel .owl-wrapper{
 	display: none;
