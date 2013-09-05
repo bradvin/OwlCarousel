@@ -42,7 +42,6 @@
 }
 .btn-navbar span.icon-bar{
 	margin-top: 0px;
-
 }
 
 /* Header  */
@@ -98,6 +97,10 @@ pre.pre-show{
 	border-radius: 0px 0px 4px 4px;
 	
 }
+/* Content */
+.table th, .table td {
+padding: 8px 12px;
+}
 
 /* Footer */
 
@@ -105,6 +108,10 @@ pre.pre-show{
 	padding: 20px;
 	background: #f3f3f3;
 	text-align: center
+}
+.twitter-share-button{
+	top: 4px;
+	position: relative;
 }
 
 /* Demo Slides */
@@ -135,7 +142,6 @@ pre.pre-show{
 .item h1{
 	margin: inherit;
 }
-
 
 .orange{
 	background: #ff8a3c;
@@ -176,8 +182,8 @@ pre.pre-show{
 	margin-top: 40px;
 }
 .demos-row{
-	margin-top: 40px;
-	margin-bottom: 40px;
+	margin-top: 30px;
+	margin-bottom: 30px;
 }
 .demo-page{
 	margin-top: 0px;
@@ -237,12 +243,55 @@ pre.pre-show{
 	height: 40px;
 	width: 10%;
 }
-
 /* One */
 .demo-one .demo-slide{
 	height: 40px;
 	width: 100%;
 }
+
+/* json */
+
+.demo-Json .demo-slide {
+	height: 40px;
+	width: 20%;
+}
+.demo-Json-custom .demo-slide{
+	height: 40px;
+	width: 33.3333333%;
+}
+/* loading icon */
+
+.demo-lazy .demo-slide{
+	height: 40px;
+	width: 33.3333333%;
+}
+.demo-lazy .demo-slide .bg{
+background: url('../img/AjaxLoader.gif') no-repeat center center #aebab6;
+}
+
+/* Auto Height */
+.demo-height .demo-slide{
+	height: 40px;
+	width: 100%;
+}
+
+/* Changelog / Faq*/
+#changelog{
+	margin-bottom: 40px;
+}
+
+#changelog .label{
+	margin-bottom:10px;
+}
+
+#faq dt {
+	line-height: 26px;
+}
+#faq dd{
+	line-height: 22px;
+	margin-bottom: 20px;
+}
+
 
 
 /* Responsive Stuff */

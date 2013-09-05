@@ -1,6 +1,6 @@
 /*
 * 	Owl Carousel Owl Demo Theme 
-*	v1.19
+*	v1.2
 */
 
 .owl-theme .owl-controlls{
@@ -68,5 +68,10 @@
 	border-radius: 30px;
 }
 
+/* preloading images */
+.owl-item.loading{
+	min-height: 190px;
+	background: url(AjaxLoader.gif) no-repeat center center
+}
 
 

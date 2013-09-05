@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="jQuery Responsive Carousel - Owl Carusel">
     <meta name="author" content="Bartosz Wojciechowski">
+    <meta name="keywords" content="HTML,CSS,JSON,JavaScript, jQuery, Responsive, Design, Owl, Carousel, Free">
 
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600,700' rel='stylesheet' type='text/css'>
     <link href="assets/css/bootstrapTheme.css" rel="stylesheet">
@@ -41,6 +42,7 @@
               <li><a href="#more-demos">More Demos</a></li>
               <li><a href="#how-to">How To</a></li>
               <li><a href="#customizing">Customizing</a></li>
+              <li><a href="#faq">FAQ</a></li>
               <li><a href="owl.carousel.zip" class="download" data-spy="affix" data-offset-top="450">Download</a></li>
             </ul>
             </div>
@@ -58,7 +60,7 @@
               <h1>OWL Carousel </h1>
               <h3>Touch enabled jQuery plugin that lets you create beautiful responsive carousel slider.</h3>
               <a class="btn btn-success btn-large" href="owl.carousel.zip">Download for FREE</a>
-              <p class="muted"><a class="muted" href="https://github.com/OwlFonk/OwlCarousel">Github</a> / v1.19 </p> 
+              <p class="muted"><a class="muted" href="https://github.com/OwlFonk/OwlCarousel">Github</a> / v1.2 </p> 
             </div>
           </div>
         </div>
@@ -207,6 +209,73 @@
           </div>
 
         </div>
+        <div class="row demos-row">
+          <div class="span3">
+            <a href="demos/json.html" class="demo-box">
+              <div class="demo-wrapper demo-Json clearfix">
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+              </div>
+              <h3>JSON</h3>
+            </a>
+          </div>
+
+          <div class="span3">
+            <a href="demos/customJson.html" class="demo-box">
+              <div class="demo-wrapper demo-Json-custom clearfix">
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+              </div>
+              <h3>JSON Custom</h3>
+            </a>
+          </div>
+
+          <div class="span3">
+            <a href="demos/lazyLoad.html" class="demo-box">
+              <div class="demo-wrapper demo-lazy clearfix">
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+              </div>
+              <h3>Lazy Load</h3>
+            </a>
+          </div>
+
+          <div class="span3">
+            <a href="demos/autoHeight.html" class="demo-box">
+              <div class="demo-wrapper demo-height clearfix">
+                <div class="demo-slide"><div class="bg"></div></div>
+              </div>
+              <h3>Auto Height</h3>
+            </a>
+          </div>
+
+          
+        </div>
+
+        <div class="row">
+          <div class="span12">
+            <h3>Hey wanna see more demos?</h3>
+            <ul>
+              <li>
+                <a href="demos/click.html">Click events inside items</a>
+              </li>
+              <li>
+                <a href="demos/randomOrder.html">Randomize items and buttons outside slider.</a>
+              </li>
+              <li>
+                <a>Progress bar... soon</a>
+              </li>
+            </ul>
+            
+          </div>
+        </div>
+
+
       </div>
     </div>
 
@@ -218,20 +287,20 @@
             <h2>1. Load jQuery and include Owl Carousel plugin files</h2>
             <p>To use Owl Carousel, you’ll need to make sure both the Owl and jQuery 1.7 or higher scripts are included.</p>
 <pre class="pre-show prettyprint linenums">
-&lt;!-- Basic stylesheet --&gt;
+&lt;!-- Important Owl stylesheet --&gt;
 &lt;link rel="stylesheet" href="owl-carousel/owl.carousel.css"&gt;
 
 &lt;!-- Default Theme --&gt;
 &lt;link rel="stylesheet" href="owl-carousel/owl.theme.css"&gt;
 
-&lt;!-- You can use latest version of jQuery  --&gt;
+&lt;!--  jQuery 1.7+  --&gt;
 &lt;script src="jquery-1.9.1.min.js"&gt;&lt;/script&gt;
 
 &lt;!-- Include js plugin --&gt;
 &lt;script src="assets/owl-carousel/owl.carousel.js"&gt;&lt;/script&gt;
 </pre>
           <h2>2. Set up your HTML</h2>
-          <p>You don't need any special markup. All you need is to wrap your divs inside the container element &lt;div class="owl-carousel"&gt;. Class "owl-carousel" is mandatory to apply proper styles that come from owl.carousel.css file.</p>
+          <p>You don't need any special markup. All you need is to wrap your divs(owl works with any type element) inside the container element &lt;div class="owl-carousel"&gt;. Class "owl-carousel" is mandatory to apply proper styles that come from owl.carousel.css file.</p>
 <pre class="pre-show prettyprint linenums">
 &lt;div id="owl-example" class="owl-carousel"&gt;
   &lt;div&gt; Your Content &lt;/div&gt;
@@ -271,110 +340,241 @@ $(document).ready(function() {
                 <tr>
                   <th>Variable</th>
                   <th>Default</th>
+                  <th>Type</th>
                   <th>Description</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><span class="text-emp">slideSpeed</span></td>
-                  <td>200</td>
-                  <td>Slide speed in milliseconds</td>
-                </tr>
-                <tr>
-                  <td><span class="text-emp">paginationSpeed</span></td>
-                  <td>false</td>
-                  <td>Pagination speed in milliseconds</td>
-                </tr>
-                <tr>
-                  <td><span class="text-emp">autoPlay</span></td>
-                  <td>false</td>
-                  <td>Auto play per slide. Change to any integrer for example "paginationSpeed : 8000" to play every 8 seconds</td>
-                </tr>
-                <tr>
-                  <td><span class="text-emp">goToFirst</span></td>
-                  <td>true</td>
-                  <td>Slide to first item if autoPlay reach end</td>
-                </tr>
-                <tr>
-                  <td><span class="text-emp">goToFirstSpeed</span></td>
-                  <td>1000</td>
-                  <td>Slide speed of goToFirst option in milliseconds</td>
-                </tr>
-                <tr>
-                  <td><span class="text-emp">stopOnHover</span></td>
-                  <td>false</td>
-                  <td>Set true to stop slides on hover(if autoPlay is on). Works only on non-touch devices.</td>
-                </tr>
-                <tr>
-                  <td><span class="text-emp">navigation</span></td>
-                  <td>false</td>
-                  <td>Display "next" and "prev" buttons. Fully customizable. Note that for better control over navigation the div with arrows and pagination is outside your carousel wrapper</td>
-                </tr>
-                <tr>
-                  <td><span class="text-emp">navigationText</span></td>
-                  <td>["prev","next"]</td>
-                  <td>You can cusomize your own text for navigation. To get empty buttons use false : "navigationText : false"</td>
-                </tr>
-                <tr>
-                  <td><span class="text-emp">pagination</span></td>
-                  <td>true</td>
-                  <td>Show pagination.</td>
-                </tr>
-                <tr>
-                  <td><span class="text-emp">paginationNumbers</span></td>
-                  <td>false</td>
-                  <td>Show numbers inside pagination buttons</td>
-                </tr>
-                <tr>
-                  <td><span class="text-emp">responsive</span></td>
-                  <td>true</td>
-                  <td>You can use Owl Carousel on desktop-only websites too! Just change that to "false" to disable resposive capabilities</td>
-                </tr>
-                <tr>
                   <td><span class="text-emp">items</span></td>
                   <td>5</td>
+                  <td>int</td>
                   <td>This variable allows you to set the maximum amount of items displayed at a time with the widest browser width</td>
                 </tr>
                  <tr>
                   <td><span class="text-emp">itemsDesktop</span></td>
                   <td>[1199,4]</td>
-                  <td>This allows you to preset the number of slides visible with a particular browser width. The format is [x,y] whereby x=browser width and y=number of slides displayed. For example [1199,4] means that if(window<=1199){ show 4 slides per page}
-                    Alternatively use "itemsDesktop: false" to override these settings.<br><br>To fully understand how it works check my <a href="demos/custom.html">Custom Demo</a></td>
+                  <td>array</td>
+                  <td>This allows you to preset the number of slides visible with a particular browser width. The format is [x,y] whereby x=browser width and y=number of slides displayed. For example [1199,4] means that if(window&lt;=1199){ show 4 slides per page}
+                    Alternatively use <code>itemsDesktop: false</code> to override these settings. Check my <a href="demos/custom.html">Custom Demo</a></td>
                 </tr>
                 <tr>
                   <td><span class="text-emp">itemsDesktopSmall</span></td>
                   <td>[979,3]</td>
+                  <td>array</td>
                   <td>As above.</td>
                 </tr>
                 <tr>
                   <td><span class="text-emp">itemsTablet</span></td>
                   <td>[768,2]</td>
+                  <td>array</td>
                   <td>As above.</td>
                 </tr>
                 <tr>
                   <td><span class="text-emp">itemsMobile</span></td>
                   <td>[479,1]</td>
+                  <td>array</td>
                   <td>As above</td>
                 </tr>
                 <tr>
+                  <td><span class="text-emp">singleItem</span></td>
+                  <td>false</td>
+                  <td>boolean</td>
+                  <td>Display only one item. <a href="demos/one.html">See demo</a></td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">slideSpeed</span></td>
+                  <td>200</td>
+                  <td>int</td>
+                  <td>Slide speed in milliseconds</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">paginationSpeed</span></td>
+                  <td>800</td>
+                  <td>int</td>
+                  <td>Pagination speed in milliseconds</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">autoPlay</span></td>
+                  <td>false</td>
+                  <td>int/boolean</td>
+                  <td>Change to any integrer for example <code>autoPlay : 5000</code> to play every 5 seconds. If you set <code>autoPlay: true</code> default speed will be 5 seconds.</td>
+                </tr>
+                <tr>
+                <tr>
+                  <td><span class="text-emp">stopOnHover</span></td>
+                  <td>false</td>
+                  <td>boolean</td>
+                  <td>Stop autoplay on mouse hover</td>
+                </tr>
+                <tr>
+                <td><span class="text-emp">goToFirst</span></td>
+                  <td>true</td>
+                  <td>boolean</td>
+                  <td>Slide to first item if autoPlay reach end</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">goToFirstSpeed</span></td>
+                  <td>1000</td>
+                  <td>int</td>
+                  <td>Slide speed of goToFirst option in milliseconds</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">navigation</span></td>
+                  <td>false</td>
+                  <td>boolean</td>
+                  <td>Display "next" and "prev" buttons.</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">navigationText</span></td>
+                  <td>["prev","next"]</td>
+                  <td>array</td>
+                  <td>You can cusomize your own text for navigation. To get empty buttons use <code>navigationText : false</code>. Also HTML can be used here <code>["&lt;div&gt;prev&lt;/div&gt;","&lt;div&gt;next&lt;/div&gt;"]</code></td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">goToFirstNav</span></td>
+                  <td>true</td>
+                  <td>boolean</td>
+                  <td>Slide to first item. Use <code>goToFirstSpeed</code> to change animation speed. </td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">scrollPerPage</span></td>
+                  <td>false</td>
+                  <td>boolean</td>
+                  <td>Scroll per page not per item.</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">pagination</span></td>
+                  <td>true</td>
+                  <td>boolean</td>
+                  <td>Show pagination.</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">paginationNumbers</span></td>
+                  <td>false</td>
+                  <td>boolean</td>
+                  <td>Show numbers inside pagination buttons</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">responsive</span></td>
+                  <td>true</td>
+                  <td>boolean</td>
+                  <td>You can use Owl Carousel on desktop-only websites too! Just change that to "false" to disable resposive capabilities</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">responsiveRefreshRate</span></td>
+                  <td>200</td>
+                  <td>int</td>
+                  <td>Check window width changes every 200ms for responsive actions</td>
+                </tr>
+                
+                <tr>
                   <td><span class="text-emp">baseClass</span></td>
                   <td>"owl-carousel"</td>
+                  <td>string</td>
                   <td>Automaticly added class for base CSS styles. Best not to change it if you don't need to.</td>
                 </tr>
                 <tr>
                   <td><span class="text-emp">theme</span></td>
                   <td>"owl-theme"</td>
+                  <td>string</td>
                   <td>Default Owl CSS styles for navigation and buttons. Change it to match your own theme</td>
                 </tr>
-
+                <tr>
+                  <td><span class="text-emp">lazyLoad</span></td>
+                  <td>false</td>
+                  <td>boolean</td>
+                  <td>Delays loading of images. Images outside of viewport won't be loaded before user scrolls to them. Great for mobile devices to speed up page loadings. IMG need special markup <code>class="lazyOwl"</code> and <code>data-src="your img path"</code>. <a href="demos/lazyLoad.html">See example.</a></td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">lazyFollow</span></td>
+                  <td>true</td>
+                  <td>boolean</td>
+                  <td>When pagination used, it skips loading the images from pages that got skipped. It only loads the images that get displayed in viewport. If set to false, all images get loaded when pagination used. It is a sub setting of the lazy load function.</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">autoHeight</span></td>
+                  <td>false</td>
+                  <td>boolean</td>
+                  <td>Add height to owl-wrapper-outer so you can use diffrent heights on slides. Use it only for one item per page setting.</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">jsonPath</span></td>
+                  <td>false</td>
+                  <td>string</td>
+                  <td>Allows you to load directly from a jSon file. The JSON structure you use needs to match the owl JSON structure used here. To use custom JSON structure see jsonSuccess option.</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">jsonSuccess</span></td>
+                  <td>false</td>
+                  <td>function</td>
+                  <td>Success callback for $.getJSON build in into carousel. See demo with custom JSON structure <a href="demos/customJson.html">here</a>. </td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">mouseDraggable</span></td>
+                  <td>false</td>
+                  <td>boolean</td>
+                  <td>Turn off mouse events; touch events are still active</td>
+                </tr>
 
               </tbody>
             </table>
+            <h2>2. Callbacks</h2>
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Variable</th>
+                  <th>Default</th>
+                  <th>Type</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="text-emp">beforeInit</span></td>
+                  <td>false</td>
+                  <td>function</td>
+                  <td>Before initialization callback</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">afterInit</span></td>
+                  <td>false</td>
+                  <td>function</td>
+                  <td>After initialization callback</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">beforeMove</span></td>
+                  <td>false</td>
+                  <td>function</td>
+                  <td>Before move callback</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">afterMove</span></td>
+                  <td>false</td>
+                  <td>function</td>
+                  <td>After move callback</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">afterAction</span></td>
+                  <td>false</td>
+                  <td>function</td>
+                  <td>After startup, move and update callback</td>
+                </tr>
+              </tbody>
+            </table>
 
-              <h2>2. Defaults</h2>
+              <h2>3. Defaults</h2>
               <p>Carousel default settings</p>
 <pre class="pre-show prettyprint linenums">
 $("#owl-example").owlCarousel({
+
+    // Most important owl features
+    items : 5,
+    itemsDesktop : [1199,4],
+    itemsDesktopSmall : [980,3],
+    itemsTablet: [768,2],
+    itemsMobile : [479,1],
+    singleItem : false,
 
     //Basic Speeds
     slideSpeed : 200,
@@ -382,31 +582,63 @@ $("#owl-example").owlCarousel({
 
     //Autoplay
     autoPlay : false,
+    stopOnHover : false,
     goToFirst : true,
     goToFirstSpeed : 1000,
 
     // Navigation
     navigation : false,
     navigationText : ["prev","next"],
+    goToFirstNav : true,
+    scrollPerPage : false,
+
+    //Pagination
     pagination : true,
-    paginationNumbers: true,
+    paginationNumbers: false,
 
     // Responsive 
     responsive: true,
-    items : 5,
-    itemsDesktop : [1199,4],
-    itemsDesktopSmall : [980,3],
-    itemsTablet: [768,2],
-    itemsMobile : [479,1],
-    
+    responsiveRefreshRate : 200,
+
     // CSS Styles
     baseClass : "owl-carousel",
-    theme : "owl-theme"
+    theme : "owl-theme",
+
+    //Lazy load
+    lazyLoad : false,
+    lazyFollow : true,
+    
+    //Auto height
+    autoHeight : false,
+    
+    //JSON 
+    jsonPath : false, 
+    jsonSuccess : false,
+    
+    //Mouse Events
+    mouseDraggable : true,
+
+    //Callbacks
+    beforeInit: false, 
+    afterInit: false, 
+    beforeMove: false, 
+    afterMove: false,
+    afterAction: false
 
 })
-</pre>   
-              <h2>3. API</h2>
-              <p>To use Owl Carousel API use delegate function.</p>
+</pre> 
+              <h2>4. Custom Events</h2>
+              <p>Owl Carousel handles a few basic events. Mainly use them for custom navigation. <a href="demos/custom.html">See Demo</a></p>
+              
+<pre class="pre-show prettyprint linenums">
+'owl.prev' //Go to previous
+'owl.next' //Go to next
+'owl.play' //Autoplay, also this event accept autoPlay speed as second parameter
+'owl.stop' //Stop
+</pre>
+
+              <h2>5. Owl Data methods</h2>
+              <p>To use Owl Carousel $.data use delegate function.</p>
               
 <pre class="pre-show prettyprint linenums">
 
@@ -421,8 +653,6 @@ owl.next()   // Go to next slide
 owl.prev()   // Go to previous slide
 owl.goTo(x)  // Go to x slide
 
-owl.update() // Update Slide
-
 owl.buildControlls()    // Build Controlls
 owl.destroyControlls()  // Remove Controlls
 
@@ -435,7 +665,31 @@ owl.stop() // Autoplay Stop
       </div>
     </div>
 
-    <div class="container">
+    <div id="faq" class="container">
+      <div class="row">
+        <div class="span12">
+          <h1>FAQ</h1>
+          <dl>
+            <dt>Can i use it for free?</dt>
+            <dd>Yes!</dd>
+            <dt>Can i use it for ecommerce?</dt>
+            <dd>Yes!</dd>
+            <dt>Has it any licence?</dt>
+            <dd>MIT</dd>
+            <dt>Can i ask for a new functionality?</dt>
+            <dd>Yes!</dd>
+            <dt>I need help!</dt>
+            <dd>Send me an <a href="mailto:owl@owlgraphic.com?subject=Hey Owl! I need help">email</a>, visit <a href="https://github.com/OwlFonk/OwlCarousel">Github</a> or add comment <a href="#disqus">below.</a></dd>
+            <dt>Does it has infinity scroll/circle slides?</dt>
+            <dd>Not at the moment. Maybe in future</dd>
+            <dt>What's new in latest release?</dt>
+            <dd>See <a href="changelog.html">Changelog</a></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <div class="container disqus">
         <div class="row">
           <div class="span12">
             <h1>Disqus</h1>
@@ -462,12 +716,22 @@ owl.stop() // Autoplay Stop
     </div>
   </div>
 
-
     <div id="footer">
       <div class="container">
         <div class="row">
           <div class="span12">
-            <h5>Bartosz Wojciechowski 2013 / @OwlFonk / <a href="mailto:owl@owlgraphic.com?subject=Hey Owl!">email</a></h5>
+            <h5>Bartosz Wojciechowski 2013 / @OwlFonk / 
+            <a href="mailto:owl@owlgraphic.com?subject=Hey Owl!">email</a> / 
+            <a href="changelog.html">changelog</a> /
+            <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EFSGXZS7V2U9N">donate</a> / 
+            <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://owlgraphic.com/owlcarousel/" data-text="Awesome jQuery Owl Carousel Responsive Plugin" data-via="OwlFonk" data-count="none" data-hashtags="owlcarousel"></a>
+            <script>
+            var owldomain = window.location.hostname.indexOf("owlgraphic");
+            if(owldomain !== -1){
+              !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+            }
+            </script>
+            </h5>
           </div>
         </div>
       </div>
@@ -479,9 +743,11 @@ owl.stop() // Autoplay Stop
 
     <!-- Frontpage Demo -->
     <script>
-    jQuery(document).ready(function($) {
+
+    $(document).ready(function($) {
       $("#owl-example").owlCarousel();
     });
+
 
     $("body").data("page", "frontpage");
 
@@ -503,7 +769,6 @@ owl.stop() // Autoplay Stop
       ga('create', 'UA-41541058-1', 'owlgraphic.com');
       ga('send', 'pageview');
     }
-
     </script>
 
   </body>

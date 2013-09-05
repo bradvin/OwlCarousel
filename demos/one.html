@@ -94,15 +94,17 @@ $(document).ready(function() {
   $("#owl-demo").owlCarousel({
 
       navigation : true, // Show next and prev buttons
-
       slideSpeed : 300,
       paginationSpeed : 400,
+      singleItem:true
 
-      items : 1, 
-      itemsDesktop : false,
-      itemsDesktopSmall : false,
-      itemsTablet: false,
-      itemsMobile : false
+      // "singleItem:true" is a shortcut for:
+      // items : 1, 
+      // itemsDesktop : false,
+      // itemsDesktopSmall : false,
+      // itemsTablet: false,
+      // itemsMobile : false
+    }
 
   });
 
@@ -148,7 +150,7 @@ $(document).ready(function() {
           </div>
         </div>
 
-        <div class="row demos-row demo-page">
+        <div class="row demos-row">
           <div class="span3">
             <a href="images.html" class="demo-box">
               <div class="demo-wrapper demo-images clearfix">
@@ -200,16 +202,71 @@ $(document).ready(function() {
           </div>
 
         </div>
+        <div class="row demos-row">
+          <div class="span3">
+            <a href="json.html" class="demo-box">
+              <div class="demo-wrapper demo-Json clearfix">
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+              </div>
+              <h3>JSON</h3>
+            </a>
+          </div>
+
+          <div class="span3">
+            <a href="customJson.html" class="demo-box">
+              <div class="demo-wrapper demo-Json-custom clearfix">
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+              </div>
+              <h3>JSON Custom</h3>
+            </a>
+          </div>
+
+          <div class="span3">
+            <a href="lazyLoad.html" class="demo-box">
+              <div class="demo-wrapper demo-lazy clearfix">
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+              </div>
+              <h3>Lazy Load</h3>
+            </a>
+          </div>
+
+          <div class="span3">
+            <a href="autoHeight.html" class="demo-box">
+              <div class="demo-wrapper demo-height clearfix">
+                <div class="demo-slide"><div class="bg"></div></div>
+              </div>
+              <h3>Auto Height</h3>
+            </a>
+          </div>
+
+        </div>
       </div>
     </div>
 
-
- 
     <div id="footer">
       <div class="container">
         <div class="row">
           <div class="span12">
-            <h5>Bartosz Wojciechowski 2013 / @OwlFonk / <a href="mailto:owl@owlgraphic.com?subject=Hey Owl!">email</a></h5>          </div>
+            <h5>Bartosz Wojciechowski 2013 / @OwlFonk / 
+            <a href="mailto:owl@owlgraphic.com?subject=Hey Owl!">email</a> / 
+            <a href="changelog.html">changelog</a> /
+            <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EFSGXZS7V2U9N">donate</a> / 
+            <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://owlgraphic.com/owlcarousel/" data-text="Awesome jQuery Owl Carousel Responsive Plugin" data-via="OwlFonk" data-count="none" data-hashtags="owlcarousel"></a>
+            <script>
+            var owldomain = window.location.hostname.indexOf("owlgraphic");
+            if(owldomain !== -1){
+              !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+            }
+            </script>
+            </h5>
           </div>
         </div>
       </div>
@@ -236,18 +293,18 @@ $(document).ready(function() {
       $("#owl-demo").owlCarousel({
 
       navigation : true,
-
       slideSpeed : 300,
       paginationSpeed : 400,
+      singleItem : true
 
-      items : 1, 
-      itemsDesktop : false,
-      itemsDesktopSmall : false,
-      itemsTablet: false,
-      itemsMobile : false
+      // "singleItem:true" is a shortcut for:
+      // items : 1, 
+      // itemsDesktop : false,
+      // itemsDesktopSmall : false,
+      // itemsTablet: false,
+      // itemsMobile : false
 
       });
-
     });
     </script>
 

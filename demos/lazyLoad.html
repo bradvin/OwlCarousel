@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Owl Carousel - Images Demo</title>
+    <title>Owl Carousel - Lazy Load</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="jQuery Responsive Carousel - Owl Carusel">
     <meta name="author" content="Bartosz Wojciechowski">
@@ -53,7 +53,7 @@
       <div class="container">
         <div class="row">
           <div class="span12">
-            <h1>Content with Images</h1>
+            <h1>Lazy Load</h1>
           </div>
         </div>
       </div>
@@ -65,16 +65,24 @@
             <div class="span12">
 
               <div id="owl-demo" class="owl-carousel">
-                <div class="item"><img src="assets/owl1.jpg" alt="Owl Image"></div>
-                <div class="item"><img src="assets/owl2.jpg" alt="Owl Image"></div>
-                <div class="item"><img src="assets/owl3.jpg" alt="Owl Image"></div>
-                <div class="item"><img src="assets/owl4.jpg" alt="Owl Image"></div>
-                <div class="item"><img src="assets/owl5.jpg" alt="Owl Image"></div>
-                <div class="item"><img src="assets/owl6.jpg" alt="Owl Image"></div>
-                <div class="item"><img src="assets/owl7.jpg" alt="Owl Image"></div>
-                <div class="item"><img src="assets/owl8.jpg" alt="Owl Image"></div>
+                <div class="item"><img class="lazyOwl" data-src="assets/owl1.jpg" alt="Lazy Owl Image"></div>
+                <div class="item"><img class="lazyOwl" data-src="assets/owl2.jpg" alt="Lazy Owl Image"></div>
+                <div class="item"><img class="lazyOwl" data-src="assets/owl3.jpg" alt="Lazy Owl Image"></div>
+                <div class="item"><img class="lazyOwl" data-src="assets/owl4.jpg" alt="Lazy Owl Image"></div>
+                <div class="item"><img class="lazyOwl" data-src="assets/owl5.jpg" alt="Lazy Owl Image"></div>
+                <div class="item"><img class="lazyOwl" data-src="assets/owl6.jpg" alt="Lazy Owl Image"></div>
+                <div class="item"><img class="lazyOwl" data-src="assets/owl7.jpg" alt="Lazy Owl Image"></div>
+                <div class="item"><img class="lazyOwl" data-src="assets/owl8.jpg" alt="Lazy Owl Image"></div>
+                <div class="item"><img class="lazyOwl" data-src="assets/owl1.jpg" alt="Lazy Owl Image"></div>
+                <div class="item"><img class="lazyOwl" data-src="assets/owl2.jpg" alt="Lazy Owl Image"></div>
+                <div class="item"><img class="lazyOwl" data-src="assets/owl3.jpg" alt="Lazy Owl Image"></div>
+                <div class="item"><img class="lazyOwl" data-src="assets/owl4.jpg" alt="Lazy Owl Image"></div>
+                <div class="item"><img class="lazyOwl" data-src="assets/owl5.jpg" alt="Lazy Owl Image"></div>
+                <div class="item"><img class="lazyOwl" data-src="assets/owl6.jpg" alt="Lazy Owl Image"></div>
+                <div class="item"><img class="lazyOwl" data-src="assets/owl7.jpg" alt="Lazy Owl Image"></div>
+                <div class="item"><img class="lazyOwl" data-src="assets/owl8.jpg" alt="Lazy Owl Image"></div>
               </div>
-              
+
             </div>
           </div>
         </div>
@@ -86,7 +94,12 @@
         <div class="row">
           <div class="span12">
             <h1>Setup</h1>
-            <p>In order for the images to auto fit to slider containers use width 100% on &lt;img&gt;. Check CSS below</p>
+            <p>Delays loading of images. Images outside of viewport wont be loaded before user scrolls to them. Great for mobile devices to speed up page loadings.
+            </p>
+            <p>
+              Img need special class <code>class="lazyOwl"</code> and path to image in <code>data-src=""</code>: 
+              <blockquote><code>&lt;img class="lazyOwl" data-src="path-to-your-image"&gt;</code></blockquote>
+              </p>
             <ul class="nav nav-tabs" id="myTab">
               <li class="active"><a href="#javascript">Javascript</a></li>
               <li><a href="#HTML">HTML</a></li>
@@ -100,33 +113,34 @@
 $(document).ready(function() {
 
   $("#owl-demo").owlCarousel({
-
-      autoPlay: 3000, //Set AutoPlay to 3 seconds
-
-      items : 4,
-      itemsDesktop : [1199,3],
-      itemsDesktopSmall : [979,3]
-
-  });
+    items : 4,
+    lazyLoad : true,
+    navigation : true
+  }); 
 
 });
-</pre>  
-
+</pre> 
               </div>
 
               <div class="tab-pane" id="HTML">
 <pre class="pre-show prettyprint linenums">
-&lt;div id="owl-demo"&gt;
-          
-  &lt;div class="item"&gt;&lt;img src="assets/owl1.jpg" alt="Owl Image"&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;img src="assets/owl2.jpg" alt="Owl Image"&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;img src="assets/owl3.jpg" alt="Owl Image"&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;img src="assets/owl4.jpg" alt="Owl Image"&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;img src="assets/owl5.jpg" alt="Owl Image"&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;img src="assets/owl6.jpg" alt="Owl Image"&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;img src="assets/owl7.jpg" alt="Owl Image"&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;img src="assets/owl8.jpg" alt="Owl Image"&gt;&lt;/div&gt;
-
+&lt;div id="owl-demo" class="owl-carousel"&gt;
+  &lt;div class="item"&gt;&lt;img class="lazyOwl" data-src="assets/owl1.jpg" alt="Lazy Owl Image"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img class="lazyOwl" data-src="assets/owl2.jpg" alt="Lazy Owl Image"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img class="lazyOwl" data-src="assets/owl3.jpg" alt="Lazy Owl Image"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img class="lazyOwl" data-src="assets/owl4.jpg" alt="Lazy Owl Image"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img class="lazyOwl" data-src="assets/owl5.jpg" alt="Lazy Owl Image"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img class="lazyOwl" data-src="assets/owl6.jpg" alt="Lazy Owl Image"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img class="lazyOwl" data-src="assets/owl7.jpg" alt="Lazy Owl Image"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img class="lazyOwl" data-src="assets/owl8.jpg" alt="Lazy Owl Image"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img class="lazyOwl" data-src="assets/owl1.jpg" alt="Lazy Owl Image"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img class="lazyOwl" data-src="assets/owl2.jpg" alt="Lazy Owl Image"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img class="lazyOwl" data-src="assets/owl3.jpg" alt="Lazy Owl Image"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img class="lazyOwl" data-src="assets/owl4.jpg" alt="Lazy Owl Image"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img class="lazyOwl" data-src="assets/owl5.jpg" alt="Lazy Owl Image"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img class="lazyOwl" data-src="assets/owl6.jpg" alt="Lazy Owl Image"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img class="lazyOwl" data-src="assets/owl7.jpg" alt="Lazy Owl Image"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img class="lazyOwl" data-src="assets/owl8.jpg" alt="Lazy Owl Image"&gt;&lt;/div&gt;
 &lt;/div&gt;
 </pre>
               </div>
@@ -142,7 +156,7 @@ $(document).ready(function() {
   height: auto;
 }
 </pre>
-              </div>
+</div>
             </div><!--End Tab Content-->
 
           </div>
@@ -258,10 +272,8 @@ $(document).ready(function() {
 
         </div>
       </div>
-    </div>
+    </div>    
 
-
- 
     <div id="footer">
       <div class="container">
         <div class="row">
@@ -304,11 +316,11 @@ $(document).ready(function() {
 
     <script>
     $(document).ready(function() {
+
       $("#owl-demo").owlCarousel({
-        autoPlay: 3000,
         items : 4,
-        itemsDesktop : [1199,3],
-        itemsDesktopSmall : [979,3]
+        lazyLoad : true,
+        navigation : true
       });
 
     });

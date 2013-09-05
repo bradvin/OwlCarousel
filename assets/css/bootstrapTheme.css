@@ -701,7 +701,7 @@ ol ul {
   margin-bottom: 0;
 }
 li {
-  line-height: 22px;
+  line-height: 28px;
 }
 ul.unstyled,
 ol.unstyled {
@@ -835,7 +835,7 @@ pre {
 }
 code {
   padding: 2px 4px;
-  color: #d14;
+  color: #ff8a3c;
   background-color: #f7f7f9;
   border: 1px solid #e1e1e8;
   white-space: nowrap;
@@ -1735,7 +1735,7 @@ table {
 .table th,
 .table td {
   padding: 16px;
-  line-height: 22px;
+  line-height: 24px;
   text-align: left;
   vertical-align: top;
   border-top: 1px solid #ffffff;
