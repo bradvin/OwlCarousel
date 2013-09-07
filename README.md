@@ -1,20 +1,23 @@
 # OwlCarousel #
-> v.1.2
+>v.1.21
 >Touch enabled jQuery plugin that lets you create beautiful responsive carousel slider.
 
 ## [OwlCarousel landing page](http://owlgraphic.com/owlcarousel)
 
 ###Features:
 * Responsive
-* Touch Event 
+* Touch Events
 * Mouse Slide Events
 * Fully Customizable
 * Choose the number of items to be displayed
 * Multiple Sliders
 * CSS3 3d Transitions
-* Custimizable controlls
+* Custimizable controls
+* JSON 
+* Custom events
+* Helpful callbacks
 
-> Tested on IE7, IE8, IE9, IE10, Chrome, Safari, Firefox, Opera, Dolphin, iPhone, iPad, Google Nexus.
+> Tested on IE7, IE8, IE9, IE10, Chrome, Safari, Firefox, Opera, iPhone, iPad, Google Nexus.
 
 
 ### More Demos

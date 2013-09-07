@@ -18,7 +18,6 @@
 
     <!-- Prettify -->
     <link href="assets/js/google-code-prettify/prettify.css" rel="stylesheet">
-	
 
     <!-- Le fav and touch icons -->
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
@@ -60,12 +59,12 @@
               <h1>OWL Carousel </h1>
               <h3>Touch enabled jQuery plugin that lets you create beautiful responsive carousel slider.</h3>
               <a class="btn btn-success btn-large" href="owl.carousel.zip">Download for FREE</a>
-              <p class="muted"><a class="muted" href="https://github.com/OwlFonk/OwlCarousel">Github</a> / v1.2 </p> 
+              <p class="muted"><a class="muted" href="https://github.com/OwlFonk/OwlCarousel">Github</a> / v1.21 / <a class="muted" href="changelog.html">changelog</a></p> 
             </div>
           </div>
         </div>
       </div>
-      
+
       <div id="demo">
         <div class="container">
           <div class="row">
@@ -78,7 +77,7 @@
             <div class="span12">
 
               <div id="owl-example" class="owl-carousel">
-                
+
                 <div class="item darkCyan">
                   <img src="assets/img/demo-slides/touch.png" alt="Touch">
                     <h3>Touch</h3>
@@ -467,7 +466,6 @@ $(document).ready(function() {
                   <td>int</td>
                   <td>Check window width changes every 200ms for responsive actions</td>
                 </tr>
-                
                 <tr>
                   <td><span class="text-emp">baseClass</span></td>
                   <td>"owl-carousel"</td>
@@ -607,14 +605,14 @@ $("#owl-example").owlCarousel({
     //Lazy load
     lazyLoad : false,
     lazyFollow : true,
-    
+
     //Auto height
     autoHeight : false,
-    
+
     //JSON 
     jsonPath : false, 
     jsonSuccess : false,
-    
+
     //Mouse Events
     mouseDraggable : true,
 
@@ -626,10 +624,10 @@ $("#owl-example").owlCarousel({
     afterAction: false
 
 })
-</pre> 
+</pre>
               <h2>4. Custom Events</h2>
               <p>Owl Carousel handles a few basic events. Mainly use them for custom navigation. <a href="demos/custom.html">See Demo</a></p>
-              
+
 <pre class="pre-show prettyprint linenums">
 'owl.prev' //Go to previous
 'owl.next' //Go to next
@@ -653,8 +651,8 @@ owl.next()   // Go to next slide
 owl.prev()   // Go to previous slide
 owl.goTo(x)  // Go to x slide
 
-owl.buildControlls()    // Build Controlls
-owl.destroyControlls()  // Remove Controlls
+owl.buildControls()    // Build Controlls
+owl.destroyControls()  // Remove Controlls
 
 owl.play() // Autoplay
 owl.stop() // Autoplay Stop
@@ -738,7 +736,7 @@ owl.stop() // Autoplay Stop
     </div>
 
 
-    <script src="assets/js/jquery-1.9.1.min.js"></script> 
+    <script src="assets/js/jquery-1.9.1.min.js"></script>
     <script src="owl-carousel/owl.carousel.min.js"></script>
 
     <!-- Frontpage Demo -->
@@ -768,6 +766,8 @@ owl.stop() // Autoplay Stop
 
       ga('create', 'UA-41541058-1', 'owlgraphic.com');
       ga('send', 'pageview');
+    } else {
+      $('.disqus').hide();
     }
     </script>
 

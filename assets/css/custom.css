@@ -275,15 +275,19 @@ background: url('../img/AjaxLoader.gif') no-repeat center center #aebab6;
 	width: 100%;
 }
 
-/* Changelog / Faq*/
+/* Changelog  */
 #changelog{
 	margin-bottom: 40px;
 }
-
 #changelog .label{
 	margin-bottom:10px;
 }
-
+#changelog .log{
+	margin-bottom: 30px;
+	padding-bottom: 30px;
+	border-bottom: 1px solid #e1e6dd;
+}
+/* Faq */
 #faq dt {
 	line-height: 26px;
 }

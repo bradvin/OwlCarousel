@@ -1,6 +1,6 @@
 /* 
  * 	Core Owl Carousel CSS File
- *	v1.2
+ *	v1.21
  */
 
 /* clearfix */
@@ -41,11 +41,11 @@
 .owl-carousel .owl-item{
 	float: left;
 }
-.owl-controlls .owl-page,
-.owl-controlls .owl-buttons div{
+.owl-controls .owl-page,
+.owl-controls .owl-buttons div{
 	cursor: pointer;
 }
-.owl-controlls {
+.owl-controls {
 	-webkit-user-select: none;
 	-khtml-user-select: none;
 	-moz-user-select: none;
