@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Owl Carousel - Custom</title>
+    <title>Owl Carousel - Navigation on top</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="jQuery Responsive Carousel - Owl Carusel">
     <meta name="author" content="Bartosz Wojciechowski">
@@ -51,7 +51,7 @@
       <div class="container">
         <div class="row">
           <div class="span12">
-            <h1>Custom Options with Events</h1>
+            <h1>Navigation on top by custom events</h1>
           </div>
         </div>
       </div>
@@ -61,6 +61,11 @@
         <div class="container">
           <div class="row">
             <div class="span12">
+
+              <div class="customNavigation">
+                <a class="btn prev">Previous</a>
+                <a class="btn next">Next</a>
+              </div>
 
               <div id="owl-demo" class="owl-carousel">
                 
@@ -82,12 +87,7 @@
                 <div class="item"><h1>16</h1></div>
 
               </div>
-              <div class="customNavigation">
-                <a class="btn prev">Previous</a>
-                <a class="btn next">Next</a>
-                <a class="btn play">Autoplay</a>
-                <a class="btn stop">Stop</a>
-              </div>
+              
 
             </div>
           </div>
@@ -100,7 +100,7 @@
         <div class="row">
           <div class="span12">
             <h1>Setup</h1>
-            <p>This is an example of using custom events for navigation. Also it shows how you can customise widths and inherit option from tablet to mobile.
+            <p>This is an example of using custom events for navigation.
             </p>
             <ul class="nav nav-tabs" id="myTab">
               <li class="active"><a href="#javascript">Javascript</a></li>
@@ -116,13 +116,7 @@ $(document).ready(function() {
 
   var owl = &#36;("#owl-demo")&#59;
 
-  owl.owlCarousel({
-      items : 10, //10 items above 1000px browser width
-      itemsDesktop : [1000,5], //5 items between 1000px and 901px
-      itemsDesktopSmall : [900,3], // betweem 900px and 601px
-      itemsTablet: [600,2], //2 items between 600 and 0
-      itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
-  })&#59;
+  owl.owlCarousel()&#59;
 
   // Custom Navigation Events
   $(".next").click(function(){
@@ -130,12 +124,6 @@ $(document).ready(function() {
   })
   $(".prev").click(function(){
     owl.trigger('owl.prev')&#59;
-  })
-  $(".play").click(function(){
-    owl.trigger('owl.play',1000)&#59; //owl.play event accept autoPlay speed as second parameter
-  })
-  $(".stop").click(function(){
-    owl.trigger('owl.stop')&#59;
   })
 
 })&#59;
@@ -145,6 +133,11 @@ $(document).ready(function() {
 
               <div class="tab-pane" id="HTML">
 <pre class="pre-show prettyprint linenums">
+&lt;div class="customNavigation"&gt;
+  &lt;a class="btn prev"&gt;Previous&lt;/a&gt;
+  &lt;a class="btn next"&gt;Next&lt;/a&gt;
+&lt;/div&gt;
+
 &lt;div id="owl-demo" class="owl-carousel owl-theme"&gt;
   &lt;div class="item"&gt;&lt;h1&gt;1&lt;/h1&gt;&lt;/div&gt;
   &lt;div class="item"&gt;&lt;h1&gt;2&lt;/h1&gt;&lt;/div&gt;
@@ -162,13 +155,6 @@ $(document).ready(function() {
   &lt;div class="item"&gt;&lt;h1&gt;14&lt;/h1&gt;&lt;/div&gt;
   &lt;div class="item"&gt;&lt;h1&gt;15&lt;/h1&gt;&lt;/div&gt;
   &lt;div class="item"&gt;&lt;h1&gt;16&lt;/h1&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div class="customNavigation"&gt;
-  &lt;a class="btn prev"&gt;Previous&lt;/a&gt;
-  &lt;a class="btn next"&gt;Next&lt;/a&gt;
-  &lt;a class="btn play"&gt;Autoplay&lt;/a&gt;
-  &lt;a class="btn stop"&gt;Stop&lt;/a&gt;
 &lt;/div&gt;
 </pre>
               </div>
@@ -377,15 +363,7 @@ $(document).ready(function() {
 
       var owl = $("#owl-demo");
 
-      owl.owlCarousel({
-
-      items : 10, //10 items above 1000px browser width
-      itemsDesktop : [1000,5], //5 items between 1000px and 901px
-      itemsDesktopSmall : [900,3], // 3 items betweem 900px and 601px
-      itemsTablet: [600,2], //2 items between 600 and 0;
-      itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
-      
-      });
+      owl.owlCarousel();
 
       // Custom Navigation Events
       $(".next").click(function(){

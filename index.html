@@ -59,7 +59,7 @@
               <h1>OWL Carousel </h1>
               <h3>Touch enabled jQuery plugin that lets you create beautiful responsive carousel slider.</h3>
               <a class="btn btn-success btn-large" href="owl.carousel.zip">Download for FREE</a>
-              <p class="muted"><a class="muted" href="https://github.com/OwlFonk/OwlCarousel">Github</a> / v1.21 / <a class="muted" href="changelog.html">changelog</a></p> 
+              <p class="muted"><a class="muted" href="https://github.com/OwlFonk/OwlCarousel">Github</a> / v1.22 / <a class="muted" href="changelog.html">Changelog</a></p> 
             </div>
           </div>
         </div>
@@ -267,8 +267,17 @@
                 <a href="demos/randomOrder.html">Randomize items and buttons outside slider.</a>
               </li>
               <li>
-                <a>Progress bar... soon</a>
+                <a href="demos/navOnTop.html">Navigation on top by custom events</a>
               </li>
+              <li>
+                <a href="demos/navOnTop2.html">Navigation on top by afterInit callback</a>
+              </li>
+              <li>
+                <a href="demos/progressBar.html">Progress Bar</a>
+              </li>
+<!--               <li>
+                <a>Progress bar... soon</a>
+              </li> -->
             </ul>
             
           </div>
@@ -428,7 +437,7 @@ $(document).ready(function() {
                   <td><span class="text-emp">navigationText</span></td>
                   <td>["prev","next"]</td>
                   <td>array</td>
-                  <td>You can cusomize your own text for navigation. To get empty buttons use <code>navigationText : false</code>. Also HTML can be used here <code>["&lt;div&gt;prev&lt;/div&gt;","&lt;div&gt;next&lt;/div&gt;"]</code></td>
+                  <td>You can cusomize your own text for navigation. To get empty buttons use <code>navigationText : false</code>. Also HTML can be used here</td>
                 </tr>
                 <tr>
                   <td><span class="text-emp">goToFirstNav</span></td>
@@ -512,8 +521,27 @@ $(document).ready(function() {
                   <td><span class="text-emp">mouseDraggable</span></td>
                   <td>false</td>
                   <td>boolean</td>
-                  <td>Turn off mouse events; touch events are still active</td>
+                  <td>Deprecated function on v1.22. Use mouseDrag and touchDrag now.</td>
                 </tr>
+                <tr>
+                  <td><span class="text-emp">mouseDrag</span></td>
+                  <td>true</td>
+                  <td>boolean</td>
+                  <td>Turn off mouse events.</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">touchDrag</span></td>
+                  <td>true</td>
+                  <td>boolean</td>
+                  <td>Turn off touch events.</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">addClassActive</span></td>
+                  <td>false</td>
+                  <td>boolean</td>
+                  <td>Add "active" classes on visible items. Works with any numbers of items on screen.</td>
+                </tr>
+
 
               </tbody>
             </table>
@@ -557,6 +585,12 @@ $(document).ready(function() {
                   <td>false</td>
                   <td>function</td>
                   <td>After startup, move and update callback</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">startDragging</span></td>
+                  <td>false</td>
+                  <td>function</td>
+                  <td>Call this function while dragging.</td>
                 </tr>
               </tbody>
             </table>
@@ -614,14 +648,18 @@ $("#owl-example").owlCarousel({
     jsonSuccess : false,
 
     //Mouse Events
-    mouseDraggable : true,
+    mouseDrag : true,
+    touchDrag : true,
 
     //Callbacks
     beforeInit: false, 
     afterInit: false, 
     beforeMove: false, 
     afterMove: false,
-    afterAction: false
+    afterAction: false,
+    startDragging : false,
+
+    addClassActive : false
 
 })
 </pre>
@@ -675,10 +713,10 @@ owl.stop() // Autoplay Stop
             <dt>Has it any licence?</dt>
             <dd>MIT</dd>
             <dt>Can i ask for a new functionality?</dt>
-            <dd>Yes!</dd>
+            <dd>Yes! Use <a href="https://github.com/OwlFonk/OwlCarousel">Github</a></dd>
             <dt>I need help!</dt>
             <dd>Send me an <a href="mailto:owl@owlgraphic.com?subject=Hey Owl! I need help">email</a>, visit <a href="https://github.com/OwlFonk/OwlCarousel">Github</a> or add comment <a href="#disqus">below.</a></dd>
-            <dt>Does it has infinity scroll/circle slides?</dt>
+            <dt>Does it has infinity scroll/circle/loop slides?</dt>
             <dd>Not at the moment. Maybe in future</dd>
             <dt>What's new in latest release?</dt>
             <dd>See <a href="changelog.html">Changelog</a></dd>

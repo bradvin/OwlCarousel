@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Owl Carousel - Custom</title>
+    <title>Owl Carousel - Progress Bar</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="jQuery Responsive Carousel - Owl Carusel">
     <meta name="author" content="Bartosz Wojciechowski">
@@ -16,7 +16,7 @@
     <link href="../owl-carousel/owl.theme.css" rel="stylesheet">
 
     <link href="../assets/js/google-code-prettify/prettify.css" rel="stylesheet">
-
+  
     <!-- Le fav and touch icons -->
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
@@ -51,7 +51,7 @@
       <div class="container">
         <div class="row">
           <div class="span12">
-            <h1>Custom Options with Events</h1>
+            <h1>Progress Bar</h1>
           </div>
         </div>
       </div>
@@ -61,38 +61,16 @@
         <div class="container">
           <div class="row">
             <div class="span12">
-
               <div id="owl-demo" class="owl-carousel">
-                
-                <div class="item"><h1>1</h1></div>
-                <div class="item"><h1>2</h1></div>
-                <div class="item"><h1>3</h1></div>
-                <div class="item"><h1>4</h1></div>
-                <div class="item"><h1>5</h1></div>
-                <div class="item"><h1>6</h1></div>
-                <div class="item"><h1>7</h1></div>
-                <div class="item"><h1>8</h1></div>
-                <div class="item"><h1>9</h1></div>
-                <div class="item"><h1>10</h1></div>
-                <div class="item"><h1>11</h1></div>
-                <div class="item"><h1>12</h1></div>
-                <div class="item"><h1>13</h1></div>
-                <div class="item"><h1>14</h1></div>
-                <div class="item"><h1>15</h1></div>
-                <div class="item"><h1>16</h1></div>
+
+                <div class="item"><img src="assets/fullimage1.jpg" alt="The Last of us"></div>
+                <div class="item"><img src="assets/fullimage2.jpg" alt="GTA V"></div>
+                <div class="item"><img src="assets/fullimage3.jpg" alt="Mirror Edge"></div>
 
               </div>
-              <div class="customNavigation">
-                <a class="btn prev">Previous</a>
-                <a class="btn next">Next</a>
-                <a class="btn play">Autoplay</a>
-                <a class="btn stop">Stop</a>
-              </div>
-
             </div>
           </div>
         </div>
-
     </div>
 
     <div id="example-info">
@@ -100,8 +78,7 @@
         <div class="row">
           <div class="span12">
             <h1>Setup</h1>
-            <p>This is an example of using custom events for navigation. Also it shows how you can customise widths and inherit option from tablet to mobile.
-            </p>
+            <p>Progress Bar made by three callbacks: <code>afterInit</code>, <code>afterMove</code> and <code>startDragging</code>.</p>
             <ul class="nav nav-tabs" id="myTab">
               <li class="active"><a href="#javascript">Javascript</a></li>
               <li><a href="#HTML">HTML</a></li>
@@ -114,90 +91,122 @@
 <pre class="pre-show prettyprint linenums">
 $(document).ready(function() {
 
-  var owl = &#36;("#owl-demo")&#59;
+  var time = 7; // time in seconds
 
-  owl.owlCarousel({
-      items : 10, //10 items above 1000px browser width
-      itemsDesktop : [1000,5], //5 items between 1000px and 901px
-      itemsDesktopSmall : [900,3], // betweem 900px and 601px
-      itemsTablet: [600,2], //2 items between 600 and 0
-      itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
-  })&#59;
+  var $progressBar,
+      $bar, 
+      $elem, 
+      isPause, 
+      tick,
+      percentTime;
 
-  // Custom Navigation Events
-  $(".next").click(function(){
-    owl.trigger('owl.next')&#59;
-  })
-  $(".prev").click(function(){
-    owl.trigger('owl.prev')&#59;
-  })
-  $(".play").click(function(){
-    owl.trigger('owl.play',1000)&#59; //owl.play event accept autoPlay speed as second parameter
-  })
-  $(".stop").click(function(){
-    owl.trigger('owl.stop')&#59;
-  })
+    //Init the carousel
+    $("#owl-demo").owlCarousel({
+      slideSpeed : 500,
+      paginationSpeed : 500,
+      singleItem : true,
+      afterInit : progressBar,
+      afterMove : moved,
+      startDragging : pauseOnDragging
+    });
 
-})&#59;
-</pre>
+    //Init progressBar where elem is $("#owl-demo")
+    function progressBar(elem){
+      $elem = elem;
+      //build progress bar elements
+      buildProgressBar();
+      //start counting
+      start();
+    }
+
+    //create div#progressBar and div#bar then prepend to $("#owl-demo")
+    function buildProgressBar(){
+      $progressBar = $("&lt;div&gt;",{
+        id:"progressBar"
+      });
+      $bar = $("&lt;div&gt;",{
+        id:"bar"
+      });
+      $progressBar.append($bar).prependTo($elem);
+    }
+
+    function start() {
+      //reset timer
+      percentTime = 0;
+      isPause = false;
+      //run interval every 0.01 second
+      tick = setInterval(interval, 10);
+    };
+
+    function interval() {
+      if(isPause === false){
+        percentTime += 1 / time;
+        $bar.css({
+           width: percentTime+"%"
+         });
+        //if percentTime is equal or greater than 100
+        if(percentTime >= 100){
+          //slide to next item 
+          $elem.trigger('owl.next')
+        }
+      }
+    }
+
+    //pause while dragging 
+    function pauseOnDragging(){
+      isPause = true;
+    }
+
+    //moved callback
+    function moved(){
+      //clear interval
+      clearTimeout(tick);
+      //start again
+      start();
+    }
+
+    //uncomment this to make pause on mouseover 
+    // $elem.on('mouseover',function(){
+    //   isPause = true;
+    // })
+    // $elem.on('mouseout',function(){
+    //   isPause = false;
+    // })
+
+});
+</pre>  
 
               </div>
 
               <div class="tab-pane" id="HTML">
 <pre class="pre-show prettyprint linenums">
 &lt;div id="owl-demo" class="owl-carousel owl-theme"&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;1&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;2&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;3&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;4&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;5&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;6&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;7&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;8&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;9&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;10&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;11&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;12&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;13&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;14&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;15&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;16&lt;/h1&gt;&lt;/div&gt;
-&lt;/div&gt;
 
-&lt;div class="customNavigation"&gt;
-  &lt;a class="btn prev"&gt;Previous&lt;/a&gt;
-  &lt;a class="btn next"&gt;Next&lt;/a&gt;
-  &lt;a class="btn play"&gt;Autoplay&lt;/a&gt;
-  &lt;a class="btn stop"&gt;Stop&lt;/a&gt;
+  &lt;div class="item"&gt;&lt;img src="assets/fullimage1.jpg" alt="The Last of us"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img src="assets/fullimage2.jpg" alt="GTA V"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img src="assets/fullimage3.jpg" alt="Mirror Edge"&gt;&lt;/div&gt;
+
 &lt;/div&gt;
 </pre>
               </div>
 
               <div class="tab-pane" id="CSS">
 <pre class="pre-show prettyprint linenums">
-#owl-demo .item{
-  background: #3fbf79;
-  padding: 30px 0px;
-  margin: 10px;
-  color: #FFF;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  text-align: center;
+#owl-demo .item img{
+  display: block;
+  width: 100%;
+  height: auto;
 }
-.customNavigation{
-  text-align: center;
+#bar{
+  width: 0%;
+  max-width: 100%;
+  height: 4px;
+  background: #7fc242;
 }
-//use styles below to disable ugly selection
-.customNavigation a{
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+#progressBar{
+  width: 100%;
+  background: #EDEDED;
 }
-
 </pre>
               </div>
             </div><!--End Tab Content-->
@@ -317,8 +326,6 @@ $(document).ready(function() {
       </div>
     </div>
 
-
- 
     <div id="footer">
       <div class="container">
         <div class="row">
@@ -348,26 +355,20 @@ $(document).ready(function() {
     <!-- Demo -->
 
     <style>
-    #owl-demo .item{
-        background: #3fbf79;
-        padding: 30px 0px;
-        margin: 10px;
-        color: #FFF;
-        -webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
-        border-radius: 3px;
-        text-align: center;
+    #owl-demo .item img{
+      display: block;
+      width: 100%;
+      height: auto;
     }
-    .customNavigation{
-      text-align: center;
+    #bar{
+      width: 0%;
+      max-width: 100%;
+      height: 4px;
+      background: #7fc242;
     }
-    .customNavigation a{
-      -webkit-user-select: none;
-      -khtml-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    #progressBar{
+      width: 100%;
+      background: #EDEDED;
     }
     </style>
 
@@ -375,43 +376,96 @@ $(document).ready(function() {
     <script>
     $(document).ready(function() {
 
-      var owl = $("#owl-demo");
+      var time = 7; // time in seconds
 
-      owl.owlCarousel({
+      var $progressBar,
+          $bar, 
+          $elem, 
+          isPause, 
+          tick,
+          percentTime;
 
-      items : 10, //10 items above 1000px browser width
-      itemsDesktop : [1000,5], //5 items between 1000px and 901px
-      itemsDesktopSmall : [900,3], // 3 items betweem 900px and 601px
-      itemsTablet: [600,2], //2 items between 600 and 0;
-      itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
-      
-      });
+        //Init the carousel
+        $("#owl-demo").owlCarousel({
+          slideSpeed : 500,
+          paginationSpeed : 500,
+          singleItem : true,
+          afterInit : progressBar,
+          afterMove : moved,
+          startDragging : pauseOnDragging
+        });
 
-      // Custom Navigation Events
-      $(".next").click(function(){
-        owl.trigger('owl.next');
-      })
-      $(".prev").click(function(){
-        owl.trigger('owl.prev');
-      })
-      $(".play").click(function(){
-        owl.trigger('owl.play',1000);
-      })
-      $(".stop").click(function(){
-        owl.trigger('owl.stop');
-      })
+        //Init progressBar where elem is $("#owl-demo")
+        function progressBar(elem){
+          $elem = elem;
+          //build progress bar elements
+          buildProgressBar();
+          //start counting
+          start();
+        }
 
+        //create div#progressBar and div#bar then prepend to $("#owl-demo")
+        function buildProgressBar(){
+          $progressBar = $("<div>",{
+            id:"progressBar"
+          });
+          $bar = $("<div>",{
+            id:"bar"
+          });
+          $progressBar.append($bar).prependTo($elem);
+        }
 
+        function start() {
+          //reset timer
+          percentTime = 0;
+          isPause = false;
+          //run interval every 0.01 second
+          tick = setInterval(interval, 10);
+        };
+
+        function interval() {
+          if(isPause === false){
+            percentTime += 1 / time;
+            $bar.css({
+               width: percentTime+"%"
+             });
+            //if percentTime is equal or greater than 100
+            if(percentTime >= 100){
+              //slide to next item 
+              $elem.trigger('owl.next')
+            }
+          }
+        }
+
+        //pause while dragging 
+        function pauseOnDragging(){
+          isPause = true;
+        }
+
+        //moved callback
+        function moved(){
+          //clear interval
+          clearTimeout(tick);
+          //start again
+          start();
+        }
+
+        //uncomment this to make pause on mouseover 
+        // $elem.on('mouseover',function(){
+        //   isPause = true;
+        // })
+        // $elem.on('mouseout',function(){
+        //   isPause = false;
+        // })
     });
     </script>
-
 
     <script src="../assets/js/bootstrap-collapse.js"></script>
     <script src="../assets/js/bootstrap-transition.js"></script>
     <script src="../assets/js/bootstrap-tab.js"></script>
 
     <script src="../assets/js/google-code-prettify/prettify.js"></script>
-	  <script src="../assets/js/application.js"></script>
+    <script src="../assets/js/application.js"></script>
 
   </body>
 </html>

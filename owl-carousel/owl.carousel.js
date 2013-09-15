@@ -1,5 +1,5 @@
 /*
- *	jQuery OwlCarousel v1.21
+ *	jQuery OwlCarousel v1.22
  *
  *	Copyright (c) 2013 Bartosz Wojciechowski
  *	http://www.owlgraphic.com/owlcarousel
@@ -66,7 +66,9 @@ if ( typeof Object.create !== "function" ) {
 			.css({opacity: 0})
 
 			base.checkTouch();
+			base.eventTypes();
 			base.support3d();
+
 
 			base.wrapperWidth = 0;
 			base.currentSlide = 0; //Starting Position
@@ -121,13 +123,17 @@ if ( typeof Object.create !== "function" ) {
 
 		eachMoveUpdate : function(){
 			var base = this;
-			base.lazyLoad();
-			base.autoHeight();
-			if(base.options.singleItem === true){
-				base.addActiveClass();
+			if(base.options.lazyLoad === true){
+				base.lazyLoad();
+			}
+			if(base.options.autoHeight === true){
+				base.autoHeight();
+			}
+			if(base.options.addClassActive === true){
+				base.addClassActive();
 			}
 			if (typeof base.options.afterAction === "function") {
-				base.options.afterAction.apply(this);
+				base.options.afterAction.apply(this,[base.$elem]);
 			}
 		},
 
@@ -238,14 +244,18 @@ if ( typeof Object.create !== "function" ) {
 			if(base.options.responsive !== true){
 				return false
 			}
+			var lastWindowWidth = $(window).width();
 			$(window).resize(function(){
-				if(base.options.autoPlay !== false){
-					clearInterval(base.autoPlaySpeed);
+				if($(window).width() !== lastWindowWidth){
+					if(base.options.autoPlay !== false){
+						clearInterval(base.autoPlaySpeed);
+					}
+					clearTimeout(smallDelay);
+					smallDelay = setTimeout(function(){
+						lastWindowWidth = $(window).width();
+						base.updateVars();
+					},base.options.responsiveRefreshRate);
 				}
-				clearTimeout(smallDelay)
-				smallDelay = setTimeout(function(){
-					base.updateVars();
-				},base.options.responsiveRefreshRate);
 			})
 		},
 
@@ -375,7 +385,7 @@ if ( typeof Object.create !== "function" ) {
 			.append(base.buttonPrev)
 			.append(base.buttonNext);
 
-			buttonsWrapper.on(base.getEvent(), "div[class^=\"owl\"]", function(event){
+			buttonsWrapper.on("touchend.owlControls mouseup.owlControls", "div[class^=\"owl\"]", function(event){
 				event.preventDefault();
 				if($(this).hasClass("owl-next")){
 					base.next();
@@ -385,22 +395,13 @@ if ( typeof Object.create !== "function" ) {
 			})
 		},
 
-		getEvent : function(){
-			var base = this;
-			if (base.isTouch === true){
-				return "touchend.owlControls";
-			} else {
-				return "click.owlControls";
-			}
-		},
-
 		buildPagination : function(){
 			var base = this;
 
 			base.paginationWrapper = $("<div class=\"owl-pagination\"/>");
 			base.owlControls.append(base.paginationWrapper);
 
-			base.paginationWrapper.on(base.getEvent(), ".owl-page", function(event){
+			base.paginationWrapper.on("touchend.owlControls mouseup.owlControls", ".owl-page", function(event){
 				event.preventDefault();
 				if(Number($(this).data("owl-page")) !== base.currentSlide){
 					base.goTo( Number($(this).data("owl-page")), true);
@@ -536,7 +537,7 @@ if ( typeof Object.create !== "function" ) {
 			var base = this;
 
 			if(typeof base.options.beforeMove === "function") {
-				base.options.beforeMove.apply(this);
+				base.options.beforeMove.apply(this,[base.$elem]);
 			}
 			if(position >= base.maximumSlide){
 				position = base.maximumSlide;
@@ -590,7 +591,7 @@ if ( typeof Object.create !== "function" ) {
 			}
 			base.eachMoveUpdate();
 			if(typeof base.options.afterMove === "function") {
-				base.options.afterMove.apply(this);
+				base.options.afterMove.apply(this,[base.$elem]);
 			}
 		},
 
@@ -716,13 +717,12 @@ if ( typeof Object.create !== "function" ) {
 
 		checkTouch : function(){
 			var base = this;
-			base.isTouch = ("ontouchstart" in document.documentElement);
+			base.isTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
 		},
 
 		moveEvents : function(){
 			var base = this;
-			if(base.options.mouseDraggable || base.isTouch === true){
-				base.eventTypes();
+			if(base.options.mouseDrag !== false || base.options.touchDrag !== false){
 				base.gestures();
 				base.disabledEvents();
 			}
@@ -730,23 +730,30 @@ if ( typeof Object.create !== "function" ) {
 
 		eventTypes : function(){
 		var base = this;
-		var types;
+		var types = ["s","e","x"];
 
 		base.ev_types = {};
 
-		if(base.isTouch) {
-		types = [
-			"touchstart.owl",
-			"touchmove.owl",
-			"touchend.owl"
+		if(base.options.mouseDrag === true && base.options.touchDrag === true){
+			types = [
+				"touchstart.owl mousedown.owl",
+				"touchmove.owl mousemove.owl",
+				"touchend.owl touchcancel.owl mouseup.owl"
 			];
-		} else{
-		types = [
-			"mousedown.owl",
-			"mousemove.owl",
-			"mouseup.owl"
+		} else if(base.options.mouseDrag === false && base.options.touchDrag === true){
+			types = [
+				"touchstart.owl",
+				"touchmove.owl",
+				"touchend.owl touchcancel.owl"
+			];
+		} else if(base.options.mouseDrag === true && base.options.touchDrag === false){
+			types = [
+				"mousedown.owl",
+				"mousemove.owl",
+				"mouseup.owl"
 			];
 		}
+
 		base.ev_types["start"] = types[0];
 		base.ev_types["move"] = types[1];
 		base.ev_types["end"] = types[2];
@@ -754,10 +761,8 @@ if ( typeof Object.create !== "function" ) {
 
 		disabledEvents :  function(){
 			var base = this;
-			if(base.isTouch !== true){
-				base.$elem.on("dragstart.owl","img", function(event) { event.preventDefault();});
-				base.$elem.bind("mousedown.disableTextSelect", function() {return false;});
-			}
+			base.$elem.on("dragstart.owl","img", function(event) { event.preventDefault();});
+			base.$elem.bind("mousedown.disableTextSelect", function() {return false;});
 		},
 
 		gestures : function(){
@@ -772,13 +777,14 @@ if ( typeof Object.create !== "function" ) {
 				minSwipe : null,
 				maxSwipe: null,
 				sliding : null,
+				dargging: null,
 				targetElement : null
 			}
 
 			base.isCssFinish = true;
 
 			function getTouches(event){
-				if(base.isTouch === true){
+				if(event.touches){
 					return {
 						x : event.touches[0].pageX,
 						y : event.touches[0].pageY
@@ -847,7 +853,12 @@ if ( typeof Object.create !== "function" ) {
 
 				base.newPosX = getTouches(event).x- locals.offsetX;
 				base.newPosY = getTouches(event).y - locals.offsetY;
-				base.newRelativeX = base.newPosX - locals.relativePos;
+				base.newRelativeX = base.newPosX - locals.relativePos;	
+
+				if (typeof base.options.startDragging === "function" && locals.dragging !== true && base.newPosX !== 0) {
+					locals.dragging = true;
+					base.options.startDragging.apply(this);
+				}			
 
 				if(base.newRelativeX > 8 || base.newRelativeX < -8 && base.isTouch === true){
 					event.preventDefault ? event.preventDefault() : event.returnValue = false;
@@ -855,7 +866,7 @@ if ( typeof Object.create !== "function" ) {
 				}
 
 				if((base.newPosY > 10 || base.newPosY < -10) && locals.sliding === false){
-					 $(document).off("touchmove.owl");
+					$(document).off("touchmove.owl");
 				}
 
 				var minSwipe = function(){
@@ -873,15 +884,15 @@ if ( typeof Object.create !== "function" ) {
 				}
 			}
 
-			var dragEnd = function(event){
+			function dragEnd(event){
 				var event = event.originalEvent || event || window.event;
 				event.target = event.target || event.srcElement;
+
+				locals.dragging = false;
 
 				if(base.isTouch !== true){
 					base.owlWrapper.removeClass("grabbing");
 				}
-
-				swapEvents("off");
 
 				if(base.newPosX !== 0){
 					var newPosition = base.getNewPosition();
@@ -898,6 +909,7 @@ if ( typeof Object.create !== "function" ) {
 					handlers.splice(0, 0, owlStopEvent);
 					}
 				}
+				swapEvents("off");
 			}
 			base.$elem.on(base.ev_types["start"], ".owl-wrapper", dragStart); 
 		},
@@ -976,7 +988,7 @@ if ( typeof Object.create !== "function" ) {
 		
 		stopOnHover : function(){
 			var base = this;
-			if(base.options.stopOnHover === true && base.isTouch === false && base.options.autoPlay !== false){
+			if(base.options.stopOnHover === true && base.isTouch !== true && base.options.autoPlay !== false){
 				base.$elem.on("mouseover", function(){
 					base.stop();
 				});
@@ -1022,7 +1034,6 @@ if ( typeof Object.create !== "function" ) {
 						lazyImg[0].src = link;
 						lazyImg.removeAttr("data-src");
 					}
-
 					lazyImg.fadeIn(200);
 					item.removeClass("loading");
 				}
@@ -1031,29 +1042,42 @@ if ( typeof Object.create !== "function" ) {
 
 		autoHeight : function(){
 			var base = this;
-			if(base.options.autoHeight === true){
-				var itemHeight = $(base.owlItems[base.currentSlide]).css("height");
-				base.wrapperOuter.css("height",itemHeight);
+			var $currentimg = $(base.owlItems[base.currentSlide]).find('img');
 
-				setTimeout(function(){
-					if(itemHeight !== $(base.owlItems[base.currentSlide]).css("height")){
-						base.wrapperOuter.css("height",itemHeight);
-					}
-				},400);
-
-				setTimeout(function(){
-					if(!base.wrapperOuter.hasClass("autoHeight")){
+			if($currentimg.get(0) !== undefined ){
+				var iterations = 0;
+				checkImage();
+			} else {
+				addHeight();
+			}
+			function checkImage(){
+				iterations += 1;
+				if ($currentimg.get(0).complete) {
+					addHeight();
+				} else if(iterations <= 50){ //if image loads in less than 10 seconds 
+					setTimeout(checkImage,200);
+				} else {
+					base.wrapperOuter.css("height", ""); //Else remove height attribute
+				}
+			}
+			function addHeight(){
+				var $currentSlide = $(base.owlItems[base.currentSlide]).height();
+				base.wrapperOuter.css("height",$currentSlide+"px");
+				if(!base.wrapperOuter.hasClass("autoHeight")){
+					setTimeout(function(){
 						base.wrapperOuter.addClass("autoHeight");
-					}
-				},0);
+					},0);
+				}
 			}
 		},
-		addActiveClass : function(){
+
+		addClassActive : function(){
 			var base = this;
 			$(base.owlItems).removeClass('active');
-			$(base.owlItems[base.currentSlide]).addClass('active');
+			for(var i=base.currentSlide; i<base.currentSlide + base.options.items; i++){
+				$(base.owlItems[i]).addClass('active');
+			}
 		}
-
 	};
 
 
@@ -1104,12 +1128,16 @@ if ( typeof Object.create !== "function" ) {
 		jsonPath : false,
 		jsonSuccess : false,
 
-		mouseDraggable : true,
+		mouseDrag : true,
+		touchDrag : true,
 
 		beforeInit : false,
 		afterInit : false,
 		beforeMove: false,
 		afterMove: false,
-		afterAction : false
+		afterAction : false,
+		startDragging : false,
+
+		addClassActive : false
 	};
 })( jQuery, window, document );

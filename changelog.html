@@ -54,6 +54,24 @@
         <div class="span12">
           <h1>Changelog</h1>
             <div class="span12 log">
+            <span class="label label-success">v1.22</span> <span class="label">15.09.2013</span>
+              <ul>
+                <li>Better detection of touch events</li>
+                <li>Add <code>active</code> class if <code>singleItem</code> is true - <b>It is not working now.</b> Please include <code>addClassActive:true</code> option to get "active" classes on visible items. Works with any numbers of items on screen.</li>
+                <li>Changed option name from <code>mouseDraggable</code> to <code>mouseDrag</code></li>
+                <li>Also added <code>touchDrag</code> to disable touch events</li>
+                <li>Fixed issues on Chrome working on windows 8 touch-enabled PC. Now touch and mouse drag events work together.(Thanks for help to Monsieur Moustache!)</li>
+                <li>Included base element in parameter for callbacks <code>afterAction</code>, <code>beforeMove</code> and <code>afterMove</code></li>
+                <li>IE8 responsive fix</li>
+                <li>Improved autoHeight function</li>
+                <li>Added touchcancel event. That fixed Android Chrome scrolling issues.</li>
+                <li>Included Progress Bar demo.</li>
+                <li>Fixed some spellings</li>
+                <li>Slightly updated prettify style</li>
+              </ul>
+            </div>
+
+            <div class="span12 log">
             <span class="label label-success">v1.21</span> <span class="label">07.09.2013</span>
               <ul>
                 <li>Check if base.owlControlls are present before calling methods on them</li>

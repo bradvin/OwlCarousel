@@ -1,8 +1,9 @@
-# OwlCarousel #
->v.1.21
+## OwlCarousel ##
+>v.1.22
+
 >Touch enabled jQuery plugin that lets you create beautiful responsive carousel slider.
 
-## [OwlCarousel landing page](http://owlgraphic.com/owlcarousel)
+### [OwlCarousel landing page](http://owlgraphic.com/owlcarousel)
 
 ###Features:
 * Responsive
@@ -17,7 +18,7 @@
 * Custom events
 * Helpful callbacks
 
-> Tested on IE7, IE8, IE9, IE10, Chrome, Safari, Firefox, Opera, iPhone, iPad, Google Nexus.
+> Tested on IE7, IE8, IE9, IE10, Chrome, Safari, Firefox, Opera, iPhone, iPad, Chrom on Google Nexus.
 
 
 ### More Demos
@@ -27,7 +28,7 @@ See what Owl can do:
 * [Custom Widths](http://owlgraphic.com/owlcarousel/demos/custom.html)
 * [One Item](http://owlgraphic.com/owlcarousel/demos/one.html)
 
-## 1.Getting Started
+### 1.Getting Started
 Load jQuery(1.7+) and include Owl Carousel plugin files
 
 ```html
@@ -40,7 +41,7 @@ Load jQuery(1.7+) and include Owl Carousel plugin files
 <!-- Include js plugin -->
 <script src="assets/owl-carousel/owl.carousel.js"></script>
 ```
-## 2.Set up your HTML
+### 2.Set up your HTML
 You don't need any special markup. All you need is to wrap your divs inside the container element <div class="owl-carousel">. Class "owl-carousel" is mandatory to apply proper styles that come from owl.carousel.css file.
 
 ```html
@@ -55,7 +56,7 @@ You don't need any special markup. All you need is to wrap your divs inside the 
   ...
 </div>
 ```
-## 3.Call the plugin
+### 3.Call the plugin
 Now call the Owl initializer function and your carousel is ready.
 
 ```html

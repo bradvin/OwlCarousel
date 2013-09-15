@@ -52,7 +52,7 @@
       <div class="container">
         <div class="row">
           <div class="span12">
-            <h1>Auto Height </h1>
+            <h1>Auto Height</h1>
           </div>
         </div>
       </div>
@@ -64,18 +64,16 @@
           <div class="span12">
 
             <div id="owl-demo" class="owl-carousel">
-              <div class="item" style="height:100px"><h1>1</h1></div>
-              <div class="item" style="height:400px"><h1>2</h1></div>
-              <div class="item" style="height:250px"><h1>3</h1></div>
-              <div class="item" style="height:100px"><h1>4</h1></div>
-              <div class="item" style="height:150px"><h1>5</h1></div>
-              <div class="item" style="height:400px"><h1>6</h1></div>
-              <div class="item" style="height:300px"><h1>7</h1></div>
-              <div class="item" style="height:200px"><h1>8</h1></div>
-              <div class="item" style="height:350px"><h1>9</h1></div>
-              <div class="item" style="height:100px"><h1>10</h1></div>
-              <div class="item" style="height:450px"><h1>11</h1></div>
-              <div class="item" style="height:350px"><h1>12</h1></div>
+              <div><img src="http://placehold.it/1170x300/42bdc2/FFFFFF"></div>
+              <div><img src="http://placehold.it/1170x400/42bdc2/FFFFFF"></div>
+              <div><img src="http://placehold.it/1170x500/42bdc2/FFFFFF"></div>
+              <div><img src="http://placehold.it/1170x200/42bdc2/FFFFFF"></div>
+              <div><img src="http://placehold.it/1170x500/42bdc2/FFFFFF"></div>
+              <div><img src="http://placehold.it/1170x250/42bdc2/FFFFFF"></div>
+              <div><img src="http://placehold.it/1170x350/42bdc2/FFFFFF"></div>
+              <div><img src="http://placehold.it/1170x300/42bdc2/FFFFFF"></div>
+              <div><img src="http://placehold.it/1170x100/42bdc2/FFFFFF"></div>
+              <div><img src="http://placehold.it/1170x500/42bdc2/FFFFFF"></div>
             </div>
 
           </div>
@@ -102,13 +100,13 @@
 $(document).ready(function() {
 
   $("#owl-demo").owlCarousel({
-    slideSpeed : 500,
-    paginationSpeed : 2000,
+    autoPlay : 3000,
+    stopOnHover : true,
+    navigation:true,
+    paginationSpeed : 1000,
     goToFirstSpeed : 2000,
-    navigation : true,
-    pagination : true,
-    autoHeight : true,
-    singleItem : true
+    singleItem : true,
+    autoHeight : true
   });
 
 });
@@ -118,36 +116,33 @@ $(document).ready(function() {
 
               <div class="tab-pane" id="HTML">
 <pre class="pre-show prettyprint linenums">
-&lt;div id="owl-demo" class="owl-carousel owl-theme"&gt;
-          
-  &lt;div class="item" style="height:100px"&gt;&lt;h1&gt;1&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item" style="height:400px"&gt;&lt;h1&gt;2&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item" style="height:250px"&gt;&lt;h1&gt;3&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item" style="height:100px"&gt;&lt;h1&gt;4&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item" style="height:150px"&gt;&lt;h1&gt;5&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item" style="height:400px"&gt;&lt;h1&gt;6&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item" style="height:500px"&gt;&lt;h1&gt;7&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item" style="height:200px"&gt;&lt;h1&gt;8&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item" style="height:350px"&gt;&lt;h1&gt;9&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item" style="height:100px"&gt;&lt;h1&gt;10&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item" style="height:450px"&gt;&lt;h1&gt;11&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item" style="height:150px"&gt;&lt;h1&gt;12&lt;/h1&gt;&lt;/div&gt;
-
+&lt;div id="owl-demo" class="owl-carousel"&gt;
+  &lt;div&gt;&lt;img src="http://placehold.it/1170x300/42bdc2/FFFFFF"&gt;&lt;/div&gt;
+  &lt;div&gt;&lt;img src="http://placehold.it/1170x400/42bdc2/FFFFFF"&gt;&lt;/div&gt;
+  &lt;div&gt;&lt;img src="http://placehold.it/1170x500/42bdc2/FFFFFF"&gt;&lt;/div&gt;
+  &lt;div&gt;&lt;img src="http://placehold.it/1170x200/42bdc2/FFFFFF"&gt;&lt;/div&gt;
+  &lt;div&gt;&lt;img src="http://placehold.it/1170x500/42bdc2/FFFFFF"&gt;&lt;/div&gt;
+  &lt;div&gt;&lt;img src="http://placehold.it/1170x250/42bdc2/FFFFFF"&gt;&lt;/div&gt;
+  &lt;div&gt;&lt;img src="http://placehold.it/1170x350/42bdc2/FFFFFF"&gt;&lt;/div&gt;
+  &lt;div&gt;&lt;img src="http://placehold.it/1170x300/42bdc2/FFFFFF"&gt;&lt;/div&gt;
+  &lt;div&gt;&lt;img src="http://placehold.it/1170x100/42bdc2/FFFFFF"&gt;&lt;/div&gt;
+  &lt;div&gt;&lt;img src="http://placehold.it/1170x500/42bdc2/FFFFFF"&gt;&lt;/div&gt;
 &lt;/div&gt;
 </pre>
               </div>
 
               <div class="tab-pane" id="CSS">
 <pre class="pre-show prettyprint linenums">
-#owl-demo .item{
-    background: #42bdc2;
-    padding: 30px 0px;
-    margin: 5px;
-    color: #FFF;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    text-align: center;
+#owl-demo .owl-item div{
+  padding:5px;
+}
+#owl-demo .owl-item img{
+  display: block;
+  width: 100%;
+  height: auto;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
 }
 </pre>
               </div>
@@ -298,31 +293,31 @@ $(document).ready(function() {
     <!-- Demo -->
 
     <style>
-    #owl-demo .item{
-        background: #42bdc2;
-        padding: 30px 0px;
-        margin: 5px;
-        color: #FFF;
-        -webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
-        border-radius: 3px;
-        text-align: center;
+    #owl-demo .owl-item div{
+      padding:5px;
+    }
+    #owl-demo .owl-item img{
+      display: block;
+      width: 100%;
+      height: auto;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      border-radius: 3px;
     }
     </style>
 
     <script>
     $(document).ready(function() {
       $("#owl-demo").owlCarousel({
-        slideSpeed : 500,
-        paginationSpeed : 2000,
+        autoPlay : 3000,
+        stopOnHover : true,
+        navigation:true,
+        paginationSpeed : 1000,
         goToFirstSpeed : 2000,
-        navigation : true,
-        pagination : true,
-        autoHeight : true,
-        singleItem : true
+        singleItem : true,
+        autoHeight : true
       });
     });
-
     </script>
     
 

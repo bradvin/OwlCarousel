@@ -2,11 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Owl Carousel - Custom</title>
+    <title>Owl Carousel - Images Demo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="jQuery Responsive Carousel - Owl Carusel">
     <meta name="author" content="Bartosz Wojciechowski">
-
+    
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600,700' rel='stylesheet' type='text/css'>
     <link href="../assets/css/bootstrapTheme.css" rel="stylesheet">
     <link href="../assets/css/custom.css" rel="stylesheet">
@@ -15,7 +15,9 @@
     <link href="../owl-carousel/owl.carousel.css" rel="stylesheet">
     <link href="../owl-carousel/owl.theme.css" rel="stylesheet">
 
+    <!-- Prettify -->
     <link href="../assets/js/google-code-prettify/prettify.css" rel="stylesheet">
+    
 
     <!-- Le fav and touch icons -->
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
@@ -51,7 +53,7 @@
       <div class="container">
         <div class="row">
           <div class="span12">
-            <h1>Custom Options with Events</h1>
+            <h1>Navigation on top by callback</h1>
           </div>
         </div>
       </div>
@@ -63,32 +65,16 @@
             <div class="span12">
 
               <div id="owl-demo" class="owl-carousel">
-                
-                <div class="item"><h1>1</h1></div>
-                <div class="item"><h1>2</h1></div>
-                <div class="item"><h1>3</h1></div>
-                <div class="item"><h1>4</h1></div>
-                <div class="item"><h1>5</h1></div>
-                <div class="item"><h1>6</h1></div>
-                <div class="item"><h1>7</h1></div>
-                <div class="item"><h1>8</h1></div>
-                <div class="item"><h1>9</h1></div>
-                <div class="item"><h1>10</h1></div>
-                <div class="item"><h1>11</h1></div>
-                <div class="item"><h1>12</h1></div>
-                <div class="item"><h1>13</h1></div>
-                <div class="item"><h1>14</h1></div>
-                <div class="item"><h1>15</h1></div>
-                <div class="item"><h1>16</h1></div>
-
+                <div class="item"><img src="assets/owl1.jpg" alt="Owl Image"></div>
+                <div class="item"><img src="assets/owl2.jpg" alt="Owl Image"></div>
+                <div class="item"><img src="assets/owl3.jpg" alt="Owl Image"></div>
+                <div class="item"><img src="assets/owl4.jpg" alt="Owl Image"></div>
+                <div class="item"><img src="assets/owl5.jpg" alt="Owl Image"></div>
+                <div class="item"><img src="assets/owl6.jpg" alt="Owl Image"></div>
+                <div class="item"><img src="assets/owl7.jpg" alt="Owl Image"></div>
+                <div class="item"><img src="assets/owl8.jpg" alt="Owl Image"></div>
               </div>
-              <div class="customNavigation">
-                <a class="btn prev">Previous</a>
-                <a class="btn next">Next</a>
-                <a class="btn play">Autoplay</a>
-                <a class="btn stop">Stop</a>
-              </div>
-
+              
             </div>
           </div>
         </div>
@@ -100,8 +86,7 @@
         <div class="row">
           <div class="span12">
             <h1>Setup</h1>
-            <p>This is an example of using custom events for navigation. Also it shows how you can customise widths and inherit option from tablet to mobile.
-            </p>
+            <p>Navigation moved on top by <code>afterInit</code> callback</p>
             <ul class="nav nav-tabs" id="myTab">
               <li class="active"><a href="#javascript">Javascript</a></li>
               <li><a href="#HTML">HTML</a></li>
@@ -114,61 +99,32 @@
 <pre class="pre-show prettyprint linenums">
 $(document).ready(function() {
 
-  var owl = &#36;("#owl-demo")&#59;
+  $("#owl-demo").owlCarousel({
+    navigation:true,
+    afterInit : function(elem){
+      var that = this
+      that.owlControls.prependTo(elem)
+    }
+  });
 
-  owl.owlCarousel({
-      items : 10, //10 items above 1000px browser width
-      itemsDesktop : [1000,5], //5 items between 1000px and 901px
-      itemsDesktopSmall : [900,3], // betweem 900px and 601px
-      itemsTablet: [600,2], //2 items between 600 and 0
-      itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
-  })&#59;
-
-  // Custom Navigation Events
-  $(".next").click(function(){
-    owl.trigger('owl.next')&#59;
-  })
-  $(".prev").click(function(){
-    owl.trigger('owl.prev')&#59;
-  })
-  $(".play").click(function(){
-    owl.trigger('owl.play',1000)&#59; //owl.play event accept autoPlay speed as second parameter
-  })
-  $(".stop").click(function(){
-    owl.trigger('owl.stop')&#59;
-  })
-
-})&#59;
-</pre>
+});
+</pre>  
 
               </div>
 
               <div class="tab-pane" id="HTML">
 <pre class="pre-show prettyprint linenums">
-&lt;div id="owl-demo" class="owl-carousel owl-theme"&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;1&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;2&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;3&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;4&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;5&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;6&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;7&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;8&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;9&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;10&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;11&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;12&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;13&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;14&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;15&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;16&lt;/h1&gt;&lt;/div&gt;
-&lt;/div&gt;
+&lt;div id="owl-demo"&gt;
+          
+  &lt;div class="item"&gt;&lt;img src="assets/owl1.jpg" alt="Owl Image"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img src="assets/owl2.jpg" alt="Owl Image"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img src="assets/owl3.jpg" alt="Owl Image"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img src="assets/owl4.jpg" alt="Owl Image"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img src="assets/owl5.jpg" alt="Owl Image"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img src="assets/owl6.jpg" alt="Owl Image"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img src="assets/owl7.jpg" alt="Owl Image"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img src="assets/owl8.jpg" alt="Owl Image"&gt;&lt;/div&gt;
 
-&lt;div class="customNavigation"&gt;
-  &lt;a class="btn prev"&gt;Previous&lt;/a&gt;
-  &lt;a class="btn next"&gt;Next&lt;/a&gt;
-  &lt;a class="btn play"&gt;Autoplay&lt;/a&gt;
-  &lt;a class="btn stop"&gt;Stop&lt;/a&gt;
 &lt;/div&gt;
 </pre>
               </div>
@@ -176,28 +132,13 @@ $(document).ready(function() {
               <div class="tab-pane" id="CSS">
 <pre class="pre-show prettyprint linenums">
 #owl-demo .item{
-  background: #3fbf79;
-  padding: 30px 0px;
-  margin: 10px;
-  color: #FFF;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  text-align: center;
+  margin: 3px;
 }
-.customNavigation{
-  text-align: center;
+#owl-demo .item img{
+  display: block;
+  width: 100%;
+  height: auto;
 }
-//use styles below to disable ugly selection
-.customNavigation a{
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
-
 </pre>
               </div>
             </div><!--End Tab Content-->
@@ -349,58 +290,25 @@ $(document).ready(function() {
 
     <style>
     #owl-demo .item{
-        background: #3fbf79;
-        padding: 30px 0px;
-        margin: 10px;
-        color: #FFF;
-        -webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
-        border-radius: 3px;
-        text-align: center;
+        margin: 3px;
     }
-    .customNavigation{
-      text-align: center;
-    }
-    .customNavigation a{
-      -webkit-user-select: none;
-      -khtml-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    #owl-demo .item img{
+        display: block;
+        width: 100%;
+        height: auto;
     }
     </style>
 
 
     <script>
     $(document).ready(function() {
-
-      var owl = $("#owl-demo");
-
-      owl.owlCarousel({
-
-      items : 10, //10 items above 1000px browser width
-      itemsDesktop : [1000,5], //5 items between 1000px and 901px
-      itemsDesktopSmall : [900,3], // 3 items betweem 900px and 601px
-      itemsTablet: [600,2], //2 items between 600 and 0;
-      itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
-      
+      $("#owl-demo").owlCarousel({
+        navigation:true,
+        afterInit : function(elem){
+          var that = this
+          that.owlControls.prependTo(elem)
+        }
       });
-
-      // Custom Navigation Events
-      $(".next").click(function(){
-        owl.trigger('owl.next');
-      })
-      $(".prev").click(function(){
-        owl.trigger('owl.prev');
-      })
-      $(".play").click(function(){
-        owl.trigger('owl.play',1000);
-      })
-      $(".stop").click(function(){
-        owl.trigger('owl.stop');
-      })
-
 
     });
     </script>
