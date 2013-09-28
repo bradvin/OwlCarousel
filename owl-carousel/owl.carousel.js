@@ -649,6 +649,7 @@ if ( typeof Object.create !== "function" ) {
 			} else {
 				base.css2slide(base.positionsInArray[position],1);
 			}
+			base.currentItem = base.owl.currentItem = position;
 			base.afterGo();
 		},
 
