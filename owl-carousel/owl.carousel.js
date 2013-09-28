@@ -83,9 +83,8 @@ if ( typeof Object.create !== "function" ) {
 			base.prevItem = 0;//base.options.startPosition;
 			base.checkVisible;
 
-			base.onStartup();
 			base.customEvents();
-
+			base.onStartup();
 		},
 
 		onStartup : function(){
