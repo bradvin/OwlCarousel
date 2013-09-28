@@ -86,7 +86,7 @@
         <div class="row">
           <div class="span12">
             <h1>Setup</h1>
-            <p>Add height to <code>div="owl-wrapper-outer"</code> so you can use diffrent heights on each slide. Use it only for one item per page setting.</p>
+            <p>Add height to <code>div="owl-wrapper-outer"</code> so you can use diffrent heights on each slide. Use it only for one item per page setting. Don't use it on large content websites.</p>
             <ul class="nav nav-tabs" id="myTab">
               <li class="active"><a href="#javascript">Javascript</a></li>
               <li><a href="#HTML">HTML</a></li>
@@ -106,7 +106,8 @@ $(document).ready(function() {
     paginationSpeed : 1000,
     goToFirstSpeed : 2000,
     singleItem : true,
-    autoHeight : true
+    autoHeight : true,
+    transitionStyle:"fade"
   });
 
 });
@@ -271,7 +272,7 @@ $(document).ready(function() {
           <div class="span12">
             <h5>Bartosz Wojciechowski 2013 / @OwlFonk / 
             <a href="mailto:owl@owlgraphic.com?subject=Hey Owl!">email</a> / 
-            <a href="changelog.html">changelog</a> /
+            <a href="../changelog.html">changelog</a> /
             <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EFSGXZS7V2U9N">donate</a> / 
             <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://owlgraphic.com/owlcarousel/" data-text="Awesome jQuery Owl Carousel Responsive Plugin" data-via="OwlFonk" data-count="none" data-hashtags="owlcarousel"></a>
             <script>
@@ -315,7 +316,8 @@ $(document).ready(function() {
         paginationSpeed : 1000,
         goToFirstSpeed : 2000,
         singleItem : true,
-        autoHeight : true
+        autoHeight : true,
+        transitionStyle:"fade"
       });
     });
     </script>

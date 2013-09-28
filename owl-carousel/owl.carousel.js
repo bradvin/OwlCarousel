@@ -1,13 +1,12 @@
 /*
- *	jQuery OwlCarousel v1.22
+ *	jQuery OwlCarousel v1.23
  *
  *	Copyright (c) 2013 Bartosz Wojciechowski
- *	http://www.owlgraphic.com/owlcarousel
+ *	http://www.owlgraphic.com/owlcarousel/
  *
  *	Licensed under MIT
  *
  */
-
 
 // Object.create function
 if ( typeof Object.create !== "function" ) {
@@ -22,11 +21,11 @@ if ( typeof Object.create !== "function" ) {
 	var Carousel = {
 		init :function(options, el){
 			var base = this;
-			base.options = $.extend({}, $.fn.owlCarousel.options, options);
+			base.options = base.userOptions = $.extend({}, $.fn.owlCarousel.options, options);
 			var elem = el;
 			var $elem = $(el);
 			base.$elem = $elem;
-			base.loadContent()
+			base.loadContent();
 		},
 
 		loadContent : function(){
@@ -63,31 +62,28 @@ if ( typeof Object.create !== "function" ) {
 			base.baseClass();
 
 			base.$elem
-			.css({opacity: 0})
+			.css({opacity: 0});
 
-			base.checkTouch();
 			base.eventTypes();
-			base.support3d();
-
+			base.checkBrowser();
 
 			base.wrapperWidth = 0;
-			base.currentSlide = 0; //Starting Position
+			base.currentItem = 0; //Starting Position
 
-			base.userItems = base.$elem.children();
-			base.itemsAmount = base.userItems.length;
+			base.$userItems = base.$elem.children();
+			base.itemsAmount = base.$userItems.length;
 			base.wrapItems();
 
 			base.owlItems = base.$elem.find(".owl-item");
+			base.$owlItems = $(base.owlItems);
 			base.owlWrapper = base.$elem.find(".owl-wrapper");
 
 			base.orignalItems = base.options.items;
 			base.playDirection = "next";
-
+			base.prevItem = 0;//base.options.startPosition;
 			base.checkVisible;
 
-			//setTimeout(function(){
 			base.onStartup();
-			//},0);
 			base.customEvents();
 
 		},
@@ -101,9 +97,15 @@ if ( typeof Object.create !== "function" ) {
 			base.response();
 			base.moveEvents();
 			base.stopOnHover();
+			base.owlStatus();
+
+			if(base.options.transitionStyle !== false){
+				base.transitionTypes(base.options.transitionStyle);
+			}
 			if(base.options.autoPlay === true){
 				base.options.autoPlay = 5000;
 			}
+
 			base.play();
 			base.$elem.find(".owl-wrapper").css("display","block")
 
@@ -123,6 +125,7 @@ if ( typeof Object.create !== "function" ) {
 
 		eachMoveUpdate : function(){
 			var base = this;
+
 			if(base.options.lazyLoad === true){
 				base.lazyLoad();
 			}
@@ -156,10 +159,11 @@ if ( typeof Object.create !== "function" ) {
 
 		watchVisibility : function(){
 			var base = this;
-			clearInterval(base.checkVisible);
-			if(!base.$elem.is(":visible")){
+
+			if(base.$elem.is(":visible") === false){
 				base.$elem.css({opacity: 0});
-				clearInterval(base.autoPlaySpeed);
+				clearInterval(base.autoPlayInterval);
+				clearInterval(base.checkVisible);
 			} else {
 				return false;
 			}
@@ -174,7 +178,7 @@ if ( typeof Object.create !== "function" ) {
 
 		wrapItems : function(){
 			var base = this;
-			base.userItems.wrapAll("<div class=\"owl-wrapper\">").wrap("<div class=\"owl-item\"></div>");
+			base.$userItems.wrapAll("<div class=\"owl-wrapper\">").wrap("<div class=\"owl-item\"></div>");
 			base.$elem.find(".owl-wrapper").wrap("<div class=\"owl-wrapper-outer\">");
 			base.wrapperOuter = base.$elem.find(".owl-wrapper-outer");
 			base.$elem.css("display","block");
@@ -206,11 +210,12 @@ if ( typeof Object.create !== "function" ) {
 				base.options.itemsDesktop = false;
 				base.options.itemsDesktopSmall = false;
 				base.options.itemsTablet = false;
+				base.options.itemsTabletSmall = false;
 				base.options.itemsMobile = false;
 				return false;
 			}
 
-			var width = $(window).width();
+			var width = $(base.options.responsiveBaseWidth).width();
 
 			if(width > (base.options.itemsDesktop[0] || base.orignalItems) ){
 				 base.options.items = base.orignalItems
@@ -226,6 +231,10 @@ if ( typeof Object.create !== "function" ) {
 
 			if(width <= base.options.itemsTablet[0]  && base.options.itemsTablet !== false){
 				base.options.items = base.options.itemsTablet[1];
+			}
+
+			if(width <= base.options.itemsTabletSmall[0]  && base.options.itemsTabletSmall !== false){
+				base.options.items = base.options.itemsTabletSmall[1];
 			}
 
 			if(width <= base.options.itemsMobile[0] && base.options.itemsMobile !== false){
@@ -248,7 +257,7 @@ if ( typeof Object.create !== "function" ) {
 			$(window).resize(function(){
 				if($(window).width() !== lastWindowWidth){
 					if(base.options.autoPlay !== false){
-						clearInterval(base.autoPlaySpeed);
+						clearInterval(base.autoPlayInterval);
 					}
 					clearTimeout(smallDelay);
 					smallDelay = setTimeout(function(){
@@ -262,19 +271,19 @@ if ( typeof Object.create !== "function" ) {
 		updatePosition : function(){
 			var base = this;
 
-			if(base.support3d === true){
-				if(base.positionsInArray[base.currentSlide] > base.maximumPixels){
-					base.transition3d(base.positionsInArray[base.currentSlide]);
+			if(base.browser.support3d === true){
+				if(base.positionsInArray[base.currentItem] > base.maximumPixels){
+					base.transition3d(base.positionsInArray[base.currentItem]);
 				} else {
 					base.transition3d(0);
-					base.currentSlide = 0;
+					base.currentItem = 0;
 				}
 			} else{
-				if(base.positionsInArray[base.currentSlide] > base.maximumPixels){
-					base.css2slide(base.positionsInArray[base.currentSlide]);
+				if(base.positionsInArray[base.currentItem] > base.maximumPixels){
+					base.css2slide(base.positionsInArray[base.currentItem]);
 				} else {
 					base.css2slide(0);
-					base.currentSlide = 0;
+					base.currentItem = 0;
 				}
 			}
 			if(base.options.autoPlay !== false){
@@ -289,16 +298,19 @@ if ( typeof Object.create !== "function" ) {
 			var lastItem = base.itemsAmount - base.options.items;
 
 			base.owlItems.each(function(index){
-				$(this)
-				.css({"width": base.itemWidth})
-				.data("owl-item",Number(index));
+				var $this = $(this);
+				$this
+					.css({"width": base.itemWidth})
+					.data("owl-item",Number(index));
 
 				if(index % base.options.items === 0 || index === lastItem){
 					if(!(index > lastItem)){
 						roundPages +=1;
 					}
 				}
-				$(this).data("owl-roundPages",roundPages);
+				$this
+					.data("owl-roundPages",roundPages)
+					.data("owl-originalStyles", $this.attr("style"));
 			});
 		},
 
@@ -330,7 +342,7 @@ if ( typeof Object.create !== "function" ) {
 
 		max : function(){
 			var base = this;
-			base.maximumSlide = base.itemsAmount - base.options.items;
+			base.maximumItem = base.itemsAmount - base.options.items;
 			var maximum = (base.itemsAmount * base.itemWidth) - base.options.items * base.itemWidth;
 				maximum = maximum * -1
 			base.maximumPixels = maximum;
@@ -356,7 +368,7 @@ if ( typeof Object.create !== "function" ) {
 		buildControls : function(){
 			var base = this;
 			if(base.options.navigation === true || base.options.pagination === true){
-				base.owlControls = $("<div class=\"owl-controls\"/>").toggleClass("clickable", !base.isTouch).appendTo(base.$elem);
+				base.owlControls = $("<div class=\"owl-controls\"/>").toggleClass("clickable", !base.browser.isTouch).appendTo(base.$elem);
 			}
 			if(base.options.pagination === true){
 				base.buildPagination();
@@ -403,7 +415,7 @@ if ( typeof Object.create !== "function" ) {
 
 			base.paginationWrapper.on("touchend.owlControls mouseup.owlControls", ".owl-page", function(event){
 				event.preventDefault();
-				if(Number($(this).data("owl-page")) !== base.currentSlide){
+				if(Number($(this).data("owl-page")) !== base.currentItem){
 					base.goTo( Number($(this).data("owl-page")), true);
 				}
 			});
@@ -445,9 +457,11 @@ if ( typeof Object.create !== "function" ) {
 		},
 		checkPagination : function(){
 			var base = this;
-
+			if(base.options.pagination === false){
+				return false;
+			}
 			base.paginationWrapper.find(".owl-page").each(function(i,v){
-				if($(this).data("owl-roundPages") === $(base.owlItems[base.currentSlide]).data("owl-roundPages") ){
+				if($(this).data("owl-roundPages") === $(base.owlItems[base.currentItem]).data("owl-roundPages") ){
 					base.paginationWrapper
 						.find(".owl-page")
 						.removeClass("active");
@@ -462,17 +476,17 @@ if ( typeof Object.create !== "function" ) {
 			if(base.options.navigation === false){
 				return false;
 			}
-			if(base.options.goToFirstNav === false){
-				if(base.currentSlide === 0 && base.maximumSlide === 0){
+			if(base.options.rewindNav === false){
+				if(base.currentItem === 0 && base.maximumItem === 0){
 					base.buttonPrev.addClass("disabled");
 					base.buttonNext.addClass("disabled");
-				} else if(base.currentSlide === 0 && base.maximumSlide !== 0){
+				} else if(base.currentItem === 0 && base.maximumItem !== 0){
 					base.buttonPrev.addClass("disabled");
 					base.buttonNext.removeClass("disabled");
-				} else if (base.currentSlide === base.maximumSlide){
+				} else if (base.currentItem === base.maximumItem){
 					base.buttonPrev.removeClass("disabled");
 					base.buttonNext.addClass("disabled");
-				} else if(base.currentSlide !== 0 && base.currentSlide !== base.maximumSlide){
+				} else if(base.currentItem !== 0 && base.currentItem !== base.maximumItem){
 					base.buttonPrev.removeClass("disabled");
 					base.buttonNext.removeClass("disabled");
 				}
@@ -501,104 +515,162 @@ if ( typeof Object.create !== "function" ) {
 
 		next : function(speed){
 			var base = this;
-			base.currentSlide += base.options.scrollPerPage === true ? base.options.items : 1;
-			if(base.currentSlide > base.maximumSlide + (base.options.scrollPerPage == true ? (base.options.items - 1) : 0)){
-				if(base.options.goToFirstNav === true){
-					base.currentSlide = 0;
-					speed = "goToFirst";
+
+			if(base.isTransition){
+				return false;
+			}
+
+			base.storePrevItem = base.currentItem;
+
+			base.currentItem += base.options.scrollPerPage === true ? base.options.items : 1;
+			if(base.currentItem > base.maximumItem + (base.options.scrollPerPage == true ? (base.options.items - 1) : 0)){
+				if(base.options.rewindNav === true){
+					base.currentItem = 0;
+					speed = "rewind";
 				} else {
-					base.currentSlide = base.maximumSlide;
+					base.currentItem = base.maximumItem;
 					return false;
 				}
 			}
-			base.goTo(base.currentSlide,speed);
+			base.goTo(base.currentItem,speed);
 		},
 
 		prev : function(speed){
 			var base = this;
-			if(base.options.scrollPerPage === true && base.currentSlide > 0 && base.currentSlide < base.options.items){
-				base.currentSlide = 0
-			} else {
-			base.currentSlide -= base.options.scrollPerPage === true ? base.options.items : 1;
+
+			if(base.isTransition){
+				return false;
 			}
-			if(base.currentSlide < 0){
-				if(base.options.goToFirstNav === true){
-					base.currentSlide = base.maximumSlide;
-					speed = "goToFirst"
+
+			base.storePrevItem = base.currentItem;
+
+			if(base.options.scrollPerPage === true && base.currentItem > 0 && base.currentItem < base.options.items){
+				base.currentItem = 0
+			} else {
+				base.currentItem -= base.options.scrollPerPage === true ? base.options.items : 1;
+			}
+			if(base.currentItem < 0){
+				if(base.options.rewindNav === true){
+					base.currentItem = base.maximumItem;
+					speed = "rewind"
 				} else {
-					base.currentSlide =0;
+					base.currentItem =0;
 					return false;
 				}
 			}
-			base.goTo(base.currentSlide,speed);
+			base.goTo(base.currentItem,speed);
 		},
 
-		goTo : function(position,pagination){
+		goTo : function(position,speed,drag){
 			var base = this;
 
+			if(base.isTransition){
+				return false;
+			}
+			base.getPrevItem();
 			if(typeof base.options.beforeMove === "function") {
 				base.options.beforeMove.apply(this,[base.$elem]);
 			}
-			if(position >= base.maximumSlide){
-				position = base.maximumSlide;
+			if(position >= base.maximumItem){
+				position = base.maximumItem;
 			}
 			else if( position <= 0 ){
 				position = 0;
 			}
-			base.currentSlide = position;
 
+			base.currentItem = base.owl.currentItem = position;
+			if( base.options.transitionStyle !== false && drag !== "drag" && base.options.items === 1 && base.browser.support3d === true){
+				base.swapSpeed(0)
+				if(base.browser.support3d === true){
+					base.transition3d(base.positionsInArray[position]);
+				} else {
+					base.css2slide(base.positionsInArray[position],1);
+				}
+				base.singleItemTransition();
+				base.afterGo();
+				return false;
+			}
 			var goToPixel = base.positionsInArray[position];
 
-			if(base.support3d === true){
+			if(base.browser.support3d === true){
 				base.isCss3Finish = false;
 
-				if(pagination === true){
-					base.swapTransitionSpeed("paginationSpeed");
+				if(speed === true){
+					base.swapSpeed("paginationSpeed");
 					setTimeout(function() {
 						base.isCss3Finish = true;
 					}, base.options.paginationSpeed);
 
-				} else if(pagination === "goToFirst" ){
-					base.swapTransitionSpeed(base.options.goToFirstSpeed);
+				} else if(speed === "rewind" ){
+					base.swapSpeed(base.options.rewindSpeed);
 					setTimeout(function() {
 						base.isCss3Finish = true;
-					}, base.options.goToFirstSpeed);
+					}, base.options.rewindSpeed);
 
 				} else {
-					base.swapTransitionSpeed("slideSpeed");
+					base.swapSpeed("slideSpeed");
 					setTimeout(function() {
 						base.isCss3Finish = true;
 					}, base.options.slideSpeed);
 				}
 				base.transition3d(goToPixel);
 			} else {
-				if(pagination === true){
+				if(speed === true){
 					base.css2slide(goToPixel, base.options.paginationSpeed);
-				} else if(pagination === "goToFirst" ){
-					base.css2slide(goToPixel, base.options.goToFirstSpeed);
+				} else if(speed === "rewind" ){
+					base.css2slide(goToPixel, base.options.rewindSpeed);
 				} else {
 					base.css2slide(goToPixel, base.options.slideSpeed);
 				}
 			}
-			if(base.options.pagination === true){
-				base.checkPagination();
+			base.afterGo();
+		},
+
+		getPrevItem : function(){
+			var base = this;
+			base.prevItem = base.owl.prevItem = base.storePrevItem === undefined ? base.currentItem : base.storePrevItem;
+			base.storePrevItem = undefined;
+		},
+
+		jumpTo : function(position){
+			var base = this;
+			base.getPrevItem();
+			if(typeof base.options.beforeMove === "function") {
+				base.options.beforeMove.apply(this,[base.$elem]);
 			}
-			if(base.options.navigation === true){
-				base.checkNavigation();
+			if(position >= base.maximumItem){
+				position = base.maximumItem;
+			}
+			else if( position <= 0 ){
+				position = 0;
+			}
+			base.swapSpeed(0)
+			if(base.browser.support3d === true){
+				base.transition3d(base.positionsInArray[position]);
+			} else {
+				base.css2slide(base.positionsInArray[position],1);
+			}
+			base.afterGo();
+		},
+
+		afterGo : function(){
+			var base = this;
+			base.checkPagination();
+			base.checkNavigation();
+			base.eachMoveUpdate();
+
+			if(typeof base.options.afterMove === "function") {
+				base.options.afterMove.apply(this,[base.$elem]);
 			}
 			if(base.options.autoPlay !== false){
 				base.checkAp();
-			}
-			base.eachMoveUpdate();
-			if(typeof base.options.afterMove === "function") {
-				base.options.afterMove.apply(this,[base.$elem]);
 			}
 		},
 
 		stop: function(){
 			var base = this;
 			base.apStatus = "stop";
-			clearInterval(base.autoPlaySpeed);
+			clearInterval(base.autoPlayInterval);
 		},
 
 		checkAp : function(){
@@ -614,38 +686,24 @@ if ( typeof Object.create !== "function" ) {
 			if(base.options.autoPlay === false){
 				return false;
 			}
-			clearInterval(base.autoPlaySpeed);
-			base.autoPlaySpeed = setInterval(function(){
-				if(base.currentSlide < base.maximumSlide && base.playDirection === "next"){
-					base.next(true);
-				} else if(base.currentSlide === base.maximumSlide){
-					if(base.options.goToFirst === true){
-						base.goTo(0,"goToFirst");
-					} else{
-						base.playDirection = "prev";
-						base.prev(true);
-					}
-				} else if(base.playDirection === "prev" && base.currentSlide > 0){
-					base.prev(true);
-				} else if(base.playDirection === "prev" && base.currentSlide === 0){
-					base.playDirection = "next";
-					base.next(true);
-				}
+			clearInterval(base.autoPlayInterval);
+			base.autoPlayInterval = setInterval(function(){
+				base.next(true);
 			},base.options.autoPlay);
 		},
 
-		swapTransitionSpeed : function(action){
+		swapSpeed : function(action){
 			var base = this;
 			if(action === "slideSpeed"){
-				base.owlWrapper.css(base.addTransition(base.options.slideSpeed));
+				base.owlWrapper.css(base.addCssSpeed(base.options.slideSpeed));
 			} else if(action === "paginationSpeed" ){
-				base.owlWrapper.css(base.addTransition(base.options.paginationSpeed));
+				base.owlWrapper.css(base.addCssSpeed(base.options.paginationSpeed));
 			} else if(typeof action !== "string"){
-				base.owlWrapper.css(base.addTransition(action));
+				base.owlWrapper.css(base.addCssSpeed(action));
 			}
 		},
 
-		addTransition : function(speed){
+		addCssSpeed : function(speed){
 			var base = this;
 			return {
 				"-webkit-transition": "all "+ speed +"ms ease",
@@ -698,26 +756,28 @@ if ( typeof Object.create !== "function" ) {
 			});
 		},
 
-		support3d : function(){
-				var base = this;
-
-				var sTranslate3D = "translate3d(0px, 0px, 0px)";
-				 var eTemp = document.createElement("div");
-				eTemp.style.cssText = "  -moz-transform:"    + sTranslate3D +
-									  "; -ms-transform:"     + sTranslate3D +
-									  "; -o-transform:"      + sTranslate3D +
-									  "; -webkit-transform:" + sTranslate3D +
-									  "; transform:"         + sTranslate3D;
-				var rxTranslate = /translate3d\(0px, 0px, 0px\)/g;
-				var asSupport = eTemp.style.cssText.match(rxTranslate);
-				var bHasSupport = (asSupport !== null && asSupport.length === 1);
-				base.support3d = bHasSupport
-				return bHasSupport;
-		},
-
-		checkTouch : function(){
+		checkBrowser : function(){
 			var base = this;
-			base.isTouch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
+
+			//Check 3d support
+			var	translate3D = "translate3d(0px, 0px, 0px)",
+				tempElem = document.createElement("div");
+
+			tempElem.style.cssText= "  -moz-transform:"    + translate3D +
+								  "; -ms-transform:"     + translate3D +
+								  "; -o-transform:"      + translate3D +
+								  "; -webkit-transform:" + translate3D +
+								  "; transform:"         + translate3D;
+			var	regex = /translate3d\(0px, 0px, 0px\)/g,
+				asSupport = tempElem.style.cssText.match(regex),
+				support3d = (asSupport !== null && asSupport.length === 1);
+
+			var isTouch = "ontouchstart" in window || navigator.msMaxTouchPoints;
+
+			base.browser = {
+				"support3d" : support3d,
+				"isTouch" : isTouch
+			}
 		},
 
 		moveEvents : function(){
@@ -824,10 +884,10 @@ if ( typeof Object.create !== "function" ) {
 				}
 
 				if(base.options.autoPlay !== false){
-					clearInterval(base.autoPlaySpeed);
+					clearInterval(base.autoPlayInterval);
 				}
 
-				if(base.isTouch !== true && !base.owlWrapper.hasClass("grabbing")){
+				if(base.browser.isTouch !== true && !base.owlWrapper.hasClass("grabbing")){
 					base.owlWrapper.addClass("grabbing")
 				}
 
@@ -860,7 +920,7 @@ if ( typeof Object.create !== "function" ) {
 					base.options.startDragging.apply(this);
 				}			
 
-				if(base.newRelativeX > 8 || base.newRelativeX < -8 && base.isTouch === true){
+				if(base.newRelativeX > 8 || base.newRelativeX < -8 && base.browser.isTouch === true){
 					event.preventDefault ? event.preventDefault() : event.returnValue = false;
 					locals.sliding = true;
 				}
@@ -877,7 +937,7 @@ if ( typeof Object.create !== "function" ) {
 				}
 
 				base.newPosX = Math.max(Math.min( base.newPosX, minSwipe() ), maxSwipe() );
-				if(base.support3d === true){
+				if(base.browser.support3d === true){
 					base.transition3d(base.newPosX);
 				} else {
 					base.css2move(base.newPosX);
@@ -890,23 +950,23 @@ if ( typeof Object.create !== "function" ) {
 
 				locals.dragging = false;
 
-				if(base.isTouch !== true){
+				if(base.browser.isTouch !== true){
 					base.owlWrapper.removeClass("grabbing");
 				}
 
 				if(base.newPosX !== 0){
 					var newPosition = base.getNewPosition();
-					base.goTo(newPosition);
-					if(locals.targetElement === event.target && base.isTouch !== true){
+					base.goTo(newPosition,false,"drag");
+					if(locals.targetElement === event.target && base.browser.isTouch !== true){
 						$(event.target).on("click.disable", function(ev){
-							ev.stopImmediatePropagation()
+							ev.stopImmediatePropagation();
 							ev.stopPropagation();
 							ev.preventDefault();
 							$(event.target).off("click.disable");
 						});
-					var handlers = $._data(event.target, "events")["click"];
-					var owlStopEvent = handlers.pop();
-					handlers.splice(0, 0, owlStopEvent);
+						var handlers = $._data(event.target, "events")["click"];
+						var owlStopEvent = handlers.pop();
+						handlers.splice(0, 0, owlStopEvent);
 					}
 				}
 				swapEvents("off");
@@ -923,15 +983,14 @@ if ( typeof Object.create !== "function" ) {
 		getNewPosition : function(){
 			var base = this,
 				newPosition;
-
+			
 			var newPosition = base.improveClosest();
-
-			if(newPosition>base.maximumSlide){
-				base.currentSlide = base.maximumSlide;
-				newPosition  = base.maximumSlide;
+			if(newPosition>base.maximumItem){
+				base.currentItem = base.maximumItem;
+				newPosition  = base.maximumItem;
 			} else if( base.newPosX >=0 ){
 				newPosition = 0;
-				base.currentSlide = 0;
+				base.currentItem = 0;
 			}
 			return newPosition;
 		},
@@ -944,14 +1003,14 @@ if ( typeof Object.create !== "function" ) {
 			$.each(array, function(i,v){
 				if( goal - (base.itemWidth/20) > array[i+1] && goal - (base.itemWidth/20)< v && base.moveDirection() === "left") {
 					closest = v;
-					base.currentSlide = i;
+					base.currentItem = i;
 				} 
 				else if (goal + (base.itemWidth/20) < v && goal + (base.itemWidth/20) > array[i+1] && base.moveDirection() === "right"){
 					closest = array[i+1];
-					base.currentSlide = i+1;
+					base.currentItem = i+1;
 				}
 			});
-			return base.currentSlide;
+			return base.currentItem;
 		},
 
 		moveDirection : function(){
@@ -984,11 +1043,17 @@ if ( typeof Object.create !== "function" ) {
 				base.stop();
 				base.hoverStatus = "stop";
 			});
+			base.$elem.on("owl.goTo",function(event,item){
+				base.goTo(item)
+			});
+			base.$elem.on("owl.jumpTo",function(event,item){
+				base.jumpTo(item)
+			});
 		},
 		
 		stopOnHover : function(){
 			var base = this;
-			if(base.options.stopOnHover === true && base.isTouch !== true && base.options.autoPlay !== false){
+			if(base.options.stopOnHover === true && base.browser.isTouch !== true && base.options.autoPlay !== false){
 				base.$elem.on("mouseover", function(){
 					base.stop();
 				});
@@ -1021,12 +1086,12 @@ if ( typeof Object.create !== "function" ) {
 				}
 
 				if(base.options.lazyFollow === true){
-					follow = itemNumber >= base.currentSlide;
+					follow = itemNumber >= base.currentItem;
 				}else {
 					follow = true;
 				}
 
-				if(follow && itemNumber < base.currentSlide + base.options.items){
+				if(follow && itemNumber < base.currentItem + base.options.items){
 					item.data("owl-loaded", "loaded");
 
 					var link = lazyImg.data("src");
@@ -1042,7 +1107,7 @@ if ( typeof Object.create !== "function" ) {
 
 		autoHeight : function(){
 			var base = this;
-			var $currentimg = $(base.owlItems[base.currentSlide]).find('img');
+			var $currentimg = $(base.owlItems[base.currentItem]).find("img");
 
 			if($currentimg.get(0) !== undefined ){
 				var iterations = 0;
@@ -1060,9 +1125,10 @@ if ( typeof Object.create !== "function" ) {
 					base.wrapperOuter.css("height", ""); //Else remove height attribute
 				}
 			}
+
 			function addHeight(){
-				var $currentSlide = $(base.owlItems[base.currentSlide]).height();
-				base.wrapperOuter.css("height",$currentSlide+"px");
+				var $currentItem = $(base.owlItems[base.currentItem]).height();
+				base.wrapperOuter.css("height",$currentItem+"px");
 				if(!base.wrapperOuter.hasClass("autoHeight")){
 					setTimeout(function(){
 						base.wrapperOuter.addClass("autoHeight");
@@ -1073,13 +1139,90 @@ if ( typeof Object.create !== "function" ) {
 
 		addClassActive : function(){
 			var base = this;
-			$(base.owlItems).removeClass('active');
-			for(var i=base.currentSlide; i<base.currentSlide + base.options.items; i++){
-				$(base.owlItems[i]).addClass('active');
+			$(base.owlItems).removeClass("active");
+			for(var i=base.currentItem; i<base.currentItem + base.options.items; i++){
+				$(base.owlItems[i]).addClass("active");
+			}
+		},
+
+		transitionTypes : function(className){
+			var base = this;
+			//Currently available: "fade","backSlide","goDown","fadeUp"
+			base.outClass = "owl-"+className+"-out";
+			base.inClass = "owl-"+className+"-in";
+		},
+
+		singleItemTransition : function(){
+			var base = this;
+			base.isTransition = true;
+
+			var outClass = base.outClass,
+				inClass = base.inClass,
+				$currentItem = base.$owlItems.eq(base.currentItem),
+				$prevItem = base.$owlItems.eq(base.prevItem),
+				prevPos = Math.abs(base.positionsInArray[base.currentItem]) + base.positionsInArray[base.prevItem],
+				origin = Math.abs(base.positionsInArray[base.currentItem])+base.itemWidth/2;
+
+            base.owlWrapper
+	            .addClass('owl-origin')
+	            .css({
+	            	"-webkit-transform-origin" : origin+"px",
+	            	"-moz-perspective-origin" : origin+"px",
+	            	"perspective-origin" : origin+"px"
+	            });
+	        function transStyles(prevPos,zindex){
+				return {
+					"position" : "relative",
+					"left" : prevPos+"px"
+				};
+			}
+
+	        var animEnd = 'webkitAnimationEnd oAnimationEnd MSAnimationEnd animationend';
+
+			$prevItem
+			.css(transStyles(prevPos,10))
+			.addClass(outClass)
+			.on(animEnd, function() {
+				base.endPrev = true;
+				$prevItem.off(animEnd);
+		    	base.clearTransStyle($prevItem,outClass);
+			});
+
+			$currentItem
+			.addClass(inClass)
+			.on(animEnd, function() {
+				base.endCurrent = true;
+				$currentItem.off(animEnd);
+		    	base.clearTransStyle($currentItem,inClass);
+		    });
+		},
+
+		clearTransStyle : function(item,classToRemove){
+			var base = this;
+			item.attr("style", item.data("owl-originalStyles"))
+				.removeClass(classToRemove);
+			if(base.endPrev && base.endCurrent){
+				base.owlWrapper.removeClass('owl-origin');
+				base.endPrev = false;
+				base.endCurrent = false;
+				base.isTransition = false;
+			}
+		},
+
+		owlStatus : function(){
+			var base = this;
+			base.owl = {
+				"userOptions"	: base.userOptions,
+				"baseElement" 	: base.$elem,
+				"userItems"		: base.$userItems,
+				"owlItems"		: base.$owlItems,
+				"currentItem"	: base.currentItem,
+				"prevItem"		: base.prevItem,
+				"isTouch" 		: base.browser.isTouch,
+				"browser"		: base.browser
 			}
 		}
 	};
-
 
 	$.fn.owlCarousel = function( options ){
 		return this.each(function() {
@@ -1095,20 +1238,20 @@ if ( typeof Object.create !== "function" ) {
 		itemsDesktop : [1199,4],
 		itemsDesktopSmall : [979,3],
 		itemsTablet: [768,2],
+		itemsTabletSmall: false,
 		itemsMobile : [479,1],
 		singleItem:false,
 
 		slideSpeed : 200,
 		paginationSpeed : 800,
+		rewindSpeed : 1000,
 
 		autoPlay : false,
 		stopOnHover : false,
-		goToFirst : true,
-		goToFirstSpeed : 1000,
 
 		navigation : false,
 		navigationText : ["prev","next"],
-		goToFirstNav : true,
+		rewindNav : true,
 		scrollPerPage : false,
 
 		pagination : true,
@@ -1116,6 +1259,7 @@ if ( typeof Object.create !== "function" ) {
 
 		responsive: true,
 		responsiveRefreshRate : 200,
+		responsiveBaseWidth: window,
 
 		baseClass : "owl-carousel",
 		theme : "owl-theme",
@@ -1131,13 +1275,16 @@ if ( typeof Object.create !== "function" ) {
 		mouseDrag : true,
 		touchDrag : true,
 
+		addClassActive : false,
+		transitionStyle : false,
+
 		beforeInit : false,
 		afterInit : false,
 		beforeMove: false,
 		afterMove: false,
 		afterAction : false,
-		startDragging : false,
+		startDragging : false
 
-		addClassActive : false
+		
 	};
 })( jQuery, window, document );
