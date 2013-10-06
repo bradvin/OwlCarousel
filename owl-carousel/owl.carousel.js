@@ -876,10 +876,10 @@ if ( typeof Object.create !== "function" ) {
 			function dragStart(event) {
 				var event = event.originalEvent || event || window.event;
 
-				if(base.isCssFinish === false){
+				if(base.isCssFinish === false && base.options.waitForCss ){
 					return false;
 				}
-				if(base.isCss3Finish === false){
+				if(base.isCss3Finish === false && base.options.waitForCss ){
 					return false;
 				}
 
@@ -1253,6 +1253,7 @@ if ( typeof Object.create !== "function" ) {
 		navigationText : ["prev","next"],
 		rewindNav : true,
 		scrollPerPage : false,
+		waitForCss : true,
 
 		pagination : true,
 		paginationNumbers: false,
