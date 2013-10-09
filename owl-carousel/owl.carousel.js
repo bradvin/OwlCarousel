@@ -883,10 +883,17 @@ if ( typeof Object.create !== "function" ) {
 			function dragStart(event) {
 				var event = event.originalEvent || event || window.event;
 
+<<<<<<< HEAD
 				if(base.isCssFinish === false && !base.options.dragBeforeAnimFinish ){
 					return false;
 				}
 				if(base.isCss3Finish === false && !base.options.dragBeforeAnimFinish ){
+=======
+				if(base.isCssFinish === false && base.options.waitForCss ){
+					return false;
+				}
+				if(base.isCss3Finish === false && base.options.waitForCss ){
+>>>>>>> 2bef2721c42fcd0f7c8819bdb78c9557a952f132
 					return false;
 				}
 
@@ -1360,6 +1367,7 @@ if ( typeof Object.create !== "function" ) {
 		navigationText : ["prev","next"],
 		rewindNav : true,
 		scrollPerPage : false,
+		waitForCss : true,
 
 		pagination : true,
 		paginationNumbers: false,

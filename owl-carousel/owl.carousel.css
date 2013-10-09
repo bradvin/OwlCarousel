@@ -64,9 +64,15 @@
 	-webkit-backface-visibility: hidden;
 	-moz-backface-visibility:    hidden;
 	-ms-backface-visibility:     hidden;
+<<<<<<< HEAD
   -webkit-transform: translate3d(0,0,0);
   -moz-transform: translate3d(0,0,0);
   -ms-transform: translate3d(0,0,0);
+=======
+    -webkit-transform: translate3d(0,0,0);
+    -moz-transform: translate3d(0,0,0);
+    -ms-transform: translate3d(0,0,0);
+>>>>>>> 2bef2721c42fcd0f7c8819bdb78c9557a952f132
 }
 
 /* CSS3 Transitions */
