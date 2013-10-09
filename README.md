@@ -1,9 +1,7 @@
-<<<<<<< HEAD
 ## OwlCarousel ##
 >v.1.24
 =======
 #[Owl Carousel](http://owlgraphic.com/owlcarousel/) 
->>>>>>> 2bef2721c42fcd0f7c8819bdb78c9557a952f132
 
 Touch enabled jQuery plugin that lets you create beautiful responsive carousel slider.
 [Visit Owl Carousel landing page](http://owlgraphic.com/owlcarousel)
