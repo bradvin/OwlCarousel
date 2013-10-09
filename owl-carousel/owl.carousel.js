@@ -1289,7 +1289,6 @@ if ( typeof Object.create !== "function" ) {
 				position;
 
 			if(!htmlString){return false}
-
 			if(base.$elem.children().length === 0){
 				base.$elem.append(htmlString);
 				base.setVars();
@@ -1303,15 +1302,11 @@ if ( typeof Object.create !== "function" ) {
 			} else {
 				position = targetPosition;
 			}
-
 			if(position >= base.$userItems.length || position === -1){
 				base.$userItems.eq(-1).after(htmlString)
 			} else {
 				base.$userItems.eq(position).before(htmlString)
 			}
-
-			
-
 			base.setVars();
 		},
 
@@ -1320,13 +1315,11 @@ if ( typeof Object.create !== "function" ) {
 				position;
 
 			if(base.$elem.children().length === 0){return false}
-			
 			if(targetPosition === undefined || targetPosition === -1){
 				position = -1;
 			} else {
 				position = targetPosition;
 			}
-
 			base.unWrap();
 			base.$userItems.eq(position).remove();
 			base.setVars();
