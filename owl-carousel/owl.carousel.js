@@ -1256,7 +1256,9 @@ if ( typeof Object.create !== "function" ) {
 			if(base.$elem.children().length !== 0){
 				base.$owlWrapper.unwrap();
 				base.$userItems.unwrap().unwrap();
-				base.owlControls.remove();
+				if(base.owlControls){
+					base.owlControls.remove();
+				}
 			}
 			base.clearEvents();
 			base.$elem
