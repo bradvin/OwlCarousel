@@ -1,5 +1,5 @@
 ## OwlCarousel ##
->v.1.22
+>v.1.24
 
 >Touch enabled jQuery plugin that lets you create beautiful responsive carousel slider.
 

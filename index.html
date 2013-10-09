@@ -59,7 +59,7 @@
               <h1>OWL Carousel </h1>
               <h3>Touch enabled jQuery plugin that lets you create beautiful responsive carousel slider.</h3>
               <a class="btn btn-success btn-large" href="owl.carousel.zip">Download for FREE</a>
-              <p class="muted"><a class="muted" href="https://github.com/OwlFonk/OwlCarousel">Github</a> / v1.23 / <a class="muted" href="changelog.html">Changelog</a></p> 
+              <p class="muted"><a class="muted" href="https://github.com/OwlFonk/OwlCarousel">Github</a> / v1.24 / <a class="muted" href="changelog.html">Changelog</a></p> 
             </div>
           </div>
         </div>
@@ -277,6 +277,9 @@
               </li>
               <li>
                 <a href="demos/transitions.html">CSS3 Transitions</a>
+              </li>
+              <li>
+                <a href="demos/manipulations.html">Content manipulations: destroy, reinit, addItem, removeItem</a>
               </li>
             </ul>
             
@@ -525,6 +528,12 @@ $(document).ready(function() {
                   <td>Success callback for $.getJSON build in into carousel. See demo with custom JSON structure <a href="demos/customJson.html">here</a>. </td>
                 </tr>
                 <tr>
+                  <td><span class="text-emp">dragBeforeAnimFinish</span></td>
+                  <td>true</td>
+                  <td>boolean</td>
+                  <td>Ignore whether a transition is done or not (only dragging).</td>
+                </tr>
+                <tr>
                   <td><span class="text-emp">mouseDrag</span></td>
                   <td>true</td>
                   <td>boolean</td>
@@ -561,6 +570,18 @@ $(document).ready(function() {
                 </tr>
               </thead>
               <tbody>
+                <tr>
+                  <td><span class="text-emp">beforeUpdate</span></td>
+                  <td>false</td>
+                  <td>function</td>
+                  <td>Before responsive update callback</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">afterUpdate</span></td>
+                  <td>false</td>
+                  <td>function</td>
+                  <td>After responsive update callback</td>
+                </tr>
                 <tr>
                   <td><span class="text-emp">beforeInit</span></td>
                   <td>false</td>
@@ -654,6 +675,7 @@ $("#owl-example").owlCarousel({
     jsonSuccess : false,
 
     //Mouse Events
+    dragBeforeAnimFinish : true,
     mouseDrag : true,
     touchDrag : true,
 
@@ -664,6 +686,8 @@ $("#owl-example").owlCarousel({
     addClassActive : false,
 
     //Callbacks
+    beforeUpdate : false,
+    afterUpdate : false,
     beforeInit: false, 
     afterInit: false, 
     beforeMove: false, 
@@ -702,12 +726,15 @@ owl.prev()   // Go to previous slide
 owl.goTo(x)  // Go to x slide
 owl.jumpTo(x)  // Go to x slide without slide animation
 
-owl.buildControls()    // Build Controlls
-owl.destroyControls()  // Remove Controlls
-
+//Auto Play
 owl.play() // Autoplay
 owl.stop() // Autoplay Stop
 
+//Manipulation methods. <a href="demos/manipulations.html">See demo.</a>
+owl.addItem(htmlString [,targetPosition])
+owl.removeItem(targetPosition)
+owl.destroy()
+owl.reinit(newOptions)
 </pre>
           </div>
         </div>

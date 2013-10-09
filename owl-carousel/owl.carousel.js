@@ -1,5 +1,5 @@
 /*
- *	jQuery OwlCarousel v1.23
+ *	jQuery OwlCarousel v1.24
  *
  *	Copyright (c) 2013 Bartosz Wojciechowski
  *	http://www.owlgraphic.com/owlcarousel/
@@ -8,7 +8,6 @@
  *
  */
 
-// Object.create function
 if ( typeof Object.create !== "function" ) {
 	Object.create = function( obj ) {
 		function F() {};
@@ -21,7 +20,8 @@ if ( typeof Object.create !== "function" ) {
 	var Carousel = {
 		init :function(options, el){
 			var base = this;
-			base.options = base.userOptions = $.extend({}, $.fn.owlCarousel.options, options);
+			base.options = $.extend({}, $.fn.owlCarousel.options, options);
+			base.userOptions = options;
 			var elem = el;
 			var $elem = $(el);
 			base.$elem = $elem;
@@ -56,33 +56,30 @@ if ( typeof Object.create !== "function" ) {
 			}
 		},
 
-		logIn : function(){
+		logIn : function(action){
 			var base = this;
 
-			base.baseClass();
-
-			base.$elem
-			.css({opacity: 0});
-
-			base.eventTypes();
+			base.$elem.css({opacity: 0});
+			base.orignalItems = base.options.items;
 			base.checkBrowser();
-
 			base.wrapperWidth = 0;
-			base.currentItem = 0; //Starting Position
+			base.checkVisible;
+			base.setVars();
+		},
 
+		setVars : function(){
+			var base = this;
+			if(base.$elem.children().length === 0){return false}
+			base.baseClass();
+			base.eventTypes();
 			base.$userItems = base.$elem.children();
 			base.itemsAmount = base.$userItems.length;
 			base.wrapItems();
-
-			base.owlItems = base.$elem.find(".owl-item");
-			base.$owlItems = $(base.owlItems);
-			base.owlWrapper = base.$elem.find(".owl-wrapper");
-
-			base.orignalItems = base.options.items;
+			base.$owlItems = base.$elem.find(".owl-item");
+			base.$owlWrapper = base.$elem.find(".owl-wrapper");
 			base.playDirection = "next";
 			base.prevItem = 0;//base.options.startPosition;
-			base.checkVisible;
-
+			base.currentItem = 0; //Starting Position
 			base.customEvents();
 			base.onStartup();
 		},
@@ -104,16 +101,14 @@ if ( typeof Object.create !== "function" ) {
 			if(base.options.autoPlay === true){
 				base.options.autoPlay = 5000;
 			}
-
 			base.play();
+
 			base.$elem.find(".owl-wrapper").css("display","block")
 
 			if(!base.$elem.is(":visible")){
 				base.watchVisibility();
 			} else {
-				setTimeout(function(){
-					base.$elem.animate({opacity: 1},200);
-				},10);
+				base.$elem.css("opacity",1);
 			}
 			base.onstartup = false;
 			base.eachMoveUpdate();
@@ -141,12 +136,18 @@ if ( typeof Object.create !== "function" ) {
 
 		updateVars : function(){
 			var base = this;
+			if(typeof base.options.beforeUpdate === "function") {
+				base.options.beforeUpdate.apply(this,[base.$elem]);
+			}
 			base.watchVisibility();
 			base.updateItems();
 			base.calculateAll();
 			base.updatePosition();
 			base.updateControls();
 			base.eachMoveUpdate();
+			if(typeof base.options.afterUpdate === "function") {
+				base.options.afterUpdate.apply(this,[base.$elem]);
+			}
 		},
 
 		reload : function(elements){
@@ -187,6 +188,8 @@ if ( typeof Object.create !== "function" ) {
 			var base = this;
 			var hasBaseClass = base.$elem.hasClass(base.options.baseClass);
 			var hasThemeClass = base.$elem.hasClass(base.options.theme);
+			base.$elem.data("owl-originalStyles", base.$elem.attr("style"))
+					  .data("owl-originalClasses", base.$elem.attr("class"));
 
 			if(!hasBaseClass){
 				base.$elem.addClass(base.options.baseClass);
@@ -203,7 +206,6 @@ if ( typeof Object.create !== "function" ) {
 			if(base.options.responsive === false){
 				return false;
 			}
-
 			if(base.options.singleItem === true){
 				base.options.items = base.orignalItems = 1;
 				base.options.itemsDesktop = false;
@@ -253,7 +255,8 @@ if ( typeof Object.create !== "function" ) {
 				return false
 			}
 			var lastWindowWidth = $(window).width();
-			$(window).resize(function(){
+
+			base.resizer = function(){
 				if($(window).width() !== lastWindowWidth){
 					if(base.options.autoPlay !== false){
 						clearInterval(base.autoPlayInterval);
@@ -264,7 +267,8 @@ if ( typeof Object.create !== "function" ) {
 						base.updateVars();
 					},base.options.responsiveRefreshRate);
 				}
-			})
+			}
+			$(window).resize(base.resizer)
 		},
 
 		updatePosition : function(){
@@ -296,7 +300,7 @@ if ( typeof Object.create !== "function" ) {
 			var roundPages = 0;
 			var lastItem = base.itemsAmount - base.options.items;
 
-			base.owlItems.each(function(index){
+			base.$owlItems.each(function(index){
 				var $this = $(this);
 				$this
 					.css({"width": base.itemWidth})
@@ -317,9 +321,9 @@ if ( typeof Object.create !== "function" ) {
 			var base = this;
 			var width = 0;
 
-			var width = base.owlItems.length * base.itemWidth;
+			var width = base.$owlItems.length * base.itemWidth;
 
-			base.owlWrapper.css({
+			base.$owlWrapper.css({
 				"width": width*2,
 				"left": 0
 			});
@@ -460,7 +464,7 @@ if ( typeof Object.create !== "function" ) {
 				return false;
 			}
 			base.paginationWrapper.find(".owl-page").each(function(i,v){
-				if($(this).data("owl-roundPages") === $(base.owlItems[base.currentItem]).data("owl-roundPages") ){
+				if($(this).data("owl-roundPages") === $(base.$owlItems[base.currentItem]).data("owl-roundPages") ){
 					base.paginationWrapper
 						.find(".owl-page")
 						.removeClass("active");
@@ -637,7 +641,7 @@ if ( typeof Object.create !== "function" ) {
 			if(typeof base.options.beforeMove === "function") {
 				base.options.beforeMove.apply(this,[base.$elem]);
 			}
-			if(position >= base.maximumItem){
+			if(position >= base.maximumItem || position === -1){
 				position = base.maximumItem;
 			}
 			else if( position <= 0 ){
@@ -695,11 +699,11 @@ if ( typeof Object.create !== "function" ) {
 		swapSpeed : function(action){
 			var base = this;
 			if(action === "slideSpeed"){
-				base.owlWrapper.css(base.addCssSpeed(base.options.slideSpeed));
+				base.$owlWrapper.css(base.addCssSpeed(base.options.slideSpeed));
 			} else if(action === "paginationSpeed" ){
-				base.owlWrapper.css(base.addCssSpeed(base.options.paginationSpeed));
+				base.$owlWrapper.css(base.addCssSpeed(base.options.paginationSpeed));
 			} else if(typeof action !== "string"){
-				base.owlWrapper.css(base.addCssSpeed(action));
+				base.$owlWrapper.css(base.addCssSpeed(action));
 			}
 		},
 
@@ -734,19 +738,19 @@ if ( typeof Object.create !== "function" ) {
 
 		transition3d : function(value){
 			var base = this;
-			base.owlWrapper.css(base.doTranslate(value));
+			base.$owlWrapper.css(base.doTranslate(value));
 		},
 
 		css2move : function(value){
 			var base = this;
-			base.owlWrapper.css({"left" : value})
+			base.$owlWrapper.css({"left" : value})
 		},
 
 		css2slide : function(value,speed){
 			var base = this;
 
 			base.isCssFinish = false;
-			base.owlWrapper.stop(true,true).animate({
+			base.$owlWrapper.stop(true,true).animate({
 				"left" : value
 			}, {
 				duration : speed || base.options.slideSpeed ,
@@ -789,40 +793,42 @@ if ( typeof Object.create !== "function" ) {
 		},
 
 		eventTypes : function(){
-		var base = this;
-		var types = ["s","e","x"];
+			var base = this;
+			var types = ["s","e","x"];
 
-		base.ev_types = {};
+			base.ev_types = {};
 
-		if(base.options.mouseDrag === true && base.options.touchDrag === true){
-			types = [
-				"touchstart.owl mousedown.owl",
-				"touchmove.owl mousemove.owl",
-				"touchend.owl touchcancel.owl mouseup.owl"
-			];
-		} else if(base.options.mouseDrag === false && base.options.touchDrag === true){
-			types = [
-				"touchstart.owl",
-				"touchmove.owl",
-				"touchend.owl touchcancel.owl"
-			];
-		} else if(base.options.mouseDrag === true && base.options.touchDrag === false){
-			types = [
-				"mousedown.owl",
-				"mousemove.owl",
-				"mouseup.owl"
-			];
-		}
+			if(base.options.mouseDrag === true && base.options.touchDrag === true){
+				types = [
+					"touchstart.owl mousedown.owl",
+					"touchmove.owl mousemove.owl",
+					"touchend.owl touchcancel.owl mouseup.owl"
+				];
+			} else if(base.options.mouseDrag === false && base.options.touchDrag === true){
+				types = [
+					"touchstart.owl",
+					"touchmove.owl",
+					"touchend.owl touchcancel.owl"
+				];
+			} else if(base.options.mouseDrag === true && base.options.touchDrag === false){
+				types = [
+					"mousedown.owl",
+					"mousemove.owl",
+					"mouseup.owl"
+				];
+			}
 
-		base.ev_types["start"] = types[0];
-		base.ev_types["move"] = types[1];
-		base.ev_types["end"] = types[2];
+			base.ev_types["start"] = types[0];
+			base.ev_types["move"] = types[1];
+			base.ev_types["end"] = types[2];
 		},
 
 		disabledEvents :  function(){
 			var base = this;
-			base.$elem.on("dragstart.owl","img", function(event) { event.preventDefault();});
-			base.$elem.bind("mousedown.disableTextSelect", function() {return false;});
+			base.$elem.on("dragstart.owl", function(event) { event.preventDefault();});
+			base.$elem.on("mousedown.disableTextSelect", function(e) {
+				return $(e.target).is('input, textarea, select, option');
+			});
 		},
 
 		gestures : function(){
@@ -873,13 +879,14 @@ if ( typeof Object.create !== "function" ) {
 					$(document).off(base.ev_types["end"]);
 				}
 			}
+
 			function dragStart(event) {
 				var event = event.originalEvent || event || window.event;
 
-				if(base.isCssFinish === false){
+				if(base.isCssFinish === false && !base.options.dragBeforeAnimFinish ){
 					return false;
 				}
-				if(base.isCss3Finish === false){
+				if(base.isCss3Finish === false && !base.options.dragBeforeAnimFinish ){
 					return false;
 				}
 
@@ -887,8 +894,8 @@ if ( typeof Object.create !== "function" ) {
 					clearInterval(base.autoPlayInterval);
 				}
 
-				if(base.browser.isTouch !== true && !base.owlWrapper.hasClass("grabbing")){
-					base.owlWrapper.addClass("grabbing")
+				if(base.browser.isTouch !== true && !base.$owlWrapper.hasClass("grabbing")){
+					base.$owlWrapper.addClass("grabbing")
 				}
 
 				base.newPosX = 0;
@@ -915,7 +922,7 @@ if ( typeof Object.create !== "function" ) {
 				base.newPosY = getTouches(event).y - locals.offsetY;
 				base.newRelativeX = base.newPosX - locals.relativePos;	
 
-				if (typeof base.options.startDragging === "function" && locals.dragging !== true && base.newPosX !== 0) {
+				if (typeof base.options.startDragging === "function" && locals.dragging !== true && base.newRelativeX !== 0) {
 					locals.dragging = true;
 					base.options.startDragging.apply(this);
 				}			
@@ -951,10 +958,10 @@ if ( typeof Object.create !== "function" ) {
 				locals.dragging = false;
 
 				if(base.browser.isTouch !== true){
-					base.owlWrapper.removeClass("grabbing");
+					base.$owlWrapper.removeClass("grabbing");
 				}
 
-				if(base.newPosX !== 0){
+				if(base.newRelativeX !== 0){
 					var newPosition = base.getNewPosition();
 					base.goTo(newPosition,false,"drag");
 					if(locals.targetElement === event.target && base.browser.isTouch !== true){
@@ -972,12 +979,6 @@ if ( typeof Object.create !== "function" ) {
 				swapEvents("off");
 			}
 			base.$elem.on(base.ev_types["start"], ".owl-wrapper", dragStart); 
-		},
-
-		clearEvents : function(){
-			var base = this;
-			base.$elem.off(".owl");
-			$(document).off(".owl");
 		},
 
 		getNewPosition : function(){
@@ -1071,43 +1072,53 @@ if ( typeof Object.create !== "function" ) {
 			if(base.options.lazyLoad === false){
 				return false;
 			}
-
 			for(var i=0; i<base.itemsAmount; i++){
-				var item = $(base.owlItems[i]),
-					itemNumber = item.data("owl-item"),
-					lazyImg = item.find(".lazyOwl"),
-					follow;
+				var $item = $(base.$owlItems[i]);
 
-				if(item.data("owl-loaded") === undefined){
-					lazyImg.hide();
-					item.addClass("loading").data("owl-loaded","checked");
-				} else if(item.data("owl-loaded") === "loaded"){
+				if($item.data("owl-loaded") === "loaded"){
 					continue;
 				}
+				var	itemNumber = $item.data("owl-item"),
+					$lazyImg = $item.find(".lazyOwl"),
+					follow;
 
+				if($item.data("owl-loaded") === undefined){
+					$lazyImg.hide();
+					$item.addClass("loading").data("owl-loaded","checked");
+				}
 				if(base.options.lazyFollow === true){
 					follow = itemNumber >= base.currentItem;
-				}else {
+				} else {
 					follow = true;
 				}
-
 				if(follow && itemNumber < base.currentItem + base.options.items){
-					item.data("owl-loaded", "loaded");
+					base.lazyPreload($item,$lazyImg);
+				}
+			}
+		},
 
-					var link = lazyImg.data("src");
-					if(link){
-						lazyImg[0].src = link;
-						lazyImg.removeAttr("data-src");
-					}
-					lazyImg.fadeIn(200);
-					item.removeClass("loading");
+		lazyPreload : function($item,$lazyImg){
+			var base = this,
+				iterations = 0;
+				$lazyImg[0].src = $lazyImg.data("src");;
+				checkLazyImage();
+
+			function checkLazyImage(){
+				iterations += 1;
+				if (base.completeImg( $lazyImg.get(0) )) {
+					$item.data("owl-loaded", "loaded").removeClass("loading");
+					$lazyImg.removeAttr("data-src").fadeIn(400);
+				} else if(iterations <= 100){//if image loads in less than 10 seconds 
+					setTimeout(checkLazyImage,100);
+				} else {
+					$lazyImg.fadeIn(400);
 				}
 			}
 		},
 
 		autoHeight : function(){
 			var base = this;
-			var $currentimg = $(base.owlItems[base.currentItem]).find("img");
+			var $currentimg = $(base.$owlItems[base.currentItem]).find("img");
 
 			if($currentimg.get(0) !== undefined ){
 				var iterations = 0;
@@ -1117,17 +1128,17 @@ if ( typeof Object.create !== "function" ) {
 			}
 			function checkImage(){
 				iterations += 1;
-				if ($currentimg.get(0).complete) {
+				if ( base.completeImg($currentimg.get(0)) ) {
 					addHeight();
-				} else if(iterations <= 50){ //if image loads in less than 10 seconds 
-					setTimeout(checkImage,200);
+				} else if(iterations <= 100){ //if image loads in less than 10 seconds 
+					setTimeout(checkImage,100);
 				} else {
 					base.wrapperOuter.css("height", ""); //Else remove height attribute
 				}
 			}
 
 			function addHeight(){
-				var $currentItem = $(base.owlItems[base.currentItem]).height();
+				var $currentItem = $(base.$owlItems[base.currentItem]).height();
 				base.wrapperOuter.css("height",$currentItem+"px");
 				if(!base.wrapperOuter.hasClass("autoHeight")){
 					setTimeout(function(){
@@ -1137,11 +1148,21 @@ if ( typeof Object.create !== "function" ) {
 			}
 		},
 
+		completeImg : function(img) {
+		    if (!img.complete) {
+		        return false;
+		    }
+		    if (typeof img.naturalWidth !== "undefined" && img.naturalWidth == 0) {
+		        return false;
+		    }
+		    return true;
+		},
+
 		addClassActive : function(){
 			var base = this;
-			$(base.owlItems).removeClass("active");
+			$owlItems.removeClass("active");
 			for(var i=base.currentItem; i<base.currentItem + base.options.items; i++){
-				$(base.owlItems[i]).addClass("active");
+				$(base.$owlItems[i]).addClass("active");
 			}
 		},
 
@@ -1163,7 +1184,7 @@ if ( typeof Object.create !== "function" ) {
 				prevPos = Math.abs(base.positionsInArray[base.currentItem]) + base.positionsInArray[base.prevItem],
 				origin = Math.abs(base.positionsInArray[base.currentItem])+base.itemWidth/2;
 
-            base.owlWrapper
+            base.$owlWrapper
 	            .addClass('owl-origin')
 	            .css({
 	            	"-webkit-transform-origin" : origin+"px",
@@ -1202,7 +1223,7 @@ if ( typeof Object.create !== "function" ) {
 			item.attr("style", item.data("owl-originalStyles"))
 				.removeClass(classToRemove);
 			if(base.endPrev && base.endCurrent){
-				base.owlWrapper.removeClass('owl-origin');
+				base.$owlWrapper.removeClass('owl-origin');
 				base.endPrev = false;
 				base.endCurrent = false;
 				base.isTransition = false;
@@ -1221,11 +1242,97 @@ if ( typeof Object.create !== "function" ) {
 				"isTouch" 		: base.browser.isTouch,
 				"browser"		: base.browser
 			}
+		},
+
+		clearEvents : function(){
+			var base = this;
+			base.$elem.off(".owl owl mousedown.disableTextSelect");
+			$(document).off(".owl owl");
+			$(window).off("resize", base.resizer);
+		},
+
+		unWrap : function(){
+			var base = this;
+			if(base.$elem.children().length !== 0){
+				base.$owlWrapper.unwrap();
+				base.$userItems.unwrap().unwrap();
+				base.owlControls.remove();
+			}
+			base.clearEvents();
+			base.$elem
+				.attr("style", base.$elem.data("owl-originalStyles") || "")
+				.attr("class", base.$elem.data("owl-originalClasses"));
+		},
+
+		destroy : function(){
+			var base = this;
+			base.unWrap();
+			base.$elem.removeData();
+		},
+
+		reinit : function(newOptions){
+			var base = this;
+			var options = $.extend({}, base.userOptions, newOptions);
+		 	base.unWrap();
+		 	base.init(options,base.$elem);
+		},
+
+		addItem : function(htmlString,targetPosition){
+			var base = this,
+				position;
+
+			if(!htmlString){return false}
+
+			if(base.$elem.children().length === 0){
+				base.$elem.append(htmlString);
+				base.setVars();
+				return false;
+			}
+
+			base.unWrap();
+
+			if(targetPosition === undefined || targetPosition === -1){
+				position = -1;
+			} else {
+				position = targetPosition;
+			}
+
+			if(position >= base.$userItems.length || position === -1){
+				base.$userItems.eq(-1).after(htmlString)
+			} else {
+				base.$userItems.eq(position).before(htmlString)
+			}
+
+			
+
+			base.setVars();
+		},
+
+		removeItem : function(targetPosition){
+			var base = this,
+				position;
+
+			if(base.$elem.children().length === 0){return false}
+			
+			if(targetPosition === undefined || targetPosition === -1){
+				position = -1;
+			} else {
+				position = targetPosition;
+			}
+
+			base.unWrap();
+			base.$userItems.eq(position).remove();
+			base.setVars();
 		}
+
 	};
 
 	$.fn.owlCarousel = function( options ){
 		return this.each(function() {
+			if($(this).data("owl-init") === true){
+				return false;
+			}
+			$(this).data("owl-init", true);
 			var carousel = Object.create( Carousel );
 			carousel.init( options, this );
 			$.data( this, "owlCarousel", carousel );
@@ -1272,19 +1379,21 @@ if ( typeof Object.create !== "function" ) {
 		jsonPath : false,
 		jsonSuccess : false,
 
+		dragBeforeAnimFinish : true,
 		mouseDrag : true,
 		touchDrag : true,
 
 		addClassActive : false,
 		transitionStyle : false,
 
+		beforeUpdate : false,
+		afterUpdate : false,
 		beforeInit : false,
 		afterInit : false,
 		beforeMove: false,
 		afterMove: false,
 		afterAction : false,
 		startDragging : false
-
 		
 	};
 })( jQuery, window, document );

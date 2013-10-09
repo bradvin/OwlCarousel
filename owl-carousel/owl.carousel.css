@@ -1,6 +1,6 @@
 /* 
  * 	Core Owl Carousel CSS File
- *	v1.23
+ *	v1.24
  */
 
 /* clearfix */
@@ -64,6 +64,9 @@
 	-webkit-backface-visibility: hidden;
 	-moz-backface-visibility:    hidden;
 	-ms-backface-visibility:     hidden;
+  -webkit-transform: translate3d(0,0,0);
+  -moz-transform: translate3d(0,0,0);
+  -ms-transform: translate3d(0,0,0);
 }
 
 /* CSS3 Transitions */
@@ -85,9 +88,9 @@
   animation: fadeOut .7s both ease;
 }
 .owl-fade-in {
-  -webkit-animation: empty 1ms both ease;
-  -moz-animation: empty 1ms both ease;
-  animation: empty 1ms both ease;
+  -webkit-animation: fadeIn .7s both ease;
+  -moz-animation: fadeIn .7s both ease;
+  animation: fadeIn .7s both ease;
 }
 /* backSlide */
 .owl-backSlide-out {
@@ -133,6 +136,18 @@
 }
 @keyframes empty {
   0% {opacity: 1}
+}
+@-webkit-keyframes fadeIn {
+  0% { opacity:0; }
+  100% { opacity:1; }
+}
+@-moz-keyframes fadeIn {
+  0% { opacity:0; }
+  100% { opacity:1; }
+}
+@keyframes fadeIn {
+  0% { opacity:0; }
+  100% { opacity:1; }
 }
 @-webkit-keyframes fadeOut {
   0% { opacity:1; }
@@ -214,4 +229,3 @@
 @keyframes scaleUpTo {
   to { opacity: 0; transform: scale(1.5); }
 }
-
