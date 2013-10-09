@@ -1167,7 +1167,7 @@ if ( typeof Object.create !== "function" ) {
 
 		addClassActive : function(){
 			var base = this;
-			$owlItems.removeClass("active");
+			base.$owlItems.removeClass("active");
 			for(var i=base.currentItem; i<base.currentItem + base.options.items; i++){
 				$(base.$owlItems[i]).addClass("active");
 			}
