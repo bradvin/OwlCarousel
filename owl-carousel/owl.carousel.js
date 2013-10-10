@@ -1091,7 +1091,7 @@ if ( typeof Object.create !== "function" ) {
 				} else {
 					follow = true;
 				}
-				if(follow && itemNumber < base.currentItem + base.options.items){
+				if(follow && itemNumber < base.currentItem + base.options.items && $lazyImg.length){
 					base.lazyPreload($item,$lazyImg);
 				}
 			}
