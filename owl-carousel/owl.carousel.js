@@ -1,5 +1,5 @@
 /*
- *	jQuery OwlCarousel v1.24
+ *	jQuery OwlCarousel v1.25
  *
  *	Copyright (c) 2013 Bartosz Wojciechowski
  *	http://www.owlgraphic.com/owlcarousel/
@@ -1078,10 +1078,15 @@ if ( typeof Object.create !== "function" ) {
 				if($item.data("owl-loaded") === "loaded"){
 					continue;
 				}
+
 				var	itemNumber = $item.data("owl-item"),
 					$lazyImg = $item.find(".lazyOwl"),
 					follow;
 
+				if( typeof $lazyImg.data("src") !== "string"){
+					$item.data("owl-loaded","loaded");
+					continue;
+				}				
 				if($item.data("owl-loaded") === undefined){
 					$lazyImg.hide();
 					$item.addClass("loading").data("owl-loaded","checked");
@@ -1100,19 +1105,23 @@ if ( typeof Object.create !== "function" ) {
 		lazyPreload : function($item,$lazyImg){
 			var base = this,
 				iterations = 0;
-				$lazyImg[0].src = $lazyImg.data("src");;
+				$lazyImg[0].src = $lazyImg.data("src");
 				checkLazyImage();
 
 			function checkLazyImage(){
 				iterations += 1;
 				if (base.completeImg( $lazyImg.get(0) )) {
-					$item.data("owl-loaded", "loaded").removeClass("loading");
-					$lazyImg.removeAttr("data-src").fadeIn(400);
+					showImage();
 				} else if(iterations <= 100){//if image loads in less than 10 seconds 
 					setTimeout(checkLazyImage,100);
 				} else {
-					$lazyImg.fadeIn(400);
+					showImage();
 				}
+			}
+			function showImage(){
+				$item.data("owl-loaded", "loaded").removeClass("loading");
+				$lazyImg.removeAttr("data-src");
+				base.options.lazyEffect === "fade" ? $lazyImg.fadeIn(400) : $lazyImg.show();
 			}
 		},
 
@@ -1370,6 +1379,7 @@ if ( typeof Object.create !== "function" ) {
 
 		lazyLoad : false,
 		lazyFollow : true,
+		lazyEffect : "fade",
 
 		autoHeight : false,
 
