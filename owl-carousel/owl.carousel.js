@@ -1,5 +1,5 @@
 /*
- *	jQuery OwlCarousel v1.25
+ *	jQuery OwlCarousel v1.26
  *
  *	Copyright (c) 2013 Bartosz Wojciechowski
  *	http://www.owlgraphic.com/owlcarousel/
@@ -311,9 +311,7 @@ if ( typeof Object.create !== "function" ) {
 						roundPages +=1;
 					}
 				}
-				$this
-					.data("owl-roundPages",roundPages)
-					.data("owl-originalStyles", $this.attr("style"));
+				$this.data("owl-roundPages",roundPages)
 			});
 		},
 
@@ -1229,7 +1227,10 @@ if ( typeof Object.create !== "function" ) {
 
 		clearTransStyle : function(item,classToRemove){
 			var base = this;
-			item.attr("style", item.data("owl-originalStyles"))
+			item.css({
+					"position" : "",
+					"left" : ""
+				})
 				.removeClass(classToRemove);
 			if(base.endPrev && base.endCurrent){
 				base.$owlWrapper.removeClass('owl-origin');

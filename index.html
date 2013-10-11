@@ -59,7 +59,7 @@
               <h1>OWL Carousel </h1>
               <h3>Touch enabled jQuery plugin that lets you create beautiful responsive carousel slider.</h3>
               <a class="btn btn-success btn-large" href="owl.carousel.zip">Download for FREE</a>
-              <p class="muted"><a class="muted" href="https://github.com/OwlFonk/OwlCarousel">Github</a> / v1.25 / <a class="muted" href="changelog.html">Changelog</a></p> 
+              <p class="muted"><a class="muted" href="https://github.com/OwlFonk/OwlCarousel">Github</a> / v1.26 / <a class="muted" href="changelog.html">Changelog</a></p> 
             </div>
           </div>
         </div>
@@ -510,6 +510,12 @@ $(document).ready(function() {
                   <td>When pagination used, it skips loading the images from pages that got skipped. It only loads the images that get displayed in viewport. If set to false, all images get loaded when pagination used. It is a sub setting of the lazy load function.</td>
                 </tr>
                 <tr>
+                  <td><span class="text-emp">lazyEffect</span></td>
+                  <td>"fade"</td>
+                  <td>boolean / string</td>
+                  <td>Default is fadeIn on 400ms speed. Use false to remove that effect.</td>
+                </tr>
+                <tr>
                   <td><span class="text-emp">autoHeight</span></td>
                   <td>false</td>
                   <td>boolean</td>
@@ -666,6 +672,7 @@ $("#owl-example").owlCarousel({
     //Lazy load
     lazyLoad : false,
     lazyFollow : true,
+    lazyEffect : "fade",
 
     //Auto height
     autoHeight : false,
