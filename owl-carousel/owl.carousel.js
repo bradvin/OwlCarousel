@@ -20,11 +20,13 @@ if ( typeof Object.create !== "function" ) {
 	var Carousel = {
 		init :function(options, el){
 			var base = this;
-			base.options = $.extend({}, $.fn.owlCarousel.options, options);
+
+			base.$elem = $(el);
+
+			// options passed via js override options passed via data attributes
+			base.options = $.extend({}, $.fn.owlCarousel.options, base.$elem.data(), options);
+
 			base.userOptions = options;
-			var elem = el;
-			var $elem = $(el);
-			base.$elem = $elem;
 			base.loadContent();
 		},
 
