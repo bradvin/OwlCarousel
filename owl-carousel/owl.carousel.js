@@ -1,5 +1,5 @@
 /*
- *	jQuery OwlCarousel v1.26
+ *	jQuery OwlCarousel v1.27
  *
  *	Copyright (c) 2013 Bartosz Wojciechowski
  *	http://www.owlgraphic.com/owlcarousel/
@@ -669,7 +669,7 @@ if ( typeof Object.create !== "function" ) {
 			}
 		},
 
-		stop: function(){
+		stop : function(){
 			var base = this;
 			base.apStatus = "stop";
 			clearInterval(base.autoPlayInterval);
@@ -1278,6 +1278,8 @@ if ( typeof Object.create !== "function" ) {
 
 		destroy : function(){
 			var base = this;
+			base.stop();
+			clearInterval(base.checkVisible);
 			base.unWrap();
 			base.$elem.removeData();
 		},
