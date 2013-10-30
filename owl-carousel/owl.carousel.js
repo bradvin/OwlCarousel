@@ -1,5 +1,5 @@
 /*
- *	jQuery OwlCarousel v1.27
+ *	jQuery OwlCarousel v1.28
  *
  *	Copyright (c) 2013 Bartosz Wojciechowski
  *	http://www.owlgraphic.com/owlcarousel/
@@ -245,7 +245,7 @@ if ( typeof Object.create !== "function" ) {
 			}
 
 			//if number of items is less than declared
-			if(base.options.items > base.itemsAmount){
+			if(base.options.items > base.itemsAmount && base.options.itemsScaleUp === true){
 				base.options.items = base.itemsAmount;
 			}
 		},
@@ -345,10 +345,15 @@ if ( typeof Object.create !== "function" ) {
 
 		max : function(){
 			var base = this;
-			base.maximumItem = base.itemsAmount - base.options.items;
-			var maximum = (base.itemsAmount * base.itemWidth) - base.options.items * base.itemWidth;
-				maximum = maximum * -1
-			base.maximumPixels = maximum;
+			var maximum = ((base.itemsAmount * base.itemWidth) - base.options.items * base.itemWidth) * -1;
+			if(base.options.items > base.itemsAmount){
+				base.maximumItem = 0;
+				maximum = 0
+				base.maximumPixels = 0;
+			} else {
+				base.maximumItem = base.itemsAmount - base.options.items;
+				base.maximumPixels = maximum;
+			}
 			return maximum;
 		},
 
@@ -501,7 +506,7 @@ if ( typeof Object.create !== "function" ) {
 			base.updatePagination();
 			base.checkNavigation();
 			if(base.owlControls){
-				if(base.options.items === base.itemsAmount){
+				if(base.options.items >= base.itemsAmount){
 					base.owlControls.hide();
 				} else {
 					base.owlControls.show();
@@ -1352,60 +1357,62 @@ if ( typeof Object.create !== "function" ) {
 
 	$.fn.owlCarousel.options = {
 
-		items : 5,
-		itemsDesktop : [1199,4],
-		itemsDesktopSmall : [979,3],
-		itemsTablet: [768,2],
-		itemsTabletSmall: false,
-		itemsMobile : [479,1],
-		singleItem:false,
+		items 					: 5,
+		itemsDesktop 			: [1199,4],
+		itemsDesktopSmall 		: [979,3],
+		itemsTablet 			: [768,2],
+		itemsTabletSmall 		: false,
+		itemsMobile 			: [479,1],
+		singleItem 				: false,
+		itemsScaleUp			: false,
 
-		slideSpeed : 200,
-		paginationSpeed : 800,
-		rewindSpeed : 1000,
+		slideSpeed 				: 200,
+		paginationSpeed 		: 800,
+		rewindSpeed 			: 1000,
 
-		autoPlay : false,
-		stopOnHover : false,
+		autoPlay 				: false,
+		stopOnHover 			: false,
 
-		navigation : false,
-		navigationText : ["prev","next"],
-		rewindNav : true,
-		scrollPerPage : false,
+		navigation 				: false,
+		navigationText 			: ["prev","next"],
+		rewindNav 				: true,
+		scrollPerPage 			: false,
 
-		pagination : true,
-		paginationNumbers: false,
+		pagination 				: true,
+		paginationNumbers 		: false,
 
-		responsive: true,
-		responsiveRefreshRate : 200,
-		responsiveBaseWidth: window,
+		responsive 				: true,
+		responsiveRefreshRate 	: 200,
+		responsiveBaseWidth		: window,
+		
 
-		baseClass : "owl-carousel",
-		theme : "owl-theme",
+		baseClass 				: "owl-carousel",
+		theme 					: "owl-theme",
 
-		lazyLoad : false,
-		lazyFollow : true,
-		lazyEffect : "fade",
+		lazyLoad 				: false,
+		lazyFollow 				: true,
+		lazyEffect 				: "fade",
 
-		autoHeight : false,
+		autoHeight 				: false,
 
-		jsonPath : false,
-		jsonSuccess : false,
+		jsonPath 				: false,
+		jsonSuccess 			: false,
 
-		dragBeforeAnimFinish : true,
-		mouseDrag : true,
-		touchDrag : true,
+		dragBeforeAnimFinish 	: true,
+		mouseDrag 				: true,
+		touchDrag 				: true,
 
-		addClassActive : false,
-		transitionStyle : false,
+		addClassActive 			: false,
+		transitionStyle 		: false,
 
-		beforeUpdate : false,
-		afterUpdate : false,
-		beforeInit : false,
-		afterInit : false,
-		beforeMove: false,
-		afterMove: false,
-		afterAction : false,
-		startDragging : false
+		beforeUpdate 			: false,
+		afterUpdate 			: false,
+		beforeInit 				: false,
+		afterInit 				: false,
+		beforeMove 				: false,
+		afterMove 				: false,
+		afterAction 			: false,
+		startDragging 			: false
 		
 	};
 })( jQuery, window, document );
