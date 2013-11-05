@@ -1127,6 +1127,9 @@ if ( typeof Object.create !== "function" ) {
 				$item.data("owl-loaded", "loaded").removeClass("loading");
 				$lazyImg.removeAttr("data-src");
 				base.options.lazyEffect === "fade" ? $lazyImg.fadeIn(400) : $lazyImg.show();
+				if(typeof base.options.afterLazyLoad === "function") {
+					base.options.afterLazyLoad.apply(this,[base.$elem]);
+				}
 			}
 		},
 
@@ -1412,7 +1415,8 @@ if ( typeof Object.create !== "function" ) {
 		beforeMove 				: false,
 		afterMove 				: false,
 		afterAction 			: false,
-		startDragging 			: false
+		startDragging 			: false,
+		afterLazyLoad			: false
 		
 	};
 })( jQuery, window, document );
