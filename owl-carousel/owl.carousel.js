@@ -1,5 +1,5 @@
 /*
- *	jQuery OwlCarousel v1.28
+ *	jQuery OwlCarousel v1.29
  *
  *	Copyright (c) 2013 Bartosz Wojciechowski
  *	http://www.owlgraphic.com/owlcarousel/
@@ -128,9 +128,9 @@ if ( typeof Object.create !== "function" ) {
 			if(base.options.autoHeight === true){
 				base.autoHeight();
 			}
-			if(base.options.addClassActive === true){
-				base.addClassActive();
-			}
+
+			base.onVisibleItems();
+
 			if (typeof base.options.afterAction === "function") {
 				base.options.afterAction.apply(this,[base.$elem]);
 			}
@@ -404,6 +404,10 @@ if ( typeof Object.create !== "function" ) {
 			buttonsWrapper
 			.append(base.buttonPrev)
 			.append(base.buttonNext);
+
+			buttonsWrapper.on("touchstart.owlControls mousedown.owlControls", "div[class^=\"owl\"]", function(event){
+				event.preventDefault();
+			})
 
 			buttonsWrapper.on("touchend.owlControls mouseup.owlControls", "div[class^=\"owl\"]", function(event){
 				event.preventDefault();
@@ -888,6 +892,9 @@ if ( typeof Object.create !== "function" ) {
 			function dragStart(event) {
 				var event = event.originalEvent || event || window.event;
 
+				if (event.which === 3) {
+					return false;
+				}
 				if(base.isCssFinish === false && !base.options.dragBeforeAnimFinish ){
 					return false;
 				}
@@ -1172,12 +1179,21 @@ if ( typeof Object.create !== "function" ) {
 		    return true;
 		},
 
-		addClassActive : function(){
+		onVisibleItems : function(){
 			var base = this;
-			base.$owlItems.removeClass("active");
-			for(var i=base.currentItem; i<base.currentItem + base.options.items; i++){
-				$(base.$owlItems[i]).addClass("active");
+
+			if(base.options.addClassActive === true){
+				base.$owlItems.removeClass("active");
 			}
+			base.visibleItems = [];
+			for(var i=base.currentItem; i<base.currentItem + base.options.items; i++){
+				base.visibleItems.push(i);
+
+				if(base.options.addClassActive === true){
+					$(base.$owlItems[i]).addClass("active");
+				}
+			}
+			base.owl.visibleItems = base.visibleItems;
 		},
 
 		transitionTypes : function(className){
@@ -1256,6 +1272,7 @@ if ( typeof Object.create !== "function" ) {
 				"owlItems"		: base.$owlItems,
 				"currentItem"	: base.currentItem,
 				"prevItem"		: base.prevItem,
+				"visibleItems"	: base.visibleItems,
 				"isTouch" 		: base.browser.isTouch,
 				"browser"		: base.browser
 			}
