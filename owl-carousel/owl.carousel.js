@@ -370,11 +370,22 @@ if ( typeof Object.create !== "function" ) {
 			var base = this;
 
 			base.positionsInArray = [0];
+			base.pagesInArray = [];
+			var prev = 0;
 			var elWidth = 0;
 
 			for(var i = 0; i<base.itemsAmount; i++){
 				elWidth += base.itemWidth;
-				base.positionsInArray.push(-elWidth)
+				base.positionsInArray.push(-elWidth);
+
+				if(base.options.scrollPerPage === true){
+					var item = $(base.$owlItems[i]);
+					var roundPageNum = item.data("owl-roundPages");
+					if(roundPageNum !== prev){
+						base.pagesInArray[prev] = base.positionsInArray[i];
+						prev = roundPageNum;
+					}
+				}
 			}
 		},
 
@@ -1002,7 +1013,8 @@ if ( typeof Object.create !== "function" ) {
 			var base = this,
 				newPosition;
 			
-			var newPosition = base.improveClosest();
+			newPosition = base.closestItem();
+
 			if(newPosition>base.maximumItem){
 				base.currentItem = base.maximumItem;
 				newPosition  = base.maximumItem;
@@ -1012,20 +1024,29 @@ if ( typeof Object.create !== "function" ) {
 			}
 			return newPosition;
 		},
+		closestItem : function(){
+			var base = this,
+				array = base.options.scrollPerPage === true ? base.pagesInArray : base.positionsInArray,
+				goal = base.newPosX,
+				closest = null;
 
-		improveClosest : function(){
-			var base = this;
-			var array = base.positionsInArray;
-			var goal = base.newPosX;
-			var closest = null;
 			$.each(array, function(i,v){
 				if( goal - (base.itemWidth/20) > array[i+1] && goal - (base.itemWidth/20)< v && base.moveDirection() === "left") {
 					closest = v;
-					base.currentItem = i;
+					if(base.options.scrollPerPage === true){
+						base.currentItem = $.inArray(closest, base.positionsInArray);
+					} else {
+						base.currentItem = i;
+					}
 				} 
-				else if (goal + (base.itemWidth/20) < v && goal + (base.itemWidth/20) > array[i+1] && base.moveDirection() === "right"){
-					closest = array[i+1];
-					base.currentItem = i+1;
+				else if (goal + (base.itemWidth/20) < v && goal + (base.itemWidth/20) > (array[i+1] || array[i]-base.itemWidth) && base.moveDirection() === "right"){
+					if(base.options.scrollPerPage === true){
+						closest = array[i+1] || array[array.length-1];
+						base.currentItem = $.inArray(closest, base.positionsInArray);
+					} else {
+						closest = array[i+1];
+						base.currentItem = i+1;
+					}
 				}
 			});
 			return base.currentItem;
