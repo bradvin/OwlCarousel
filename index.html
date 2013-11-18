@@ -59,7 +59,7 @@
               <h1>OWL Carousel </h1>
               <h3>Touch enabled jQuery plugin that lets you create beautiful responsive carousel slider.</h3>
               <a class="btn btn-success btn-large" href="owl.carousel.zip">Download for FREE</a>
-              <p class="muted"><a class="muted" href="https://github.com/OwlFonk/OwlCarousel">Github</a> / v1.29 / <a class="muted" href="changelog.html">Changelog</a></p> 
+              <p class="muted"><a class="muted" href="https://github.com/OwlFonk/OwlCarousel">Github</a> / v1.3 / <a class="muted" href="changelog.html">Changelog</a></p> 
             </div>
           </div>
         </div>
@@ -284,6 +284,12 @@
               <li>
                 <a href="demos/scaleup.html">Auto scale up comparsion demo</a>
               </li>
+              <li>
+                <a href="demos/sync.html">Synced Owls</a>
+              </li>
+              <li>
+                <a href="demos/owlStatus.html">How to retrieve basic information from plugin (current, prev, all items, visible items etc.)</a>
+              </li>
             </ul>
             
           </div>
@@ -349,7 +355,7 @@ $(document).ready(function() {
             <h1>Customizing</h1>
             <h2>1. Options</h2>
             <p>All of the options below are available to customize Owl Carousel.</p> 
-            <table class="table table-bordered table-striped">
+            <table class="table hp-table table-bordered table-striped">
               <thead>
                 <tr>
                   <th>Variable</th>
@@ -462,7 +468,7 @@ $(document).ready(function() {
                   <td><span class="text-emp">scrollPerPage</span></td>
                   <td>false</td>
                   <td>boolean</td>
-                  <td>Scroll per page not per item.</td>
+                  <td>Scroll per page not per item. This affect next/prev buttons and mouse/touch dragging.</td>
                 </tr>
                 <tr>
                   <td><span class="text-emp">pagination</span></td>
@@ -575,7 +581,7 @@ $(document).ready(function() {
               </tbody>
             </table>
             <h2>2. Callbacks</h2>
-            <table class="table table-bordered table-striped">
+            <table class="table hp-table table-bordered table-striped">
               <thead>
                 <tr>
                   <th>Variable</th>
@@ -632,6 +638,12 @@ $(document).ready(function() {
                   <td>false</td>
                   <td>function</td>
                   <td>Call this function while dragging.</td>
+                </tr>
+                <tr>
+                  <td><span class="text-emp">afterLazyLoad</span></td>
+                  <td>false</td>
+                  <td>function</td>
+                  <td>Call this function after lazyLoad.</td>
                 </tr>
               </tbody>
             </table>
@@ -711,6 +723,7 @@ $("#owl-example").owlCarousel({
     afterMove: false,
     afterAction: false,
     startDragging : false
+    afterLazyLoad : false
 
 })
 </pre>

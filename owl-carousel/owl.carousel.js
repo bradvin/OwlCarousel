@@ -245,10 +245,6 @@ if ( typeof Object.create !== "function" ) {
 				base.options.items = base.options.itemsMobile[1];
 			}
 
-			if(base.options.itemsAllSizes !== false){
-				base.options.items = base.options.itemsAllSizes;
-			}
-
 			//if number of items is less than declared
 			if(base.options.items > base.itemsAmount && base.options.itemsScaleUp === true){
 				base.options.items = base.itemsAmount;
@@ -978,9 +974,9 @@ if ( typeof Object.create !== "function" ) {
 				}
 
 				if(base.newRelativeX<0){
-					base.dragDirection = base.owl.dragDirection = "right"
-				} else {
 					base.dragDirection = base.owl.dragDirection = "left"
+				} else {
+					base.dragDirection = base.owl.dragDirection = "right"
 				}
 
 				if(base.newRelativeX !== 0){
@@ -1409,7 +1405,6 @@ if ( typeof Object.create !== "function" ) {
 		itemsTablet 			: [768,2],
 		itemsTabletSmall 		: false,
 		itemsMobile 			: [479,1],
-		itemsAllSizes			: false,
 		singleItem 				: false,
 		itemsScaleUp			: false,
 

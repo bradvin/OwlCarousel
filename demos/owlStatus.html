@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Owl Carousel - Status</title>
+    <title>Owl Carousel - Owl Status</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="jQuery Responsive Carousel - Owl Carusel">
     <meta name="author" content="Bartosz Wojciechowski">
@@ -130,7 +130,7 @@
         <div class="row">
           <div class="span12">
             <h1>Setup</h1>
-            <p>This is an example of using custom events for navigation. Also it shows how you can customise widths and inherit option from tablet to mobile.
+            <p>This is an example of retrieving <code>this.owl object</code> with basic information.
             </p>
             <ul class="nav nav-tabs" id="myTab">
               <li class="active"><a href="#javascript">Javascript</a></li>
@@ -144,38 +144,54 @@
 <pre class="pre-show prettyprint linenums">
 $(document).ready(function() {
 
-  var owl = &#36;("#owl-demo")&#59;
+  var owl = $("#owl-demo"),
+      status = $("#owlStatus");
 
   owl.owlCarousel({
-      items : 10, //10 items above 1000px browser width
-      itemsDesktop : [1000,5], //5 items between 1000px and 901px
-      itemsDesktopSmall : [900,3], // betweem 900px and 601px
-      itemsTablet: [600,2], //2 items between 600 and 0
-      itemsMobile : false // itemsMobile disabled - inherit from itemsTablet option
-  })&#59;
+    navigation : true,
+    afterAction : afterAction
+  });
 
-  // Custom Navigation Events
-  $(".next").click(function(){
-    owl.trigger('owl.next')&#59;
-  })
-  $(".prev").click(function(){
-    owl.trigger('owl.prev')&#59;
-  })
-  $(".play").click(function(){
-    owl.trigger('owl.play',1000)&#59; //owl.play event accept autoPlay speed as second parameter
-  })
-  $(".stop").click(function(){
-    owl.trigger('owl.stop')&#59;
-  })
+  function updateResult(pos,value){
+    status.find(pos).find(".result").text(value);
+  }
 
-})&#59;
+  function afterAction(){
+    updateResult(".owlItems", this.owl.owlItems.length);
+    updateResult(".currentItem", this.owl.currentItem);
+    updateResult(".prevItem", this.prevItem);
+    updateResult(".visibleItems", this.owl.visibleItems);
+    updateResult(".dragDirection", this.owl.dragDirection);
+  }
+
+  /*
+  All owl object information listed below:
+
+  base.owl = {
+    "userOptions" : base.userOptions,
+    "baseElement" : base.$elem,   
+    "userItems"   : base.$userItems,
+    "owlItems"    : base.$owlItems,
+    "currentItem" : base.currentItem,
+    "prevItem"    : base.prevItem,
+    "visibleItems": base.visibleItems,
+    "isTouch"     : base.browser.isTouch,
+    "browser"     : base.browser,
+    "dragDirection": base.dragDirection
+  }
+  */
+
+
+  
+});
 </pre>
 
               </div>
 
               <div class="tab-pane" id="HTML">
 <pre class="pre-show prettyprint linenums">
-&lt;div id="owl-demo" class="owl-carousel owl-theme"&gt;
+&lt;div id="owl-demo" class="owl-carousel"&gt;
+  &lt;div class="item"&gt;&lt;h1&gt;0&lt;/h1&gt;&lt;/div&gt;
   &lt;div class="item"&gt;&lt;h1&gt;1&lt;/h1&gt;&lt;/div&gt;
   &lt;div class="item"&gt;&lt;h1&gt;2&lt;/h1&gt;&lt;/div&gt;
   &lt;div class="item"&gt;&lt;h1&gt;3&lt;/h1&gt;&lt;/div&gt;
@@ -191,15 +207,43 @@ $(document).ready(function() {
   &lt;div class="item"&gt;&lt;h1&gt;13&lt;/h1&gt;&lt;/div&gt;
   &lt;div class="item"&gt;&lt;h1&gt;14&lt;/h1&gt;&lt;/div&gt;
   &lt;div class="item"&gt;&lt;h1&gt;15&lt;/h1&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;h1&gt;16&lt;/h1&gt;&lt;/div&gt;
 &lt;/div&gt;
+&lt;table id="owlStatus" class="table" style="width:auto"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Name&lt;/th&gt;
+      &lt;th&gt;Value&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
 
-&lt;div class="customNavigation"&gt;
-  &lt;a class="btn prev"&gt;Previous&lt;/a&gt;
-  &lt;a class="btn next"&gt;Next&lt;/a&gt;
-  &lt;a class="btn play"&gt;Autoplay&lt;/a&gt;
-  &lt;a class="btn stop"&gt;Stop&lt;/a&gt;
-&lt;/div&gt;
+    &lt;tr class="owlItems"&gt;
+      &lt;td&gt;owlItems.length&lt;/td&gt;
+      &lt;td class="result"&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+
+    &lt;tr class="currentItem"&gt;
+      &lt;td&gt;currentItem&lt;/td&gt;
+      &lt;td class="result"&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+
+    &lt;tr class="prevItem"&gt;
+      &lt;td&gt;prevItem&lt;/td&gt;
+      &lt;td class="result"&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+
+    &lt;tr class="visibleItems"&gt;
+      &lt;td&gt;visibleItems&lt;/td&gt;
+      &lt;td class="result"&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+
+     &lt;tr class="dragDirection"&gt;
+      &lt;td&gt;dragDirection:&lt;/td&gt;
+      &lt;td class="result"&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
 </pre>
               </div>
 
@@ -214,18 +258,6 @@ $(document).ready(function() {
   -moz-border-radius: 3px;
   border-radius: 3px;
   text-align: center;
-}
-.customNavigation{
-  text-align: center;
-}
-//use styles below to disable ugly selection
-.customNavigation a{
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 </pre>
@@ -388,7 +420,6 @@ $(document).ready(function() {
         border-radius: 3px;
         text-align: center;
     }
-
     </style>
 
 
@@ -400,11 +431,7 @@ $(document).ready(function() {
 
       owl.owlCarousel({
         navigation : true,
-        afterAction : afterAction,
-        afterMove : function(){
-          //console.log("afterMove");
-        }
-
+        afterAction : afterAction
       });
 
       function updateResult(pos,value){
@@ -420,7 +447,6 @@ $(document).ready(function() {
       }
 
     });
-
     </script>
 
 
