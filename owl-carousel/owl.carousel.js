@@ -1,5 +1,5 @@
 /*
- *	jQuery OwlCarousel v1.29
+ *	jQuery OwlCarousel v1.3
  *
  *	Copyright (c) 2013 Bartosz Wojciechowski
  *	http://www.owlgraphic.com/owlcarousel/
@@ -61,6 +61,9 @@ if ( typeof Object.create !== "function" ) {
 		logIn : function(action){
 			var base = this;
 
+			base.$elem.data("owl-originalStyles", base.$elem.attr("style"))
+					  .data("owl-originalClasses", base.$elem.attr("class"));
+
 			base.$elem.css({opacity: 0});
 			base.orignalItems = base.options.items;
 			base.checkBrowser();
@@ -80,8 +83,9 @@ if ( typeof Object.create !== "function" ) {
 			base.$owlItems = base.$elem.find(".owl-item");
 			base.$owlWrapper = base.$elem.find(".owl-wrapper");
 			base.playDirection = "next";
-			base.prevItem = 0;//base.options.startPosition;
-			base.currentItem = 0; //Starting Position
+			base.prevItem = 0;
+			base.prevArr = [0];
+			base.currentItem = 0;
 			base.customEvents();
 			base.onStartup();
 		},
@@ -128,7 +132,6 @@ if ( typeof Object.create !== "function" ) {
 			if(base.options.autoHeight === true){
 				base.autoHeight();
 			}
-
 			base.onVisibleItems();
 
 			if (typeof base.options.afterAction === "function") {
@@ -190,8 +193,6 @@ if ( typeof Object.create !== "function" ) {
 			var base = this;
 			var hasBaseClass = base.$elem.hasClass(base.options.baseClass);
 			var hasThemeClass = base.$elem.hasClass(base.options.theme);
-			base.$elem.data("owl-originalStyles", base.$elem.attr("style"))
-					  .data("owl-originalClasses", base.$elem.attr("class"));
 
 			if(!hasBaseClass){
 				base.$elem.addClass(base.options.baseClass);
@@ -275,22 +276,7 @@ if ( typeof Object.create !== "function" ) {
 
 		updatePosition : function(){
 			var base = this;
-
-			if(base.browser.support3d === true){
-				if(base.positionsInArray[base.currentItem] > base.maximumPixels){
-					base.transition3d(base.positionsInArray[base.currentItem]);
-				} else {
-					base.transition3d(0);
-					base.currentItem = 0;
-				}
-			} else{
-				if(base.positionsInArray[base.currentItem] > base.maximumPixels){
-					base.css2slide(base.positionsInArray[base.currentItem]);
-				} else {
-					base.css2slide(0);
-					base.currentItem = 0;
-				}
-			}
+			base.jumpTo(base.currentItem);
 			if(base.options.autoPlay !== false){
 				base.checkAp();
 			}
@@ -365,11 +351,22 @@ if ( typeof Object.create !== "function" ) {
 			var base = this;
 
 			base.positionsInArray = [0];
+			base.pagesInArray = [];
+			var prev = 0;
 			var elWidth = 0;
 
 			for(var i = 0; i<base.itemsAmount; i++){
 				elWidth += base.itemWidth;
-				base.positionsInArray.push(-elWidth)
+				base.positionsInArray.push(-elWidth);
+
+				if(base.options.scrollPerPage === true){
+					var item = $(base.$owlItems[i]);
+					var roundPageNum = item.data("owl-roundPages");
+					if(roundPageNum !== prev){
+						base.pagesInArray[prev] = base.positionsInArray[i];
+						prev = roundPageNum;
+					}
+				}
 			}
 		},
 
@@ -532,8 +529,6 @@ if ( typeof Object.create !== "function" ) {
 				return false;
 			}
 
-			base.storePrevItem = base.currentItem;
-
 			base.currentItem += base.options.scrollPerPage === true ? base.options.items : 1;
 			if(base.currentItem > base.maximumItem + (base.options.scrollPerPage == true ? (base.options.items - 1) : 0)){
 				if(base.options.rewindNav === true){
@@ -553,8 +548,6 @@ if ( typeof Object.create !== "function" ) {
 			if(base.isTransition){
 				return false;
 			}
-
-			base.storePrevItem = base.currentItem;
 
 			if(base.options.scrollPerPage === true && base.currentItem > 0 && base.currentItem < base.options.items){
 				base.currentItem = 0
@@ -579,7 +572,6 @@ if ( typeof Object.create !== "function" ) {
 			if(base.isTransition){
 				return false;
 			}
-			base.getPrevItem();
 			if(typeof base.options.beforeMove === "function") {
 				base.options.beforeMove.apply(this,[base.$elem]);
 			}
@@ -638,15 +630,8 @@ if ( typeof Object.create !== "function" ) {
 			base.afterGo();
 		},
 
-		getPrevItem : function(){
-			var base = this;
-			base.prevItem = base.owl.prevItem = base.storePrevItem === undefined ? base.currentItem : base.storePrevItem;
-			base.storePrevItem = undefined;
-		},
-
 		jumpTo : function(position){
 			var base = this;
-			base.getPrevItem();
 			if(typeof base.options.beforeMove === "function") {
 				base.options.beforeMove.apply(this,[base.$elem]);
 			}
@@ -668,16 +653,28 @@ if ( typeof Object.create !== "function" ) {
 
 		afterGo : function(){
 			var base = this;
-			base.checkPagination();
-			base.checkNavigation();
-			base.eachMoveUpdate();
 
-			if(typeof base.options.afterMove === "function") {
+			base.prevArr.push(base.currentItem);
+			base.prevItem = base.owl.prevItem = base.prevArr[base.prevArr.length -2];
+			base.prevArr.shift(0)
+
+			if(base.prevItem !== base.currentItem){
+				base.checkPagination();
+				base.checkNavigation();
+				base.eachMoveUpdate();
+
+				if(base.options.autoPlay !== false){
+					base.checkAp();
+				}
+			}
+
+			if(typeof base.options.afterMove === "function" && base.prevItem !== base.currentItem) {
 				base.options.afterMove.apply(this,[base.$elem]);
 			}
-			if(base.options.autoPlay !== false){
-				base.checkAp();
-			}
+
+			
+
+			
 		},
 
 		stop : function(){
@@ -895,6 +892,9 @@ if ( typeof Object.create !== "function" ) {
 				if (event.which === 3) {
 					return false;
 				}
+				if(base.itemsAmount <= base.options.items){
+					return false;
+				}
 				if(base.isCssFinish === false && !base.options.dragBeforeAnimFinish ){
 					return false;
 				}
@@ -936,8 +936,8 @@ if ( typeof Object.create !== "function" ) {
 
 				if (typeof base.options.startDragging === "function" && locals.dragging !== true && base.newRelativeX !== 0) {
 					locals.dragging = true;
-					base.options.startDragging.apply(this);
-				}			
+					base.options.startDragging.apply(base,[base.$elem]);
+				}
 
 				if(base.newRelativeX > 8 || base.newRelativeX < -8 && base.browser.isTouch === true){
 					event.preventDefault ? event.preventDefault() : event.returnValue = false;
@@ -973,6 +973,12 @@ if ( typeof Object.create !== "function" ) {
 					base.$owlWrapper.removeClass("grabbing");
 				}
 
+				if(base.newRelativeX<0){
+					base.dragDirection = base.owl.dragDirection = "left"
+				} else {
+					base.dragDirection = base.owl.dragDirection = "right"
+				}
+
 				if(base.newRelativeX !== 0){
 					var newPosition = base.getNewPosition();
 					base.goTo(newPosition,false,"drag");
@@ -997,7 +1003,8 @@ if ( typeof Object.create !== "function" ) {
 			var base = this,
 				newPosition;
 			
-			var newPosition = base.improveClosest();
+			newPosition = base.closestItem();
+
 			if(newPosition>base.maximumItem){
 				base.currentItem = base.maximumItem;
 				newPosition  = base.maximumItem;
@@ -1007,20 +1014,29 @@ if ( typeof Object.create !== "function" ) {
 			}
 			return newPosition;
 		},
+		closestItem : function(){
+			var base = this,
+				array = base.options.scrollPerPage === true ? base.pagesInArray : base.positionsInArray,
+				goal = base.newPosX,
+				closest = null;
 
-		improveClosest : function(){
-			var base = this;
-			var array = base.positionsInArray;
-			var goal = base.newPosX;
-			var closest = null;
 			$.each(array, function(i,v){
 				if( goal - (base.itemWidth/20) > array[i+1] && goal - (base.itemWidth/20)< v && base.moveDirection() === "left") {
 					closest = v;
-					base.currentItem = i;
+					if(base.options.scrollPerPage === true){
+						base.currentItem = $.inArray(closest, base.positionsInArray);
+					} else {
+						base.currentItem = i;
+					}
 				} 
-				else if (goal + (base.itemWidth/20) < v && goal + (base.itemWidth/20) > array[i+1] && base.moveDirection() === "right"){
-					closest = array[i+1];
-					base.currentItem = i+1;
+				else if (goal + (base.itemWidth/20) < v && goal + (base.itemWidth/20) > (array[i+1] || array[i]-base.itemWidth) && base.moveDirection() === "right"){
+					if(base.options.scrollPerPage === true){
+						closest = array[i+1] || array[array.length-1];
+						base.currentItem = $.inArray(closest, base.positionsInArray);
+					} else {
+						closest = array[i+1];
+						base.currentItem = i+1;
+					}
 				}
 			});
 			return base.currentItem;
@@ -1117,12 +1133,17 @@ if ( typeof Object.create !== "function" ) {
 		lazyPreload : function($item,$lazyImg){
 			var base = this,
 				iterations = 0;
-				$lazyImg[0].src = $lazyImg.data("src");
+				if ($lazyImg.prop("tagName") === "DIV") {
+					$lazyImg.css("background-image", "url(" + $lazyImg.data("src")+ ")" );
+					var isBackgroundImg=true;
+				} else {
+					$lazyImg[0].src = $lazyImg.data("src");
+				}
 				checkLazyImage();
 
 			function checkLazyImage(){
 				iterations += 1;
-				if (base.completeImg( $lazyImg.get(0) )) {
+				if (base.completeImg($lazyImg.get(0)) || isBackgroundImg === true) {
 					showImage();
 				} else if(iterations <= 100){//if image loads in less than 10 seconds 
 					setTimeout(checkLazyImage,100);
@@ -1277,7 +1298,8 @@ if ( typeof Object.create !== "function" ) {
 				"prevItem"		: base.prevItem,
 				"visibleItems"	: base.visibleItems,
 				"isTouch" 		: base.browser.isTouch,
-				"browser"		: base.browser
+				"browser"		: base.browser,
+				"dragDirection" : base.dragDirection
 			}
 		},
 
