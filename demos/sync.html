@@ -51,7 +51,7 @@
       <div class="container">
         <div class="row">
           <div class="span12">
-            <h1>Custom Options with Events</h1>
+            <h1>Sync two Owls</h1>
           </div>
         </div>
       </div>
@@ -378,9 +378,9 @@ $(document).ready(function() {
     <!-- Demo -->
 
     <style>
-    #sync1 .item, #sync2 .item{
-        background: #3fbf79;
-        padding: 30px 0px;
+    #sync1 .item{
+        background: #0c83e7;
+        padding: 80px 0px;
         margin: 5px;
         color: #FFF;
         -webkit-border-radius: 3px;
@@ -389,7 +389,18 @@ $(document).ready(function() {
         text-align: center;
     }
     #sync2 .item{
-        background: gray;
+        background: #C9C9C9;
+        padding: 10px 0px;
+        margin: 5px;
+        color: #FFF;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        text-align: center;
+        cursor: pointer;
+    }
+    #sync2 .item h1{
+      font-size: 18px;
     }
     #sync2 .synced .item{
       background: #0c83e7;
@@ -406,19 +417,25 @@ $(document).ready(function() {
       sync1.owlCarousel({
         singleItem : true,
         slideSpeed : 1000,
+        navigation: true,
+        pagination:false,
         afterAction : syncPosition
       });
 
       sync2.owlCarousel({
-        itemsAll : 10,
+        items : 15,
+        itemsDesktop      : [1199,10],
+        itemsDesktopSmall     : [979,10],
+        itemsTablet       : [768,8],
+        itemsMobile       : [479,4],
+        pagination:false,
         afterInit : function(el){
-          el.find(".owl-item").eq(0).addClass("synced")
+          el.find(".owl-item").eq(0).addClass("synced");
         }
       });
 
       function syncPosition(el){
         var current = this.currentItem;
-        var itemData = $("#sync2").find(".owl-item").eq(current).data();
         $("#sync2")
           .find(".owl-item")
           .removeClass("synced")

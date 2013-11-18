@@ -396,29 +396,27 @@ $(document).ready(function() {
     $(document).ready(function() {
 
       var owl = $("#owl-demo"),
-          status = $("#owlStatus"),
-          direction;
+          status = $("#owlStatus");
 
       owl.owlCarousel({
         navigation : true,
-        afterAction : afterAction
+        afterAction : afterAction,
+        afterMove : function(){
+          //console.log("afterMove");
+        }
 
       });
-
 
       function updateResult(pos,value){
         status.find(pos).find(".result").text(value);
       }
 
       function afterAction(){
-        
         updateResult(".owlItems", this.owl.owlItems.length);
         updateResult(".currentItem", this.owl.currentItem);
-        updateResult(".prevItem", this.owl.prevItem);
+        updateResult(".prevItem", this.prevItem);
         updateResult(".visibleItems", this.owl.visibleItems);
         updateResult(".dragDirection", this.owl.dragDirection);
-
-        console.log(this.owl.visibleItems)
       }
 
     });

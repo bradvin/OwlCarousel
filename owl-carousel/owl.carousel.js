@@ -84,6 +84,7 @@ if ( typeof Object.create !== "function" ) {
 			base.$owlWrapper = base.$elem.find(".owl-wrapper");
 			base.playDirection = "next";
 			base.prevItem = 0;
+			base.prevArr = [0];
 			base.currentItem = 0;
 			base.customEvents();
 			base.onStartup();
@@ -131,7 +132,6 @@ if ( typeof Object.create !== "function" ) {
 			if(base.options.autoHeight === true){
 				base.autoHeight();
 			}
-
 			base.onVisibleItems();
 
 			if (typeof base.options.afterAction === "function") {
@@ -280,22 +280,7 @@ if ( typeof Object.create !== "function" ) {
 
 		updatePosition : function(){
 			var base = this;
-
-			if(base.browser.support3d === true){
-				if(base.positionsInArray[base.currentItem] > base.maximumPixels){
-					base.transition3d(base.positionsInArray[base.currentItem]);
-				} else {
-					base.transition3d(0);
-					base.currentItem = base.owl.currentItem = 0;
-				}
-			} else{
-				if(base.positionsInArray[base.currentItem] > base.maximumPixels){
-					base.css2slide(base.positionsInArray[base.currentItem]);
-				} else {
-					base.css2slide(0);
-					base.currentItem = base.owl.currentItem = 0;
-				}
-			}
+			base.jumpTo(base.currentItem);
 			if(base.options.autoPlay !== false){
 				base.checkAp();
 			}
@@ -672,19 +657,28 @@ if ( typeof Object.create !== "function" ) {
 
 		afterGo : function(){
 			var base = this;
-			base.checkPagination();
-			base.checkNavigation();
-			base.eachMoveUpdate();
+
+			base.prevArr.push(base.currentItem);
+			base.prevItem = base.owl.prevItem = base.prevArr[base.prevArr.length -2];
+			base.prevArr.shift(0)
+
+			if(base.prevItem !== base.currentItem){
+				base.checkPagination();
+				base.checkNavigation();
+				base.eachMoveUpdate();
+
+				if(base.options.autoPlay !== false){
+					base.checkAp();
+				}
+			}
 
 			if(typeof base.options.afterMove === "function" && base.prevItem !== base.currentItem) {
 				base.options.afterMove.apply(this,[base.$elem]);
 			}
-			if(base.options.autoPlay !== false){
-				base.checkAp();
-			}
-			if(base.prevItem !== base.currentItem){
-				base.prevItem = base.owl.prevItem = base.currentItem;
-			}
+
+			
+
+			
 		},
 
 		stop : function(){
