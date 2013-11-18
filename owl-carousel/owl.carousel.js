@@ -590,8 +590,9 @@ if ( typeof Object.create !== "function" ) {
 				} else {
 					base.css2slide(base.positionsInArray[position],1);
 				}
-				base.singleItemTransition();
 				base.afterGo();
+				base.singleItemTransition();
+				
 				return false;
 			}
 			var goToPixel = base.positionsInArray[position];
@@ -667,14 +668,9 @@ if ( typeof Object.create !== "function" ) {
 					base.checkAp();
 				}
 			}
-
 			if(typeof base.options.afterMove === "function" && base.prevItem !== base.currentItem) {
 				base.options.afterMove.apply(this,[base.$elem]);
 			}
-
-			
-
-			
 		},
 
 		stop : function(){
