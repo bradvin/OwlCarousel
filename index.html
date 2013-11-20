@@ -403,6 +403,18 @@ $(document).ready(function() {
                   <td>As above</td>
                 </tr>
                 <tr>
+                  <td><span class="text-emp">itemsCustom</span></td>
+                  <td>false</td>
+                  <td>array</td>
+                  <td>
+                    This allow you to add custom variations of items depending from the width
+                    If this option is set, itemsDeskop, itemsDesktopSmall, itemsTablet, itemsMobile etc. are disabled
+                    For better preview, order the arrays by screen size, but it's not mandatory
+                    Don't forget to include the lowest available screen size, otherwise it will take the default one for screens lower than lowest available.
+                    <br />Example:<br /> [[0, 2], [400, 4], [700, 6], [1000, 8], [1200, 10], [1600, 16]]<br />
+                    For more information about structure of the internal arrays see itemsDesktop. Check my <a href="demos/custom.html">Custom Demo</a></td>
+                </tr>
+                <tr>
                   <td><span class="text-emp">singleItem</span></td>
                   <td>false</td>
                   <td>boolean</td>

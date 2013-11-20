@@ -211,6 +211,7 @@ if ( typeof Object.create !== "function" ) {
 			}
 			if(base.options.singleItem === true){
 				base.options.items = base.orignalItems = 1;
+				base.options.itemsCustom = false;
 				base.options.itemsDesktop = false;
 				base.options.itemsDesktopSmall = false;
 				base.options.itemsTablet = false;
@@ -222,27 +223,38 @@ if ( typeof Object.create !== "function" ) {
 			var width = $(base.options.responsiveBaseWidth).width();
 
 			if(width > (base.options.itemsDesktop[0] || base.orignalItems) ){
-				 base.options.items = base.orignalItems
+				base.options.items = base.orignalItems;
 			}
 
-			if(width <= base.options.itemsDesktop[0] && base.options.itemsDesktop !== false){
-				base.options.items = base.options.itemsDesktop[1];
-			}
+			if(typeof(base.options.itemsCustom) !== 'undefined' && base.options.itemsCustom !== false){
+				//Reorder array by screen size
+				base.options.itemsCustom.sort(function(a,b){return a[0]-b[0];});
+				for(var i in base.options.itemsCustom){
+					if(typeof(base.options.itemsCustom[i]) !== 'undefined' && base.options.itemsCustom[i][0] <= width){
+						base.options.items = base.options.itemsCustom[i][1];
+					}
+				}
+			} else {
 
-			if(width <= base.options.itemsDesktopSmall[0] && base.options.itemsDesktopSmall !== false){
-				base.options.items = base.options.itemsDesktopSmall[1];
-			}
+				if(width <= base.options.itemsDesktop[0] && base.options.itemsDesktop !== false){
+					base.options.items = base.options.itemsDesktop[1];
+				}
 
-			if(width <= base.options.itemsTablet[0]  && base.options.itemsTablet !== false){
-				base.options.items = base.options.itemsTablet[1];
-			}
+				if(width <= base.options.itemsDesktopSmall[0] && base.options.itemsDesktopSmall !== false){
+					base.options.items = base.options.itemsDesktopSmall[1];
+				}
 
-			if(width <= base.options.itemsTabletSmall[0]  && base.options.itemsTabletSmall !== false){
-				base.options.items = base.options.itemsTabletSmall[1];
-			}
+				if(width <= base.options.itemsTablet[0]  && base.options.itemsTablet !== false){
+					base.options.items = base.options.itemsTablet[1];
+				}
 
-			if(width <= base.options.itemsMobile[0] && base.options.itemsMobile !== false){
-				base.options.items = base.options.itemsMobile[1];
+				if(width <= base.options.itemsTabletSmall[0]  && base.options.itemsTabletSmall !== false){
+					base.options.items = base.options.itemsTabletSmall[1];
+				}
+
+				if(width <= base.options.itemsMobile[0] && base.options.itemsMobile !== false){
+					base.options.items = base.options.itemsMobile[1];
+				}
 			}
 
 			//if number of items is less than declared
@@ -1396,6 +1408,7 @@ if ( typeof Object.create !== "function" ) {
 	$.fn.owlCarousel.options = {
 
 		items 					: 5,
+		itemsCustom				: false,
 		itemsDesktop 			: [1199,4],
 		itemsDesktopSmall 		: [979,3],
 		itemsTablet 			: [768,2],
