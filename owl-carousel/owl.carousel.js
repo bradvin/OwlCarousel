@@ -1,5 +1,5 @@
 /*
- *	jQuery OwlCarousel v1.3
+ *	jQuery OwlCarousel v1.31
  *
  *	Copyright (c) 2013 Bartosz Wojciechowski
  *	http://www.owlgraphic.com/owlcarousel/
@@ -901,7 +901,7 @@ if ( typeof Object.create !== "function" ) {
 					return false;
 				}
 				if(base.itemsAmount <= base.options.items){
-					return false;
+					return;
 				}
 				if(base.isCssFinish === false && !base.options.dragBeforeAnimFinish ){
 					return false;
@@ -1407,64 +1407,64 @@ if ( typeof Object.create !== "function" ) {
 
 	$.fn.owlCarousel.options = {
 
-		items 					: 5,
-		itemsCustom				: false,
-		itemsDesktop 			: [1199,4],
-		itemsDesktopSmall 		: [979,3],
-		itemsTablet 			: [768,2],
-		itemsTabletSmall 		: false,
-		itemsMobile 			: [479,1],
-		singleItem 				: false,
-		itemsScaleUp			: false,
+		items : 5,
+		itemsCustom : false,
+		itemsDesktop : [1199,4],
+		itemsDesktopSmall : [979,3],
+		itemsTablet : [768,2],
+		itemsTabletSmall : false,
+		itemsMobile : [479,1],
+		singleItem : false,
+		itemsScaleUp : false,
 
-		slideSpeed 				: 200,
-		paginationSpeed 		: 800,
-		rewindSpeed 			: 1000,
+		slideSpeed : 200,
+		paginationSpeed : 800,
+		rewindSpeed : 1000,
 
-		autoPlay 				: false,
-		stopOnHover 			: false,
+		autoPlay : false,
+		stopOnHover : false,
 
-		navigation 				: false,
-		navigationText 			: ["prev","next"],
-		rewindNav 				: true,
-		scrollPerPage 			: false,
+		navigation : false,
+		navigationText : ["prev","next"],
+		rewindNav : true,
+		scrollPerPage : false,
 
-		pagination 				: true,
-		paginationNumbers 		: false,
+		pagination : true,
+		paginationNumbers : false,
 
-		responsive 				: true,
-		responsiveRefreshRate 	: 200,
-		responsiveBaseWidth		: window,
+		responsive : true,
+		responsiveRefreshRate : 200,
+		responsiveBaseWidth	: window,
 		
 
-		baseClass 				: "owl-carousel",
-		theme 					: "owl-theme",
+		baseClass : "owl-carousel",
+		theme : "owl-theme",
 
-		lazyLoad 				: false,
-		lazyFollow 				: true,
-		lazyEffect 				: "fade",
+		lazyLoad : false,
+		lazyFollow : true,
+		lazyEffect : "fade",
 
-		autoHeight 				: false,
+		autoHeight : false,
 
-		jsonPath 				: false,
-		jsonSuccess 			: false,
+		jsonPath : false,
+		jsonSuccess : false,
 
-		dragBeforeAnimFinish 	: true,
-		mouseDrag 				: true,
-		touchDrag 				: true,
+		dragBeforeAnimFinish : true,
+		mouseDrag : true,
+		touchDrag : true,
 
-		addClassActive 			: false,
-		transitionStyle 		: false,
+		addClassActive : false,
+		transitionStyle : false,
 
-		beforeUpdate 			: false,
-		afterUpdate 			: false,
-		beforeInit 				: false,
-		afterInit 				: false,
-		beforeMove 				: false,
-		afterMove 				: false,
-		afterAction 			: false,
-		startDragging 			: false,
-		afterLazyLoad			: false
+		beforeUpdate : false,
+		afterUpdate : false,
+		beforeInit : false,
+		afterInit : false,
+		beforeMove : false,
+		afterMove : false,
+		afterAction : false,
+		startDragging : false,
+		afterLazyLoad: false
 		
 	};
 })( jQuery, window, document );

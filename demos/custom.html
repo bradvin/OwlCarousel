@@ -118,22 +118,6 @@ $(document).ready(function() {
 
   owl.owlCarousel({
       items : 10, //10 items above 1000px browser width
-      
-      // Define custom and unlimited items depending from the width
-      // If this option is set, itemsDeskop, itemsDesktopSmall, itemsTablet, itemsMobile etc. are disabled
-      // For better preview, order the arrays by screen size, but it's not mandatory
-      // Don't forget to include the lowest available screen size, otherwise it will take the default one for screens lower than lowest available.
-      // In the example there is dimension with 0 with which cover screens between 0 and 450px
-      itemsCustom : [
-        [0, 2],
-        [450, 4],
-        [600, 7],
-        [700, 9],
-        [1000, 10],
-        [1200, 12],
-        [1400, 13],
-        [1600, 15]
-      ],
       itemsDesktop : [1000,5], //5 items between 1000px and 901px
       itemsDesktopSmall : [900,3], // betweem 900px and 601px
       itemsTablet: [600,2], //2 items between 600 and 0
@@ -245,18 +229,6 @@ $(document).ready(function() {
           </div>
 
           <div class="span3">
-            <a href="full.html" class="demo-box">
-              <div class="demo-wrapper demo-full clearfix">
-                <div class="demo-slide"><div class="bg"></div></div>
-                <div class="demo-slide"><div class="bg"></div></div>
-                <div class="demo-slide"><div class="bg"></div></div>
-                <div class="demo-slide"><div class="bg"></div></div>
-              </div>
-              <h3>Full Width</h3>
-            </a>
-          </div>
-
-          <div class="span3">
             <a href="custom.html" class="demo-box">
               <div class="demo-wrapper demo-custom clearfix">
                 <div class="demo-slide"><div class="bg"></div></div>
@@ -271,6 +243,18 @@ $(document).ready(function() {
                 <div class="demo-slide"><div class="bg"></div></div>
               </div>
               <h3>Custom</h3>
+            </a>
+          </div>
+
+          <div class="span3">
+            <a href="itemsCustom.html" class="demo-box">
+              <div class="demo-wrapper demo-full clearfix">
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+              </div>
+              <h3>Custom 2</h3>
             </a>
           </div>
 
@@ -396,22 +380,6 @@ $(document).ready(function() {
       owl.owlCarousel({
 
       items : 10, //10 items above 1000px browser width
-      
-      // Define custom and unlimited items depending from the width
-      // If this option is set, itemsDeskop, itemsDesktopSmall, itemsTablet, itemsMobile etc. are disabled
-      // For better preview, order the arrays by screen size, but it's not mandatory
-      // Don't forget to include the lowest available screen size, otherwise it will take the default one for screens lower than lowest available.
-      // In the example there is dimension with 0 with which cover screens between 0 and 450px
-      itemsCustom : [
-        [0, 2],
-        [450, 4],
-        [600, 7],
-        [700, 9],
-        [1000, 10],
-        [1200, 12],
-        [1400, 13],
-        [1600, 15]
-      ],
       itemsDesktop : [1000,5], //5 items between 1000px and 901px
       itemsDesktopSmall : [900,3], // 3 items betweem 900px and 601px
       itemsTablet: [600,2], //2 items between 600 and 0;
@@ -443,7 +411,7 @@ $(document).ready(function() {
     <script src="../assets/js/bootstrap-tab.js"></script>
 
     <script src="../assets/js/google-code-prettify/prettify.js"></script>
-	  <script src="../assets/js/application.js"></script>
+    <script src="../assets/js/application.js"></script>
 
   </body>
 </html>

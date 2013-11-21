@@ -329,18 +329,6 @@ $(document).ready(function() {
           </div>
 
           <div class="span3">
-            <a href="full.html" class="demo-box">
-              <div class="demo-wrapper demo-full clearfix">
-                <div class="demo-slide"><div class="bg"></div></div>
-                <div class="demo-slide"><div class="bg"></div></div>
-                <div class="demo-slide"><div class="bg"></div></div>
-                <div class="demo-slide"><div class="bg"></div></div>
-              </div>
-              <h3>Full Width</h3>
-            </a>
-          </div>
-
-          <div class="span3">
             <a href="custom.html" class="demo-box">
               <div class="demo-wrapper demo-custom clearfix">
                 <div class="demo-slide"><div class="bg"></div></div>
@@ -355,6 +343,18 @@ $(document).ready(function() {
                 <div class="demo-slide"><div class="bg"></div></div>
               </div>
               <h3>Custom</h3>
+            </a>
+          </div>
+
+          <div class="span3">
+            <a href="itemsCustom.html" class="demo-box">
+              <div class="demo-wrapper demo-full clearfix">
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+              </div>
+              <h3>Custom 2</h3>
             </a>
           </div>
 
@@ -489,7 +489,8 @@ $(document).ready(function() {
         slideSpeed : 1000,
         navigation: true,
         pagination:false,
-        afterAction : syncPosition
+        afterAction : syncPosition,
+        responsiveRefreshRate : 200,
       });
 
       sync2.owlCarousel({
@@ -499,6 +500,7 @@ $(document).ready(function() {
         itemsTablet       : [768,8],
         itemsMobile       : [479,4],
         pagination:false,
+        responsiveRefreshRate : 100,
         afterInit : function(el){
           el.find(".owl-item").eq(0).addClass("synced");
         }
@@ -514,6 +516,7 @@ $(document).ready(function() {
         if($("#sync2").data("owlCarousel") !== undefined){
           center(current)
         }
+
       }
 
       $("#sync2").on("click", ".owl-item", function(e){
@@ -524,6 +527,7 @@ $(document).ready(function() {
 
       function center(number){
         var sync2visible = sync2.data("owlCarousel").owl.visibleItems;
+
         var num = number;
         var found = false;
         for(var i in sync2visible){
