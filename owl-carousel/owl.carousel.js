@@ -68,7 +68,7 @@ if ( typeof Object.create !== "function" ) {
 			base.orignalItems = base.options.items;
 			base.checkBrowser();
 			base.wrapperWidth = 0;
-			base.checkVisible;
+			base.checkVisible = null;
 			base.setVars();
 		},
 

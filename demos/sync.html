@@ -148,7 +148,8 @@ $(document).ready(function() {
     slideSpeed : 1000,
     navigation: true,
     pagination:false,
-    afterAction : syncPosition
+    afterAction : syncPosition,
+    responsiveRefreshRate : 200,
   });
 
   sync2.owlCarousel({
@@ -158,6 +159,7 @@ $(document).ready(function() {
     itemsTablet       : [768,8],
     itemsMobile       : [479,4],
     pagination:false,
+    responsiveRefreshRate : 100,
     afterInit : function(el){
       el.find(".owl-item").eq(0).addClass("synced");
     }
