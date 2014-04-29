@@ -1163,7 +1163,9 @@ if (typeof Object.create !== "function") {
                     follow = true;
                 }
                 if (follow && itemNumber < base.currentItem + base.options.items && $lazyImg.length) {
-                    base.lazyPreload($item, $lazyImg);
+                    $lazyImg.each(function() {
+                        base.lazyPreload($item, $(this));
+                    });
                 }
             }
         },
