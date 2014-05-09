@@ -65,8 +65,10 @@ if (typeof Object.create !== "function") {
         logIn : function () {
             var base = this;
 
-            base.$elem.data("owl-originalStyles", base.$elem.attr("style"))
-                      .data("owl-originalClasses", base.$elem.attr("class"));
+            base.$elem.data({
+                "owl-originalStyles": base.$elem.attr("style"),
+                "owl-originalClasses": base.$elem.attr("class"),
+            });
 
             base.$elem.css({opacity: 0});
             base.orignalItems = base.options.items;
@@ -1373,9 +1375,10 @@ if (typeof Object.create !== "function") {
                 }
             }
             base.clearEvents();
-            base.$elem
-                .attr("style", base.$elem.data("owl-originalStyles") || "")
-                .attr("class", base.$elem.data("owl-originalClasses"));
+            base.$elem.attr({
+                style: base.$elem.data("owl-originalStyles") || "",
+                class: base.$elem.data("owl-originalClasses")
+            });
         },
 
         destroy : function () {
