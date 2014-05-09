@@ -67,7 +67,7 @@ if (typeof Object.create !== "function") {
 
             base.$elem.data({
                 "owl-originalStyles": base.$elem.attr("style"),
-                "owl-originalClasses": base.$elem.attr("class"),
+                "owl-originalClasses": base.$elem.attr("class")
             });
 
             base.$elem.css({opacity: 0});
