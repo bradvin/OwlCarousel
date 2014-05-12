@@ -1,5 +1,5 @@
 /*
- *  jQuery OwlCarousel v1.3.2
+ *  jQuery OwlCarousel v1.3.3
  *
  *  Copyright (c) 2013 Bartosz Wojciechowski
  *  http://www.owlgraphic.com/owlcarousel/
@@ -65,8 +65,8 @@ if (typeof Object.create !== "function") {
         logIn : function () {
             var base = this;
 
-            base.$elem.data("owl-originalStyles", base.$elem.attr("style"))
-                      .data("owl-originalClasses", base.$elem.attr("class"));
+            base.$elem.data("owl-originalStyles", base.$elem.attr("style"));
+            base.$elem.data("owl-originalClasses", base.$elem.attr("class"));
 
             base.$elem.css({opacity: 0});
             base.orignalItems = base.options.items;

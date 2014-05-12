@@ -1,5 +1,7 @@
-## OwlCarousel ##
->v.1.3.2
+##New version 2.0.0-beta now available for testers. [Check it](http://www.owlgraphic.com/owlcarousel2/)
+
+### OwlCarousel ###
+>v.1.3.3
 
 Touch enabled jQuery plugin that lets you create beautiful responsive carousel slider.
 [Visit Owl Carousel landing page](http://owlgraphic.com/owlcarousel)
