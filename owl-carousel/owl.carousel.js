@@ -395,6 +395,9 @@ if (typeof Object.create !== "function") {
             var base = this;
             if (base.options.navigation === true || base.options.pagination === true) {
                 base.owlControls = $("<div class=\"owl-controls\"/>").toggleClass("clickable", !base.browser.isTouch).appendTo(base.$elem);
+                if( base.options.paginationWrap === false ){
+                  base.options.paginationWrap = base.owlControls;
+                }
             }
             if (base.options.pagination === true) {
                 base.buildPagination();
@@ -436,18 +439,19 @@ if (typeof Object.create !== "function") {
                 }
             });
         },
-
-        buildPagination : function () {
+        buildPagination: function () {
             var base = this;
 
-            base.paginationWrapper = $("<div class=\"owl-pagination\"/>");
-            base.owlControls.append(base.paginationWrapper);
+            var paginationWrapper = $("<div class=\"owl-pagination\"/>");
+            $(base.options.paginationWrap).append(paginationWrapper);
+
+            base.paginationWrapper = $('.owl-pagination', base.options.paginationWrap);
 
             base.paginationWrapper.on("touchend.owlControls mouseup.owlControls", ".owl-page", function (event) {
-                event.preventDefault();
-                if (Number($(this).data("owl-page")) !== base.currentItem) {
-                    base.goTo(Number($(this).data("owl-page")), true);
-                }
+              event.preventDefault();
+              if (Number($(this).data("owl-page")) !== base.currentItem) {
+                base.goTo(Number($(this).data("owl-page")), true);
+              }
             });
         },
 
@@ -1480,6 +1484,7 @@ if (typeof Object.create !== "function") {
 
         pagination : true,
         paginationNumbers : false,
+        paginationWrap: true,
 
         responsive : true,
         responsiveRefreshRate : 200,
