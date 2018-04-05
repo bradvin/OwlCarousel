@@ -396,7 +396,7 @@ if (typeof Object.create !== "function") {
             if (base.options.navigation === true || base.options.pagination === true) {
                 base.owlControls = $("<div class=\"owl-controls\"/>").toggleClass("clickable", !base.browser.isTouch).appendTo(base.$elem);
                 if( base.options.paginationWrap === false ){
-                  base.options.paginationWrap = base.owlControls;
+                    base.options.paginationWrap = base.owlControls;
                 }
             }
             if (base.options.pagination === true) {
@@ -448,10 +448,10 @@ if (typeof Object.create !== "function") {
             base.paginationWrapper = $('.owl-pagination', base.options.paginationWrap);
 
             base.paginationWrapper.on("touchend.owlControls mouseup.owlControls", ".owl-page", function (event) {
-              event.preventDefault();
-              if (Number($(this).data("owl-page")) !== base.currentItem) {
-                base.goTo(Number($(this).data("owl-page")), true);
-              }
+                event.preventDefault();
+                if (Number($(this).data("owl-page")) !== base.currentItem) {
+                    base.goTo(Number($(this).data("owl-page")), true);
+                }
             });
         },
 
@@ -462,7 +462,9 @@ if (typeof Object.create !== "function") {
                 lastItem,
                 i,
                 paginationButton,
-                paginationButtonInner;
+                paginationButtonInner,
+                userItem,
+                label;
 
             if (base.options.pagination === false) {
                 return false;
@@ -482,8 +484,19 @@ if (typeof Object.create !== "function") {
                     paginationButton = $("<div/>", {
                         "class" : "owl-page"
                     });
+
+                    if(base.options.paginationNumbers){
+                        label = counter;
+                    }else if(base.options.paginationTitle){
+                        userItem = base.$userItems.eq(counter - 1);
+                        console.log(userItem);
+                        label = userItem.attr('alt') || userItem.data('title') || '';
+                    }else{
+                        label = '';
+                    }
+
                     paginationButtonInner = $("<span></span>", {
-                        "text": base.options.paginationNumbers === true ? counter : "",
+                        "text": label,
                         "class": base.options.paginationNumbers === true ? "owl-numbers" : ""
                     });
                     paginationButton.append(paginationButtonInner);
@@ -801,10 +814,10 @@ if (typeof Object.create !== "function") {
                 isTouch;
 
             tempElem.style.cssText = "  -moz-transform:" + translate3D +
-                                  "; -ms-transform:"     + translate3D +
-                                  "; -o-transform:"      + translate3D +
-                                  "; -webkit-transform:" + translate3D +
-                                  "; transform:"         + translate3D;
+                "; -ms-transform:"     + translate3D +
+                "; -o-transform:"      + translate3D +
+                "; -webkit-transform:" + translate3D +
+                "; transform:"         + translate3D;
             regex = /translate3d\(0px, 0px, 0px\)/g;
             asSupport = tempElem.style.cssText.match(regex);
             support3d = (asSupport !== null && asSupport.length === 1);
@@ -1484,6 +1497,7 @@ if (typeof Object.create !== "function") {
 
         pagination : true,
         paginationNumbers : false,
+        paginationTitle: false,
         paginationWrap: true,
 
         responsive : true,
