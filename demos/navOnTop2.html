@@ -53,7 +53,7 @@
       <div class="container">
         <div class="row">
           <div class="span12">
-            <h1>Content with Images</h1>
+            <h1>Navigation on top by callback</h1>
           </div>
         </div>
       </div>
@@ -86,7 +86,7 @@
         <div class="row">
           <div class="span12">
             <h1>Setup</h1>
-            <p>In order for the images to auto fit to slider containers use width 100% on &lt;img&gt;. Check CSS below</p>
+            <p>Navigation moved on top by <code>afterInit</code> callback</p>
             <ul class="nav nav-tabs" id="myTab">
               <li class="active"><a href="#javascript">Javascript</a></li>
               <li><a href="#HTML">HTML</a></li>
@@ -100,13 +100,11 @@
 $(document).ready(function() {
 
   $("#owl-demo").owlCarousel({
-
-      autoPlay: 3000, //Set AutoPlay to 3 seconds
-
-      items : 4,
-      itemsDesktop : [1199,3],
-      itemsDesktopSmall : [979,3]
-
+    navigation:true,
+    afterInit : function(elem){
+      var that = this
+      that.owlControls.prependTo(elem)
+    }
   });
 
 });
@@ -305,14 +303,16 @@ $(document).ready(function() {
     <script>
     $(document).ready(function() {
       $("#owl-demo").owlCarousel({
-        autoPlay: 3000,
-        items : 4,
-        itemsDesktop : [1199,3],
-        itemsDesktopSmall : [979,3]
+        navigation:true,
+        afterInit : function(elem){
+          var that = this
+          that.owlControls.prependTo(elem)
+        }
       });
 
     });
     </script>
+
 
     <script src="../assets/js/bootstrap-collapse.js"></script>
     <script src="../assets/js/bootstrap-transition.js"></script>

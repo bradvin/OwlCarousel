@@ -2,11 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Owl Carousel - Images Demo</title>
+    <title>Owl Carousel - Progress Bar</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="jQuery Responsive Carousel - Owl Carusel">
     <meta name="author" content="Bartosz Wojciechowski">
-    
+
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600,700' rel='stylesheet' type='text/css'>
     <link href="../assets/css/bootstrapTheme.css" rel="stylesheet">
     <link href="../assets/css/custom.css" rel="stylesheet">
@@ -15,10 +15,8 @@
     <link href="../owl-carousel/owl.carousel.css" rel="stylesheet">
     <link href="../owl-carousel/owl.theme.css" rel="stylesheet">
 
-    <!-- Prettify -->
     <link href="../assets/js/google-code-prettify/prettify.css" rel="stylesheet">
-    
-
+  
     <!-- Le fav and touch icons -->
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
@@ -53,7 +51,7 @@
       <div class="container">
         <div class="row">
           <div class="span12">
-            <h1>Content with Images</h1>
+            <h1>Progress Bar</h1>
           </div>
         </div>
       </div>
@@ -63,22 +61,16 @@
         <div class="container">
           <div class="row">
             <div class="span12">
-
               <div id="owl-demo" class="owl-carousel">
-                <div class="item"><img src="assets/owl1.jpg" alt="Owl Image"></div>
-                <div class="item"><img src="assets/owl2.jpg" alt="Owl Image"></div>
-                <div class="item"><img src="assets/owl3.jpg" alt="Owl Image"></div>
-                <div class="item"><img src="assets/owl4.jpg" alt="Owl Image"></div>
-                <div class="item"><img src="assets/owl5.jpg" alt="Owl Image"></div>
-                <div class="item"><img src="assets/owl6.jpg" alt="Owl Image"></div>
-                <div class="item"><img src="assets/owl7.jpg" alt="Owl Image"></div>
-                <div class="item"><img src="assets/owl8.jpg" alt="Owl Image"></div>
+
+                <div class="item"><img src="assets/fullimage1.jpg" alt="The Last of us"></div>
+                <div class="item"><img src="assets/fullimage2.jpg" alt="GTA V"></div>
+                <div class="item"><img src="assets/fullimage3.jpg" alt="Mirror Edge"></div>
+
               </div>
-              
             </div>
           </div>
         </div>
-
     </div>
 
     <div id="example-info">
@@ -86,7 +78,7 @@
         <div class="row">
           <div class="span12">
             <h1>Setup</h1>
-            <p>In order for the images to auto fit to slider containers use width 100% on &lt;img&gt;. Check CSS below</p>
+            <p>Progress Bar made by three callbacks: <code>afterInit</code>, <code>afterMove</code> and <code>startDragging</code>.</p>
             <ul class="nav nav-tabs" id="myTab">
               <li class="active"><a href="#javascript">Javascript</a></li>
               <li><a href="#HTML">HTML</a></li>
@@ -99,15 +91,87 @@
 <pre class="pre-show prettyprint linenums">
 $(document).ready(function() {
 
-  $("#owl-demo").owlCarousel({
+  var time = 7; // time in seconds
 
-      autoPlay: 3000, //Set AutoPlay to 3 seconds
+  var $progressBar,
+      $bar, 
+      $elem, 
+      isPause, 
+      tick,
+      percentTime;
 
-      items : 4,
-      itemsDesktop : [1199,3],
-      itemsDesktopSmall : [979,3]
+    //Init the carousel
+    $("#owl-demo").owlCarousel({
+      slideSpeed : 500,
+      paginationSpeed : 500,
+      singleItem : true,
+      afterInit : progressBar,
+      afterMove : moved,
+      startDragging : pauseOnDragging
+    });
 
-  });
+    //Init progressBar where elem is $("#owl-demo")
+    function progressBar(elem){
+      $elem = elem;
+      //build progress bar elements
+      buildProgressBar();
+      //start counting
+      start();
+    }
+
+    //create div#progressBar and div#bar then prepend to $("#owl-demo")
+    function buildProgressBar(){
+      $progressBar = $("&lt;div&gt;",{
+        id:"progressBar"
+      });
+      $bar = $("&lt;div&gt;",{
+        id:"bar"
+      });
+      $progressBar.append($bar).prependTo($elem);
+    }
+
+    function start() {
+      //reset timer
+      percentTime = 0;
+      isPause = false;
+      //run interval every 0.01 second
+      tick = setInterval(interval, 10);
+    };
+
+    function interval() {
+      if(isPause === false){
+        percentTime += 1 / time;
+        $bar.css({
+           width: percentTime+"%"
+         });
+        //if percentTime is equal or greater than 100
+        if(percentTime >= 100){
+          //slide to next item 
+          $elem.trigger('owl.next')
+        }
+      }
+    }
+
+    //pause while dragging 
+    function pauseOnDragging(){
+      isPause = true;
+    }
+
+    //moved callback
+    function moved(){
+      //clear interval
+      clearTimeout(tick);
+      //start again
+      start();
+    }
+
+    //uncomment this to make pause on mouseover 
+    // $elem.on('mouseover',function(){
+    //   isPause = true;
+    // })
+    // $elem.on('mouseout',function(){
+    //   isPause = false;
+    // })
 
 });
 </pre>  
@@ -116,16 +180,11 @@ $(document).ready(function() {
 
               <div class="tab-pane" id="HTML">
 <pre class="pre-show prettyprint linenums">
-&lt;div id="owl-demo"&gt;
-          
-  &lt;div class="item"&gt;&lt;img src="assets/owl1.jpg" alt="Owl Image"&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;img src="assets/owl2.jpg" alt="Owl Image"&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;img src="assets/owl3.jpg" alt="Owl Image"&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;img src="assets/owl4.jpg" alt="Owl Image"&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;img src="assets/owl5.jpg" alt="Owl Image"&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;img src="assets/owl6.jpg" alt="Owl Image"&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;img src="assets/owl7.jpg" alt="Owl Image"&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;img src="assets/owl8.jpg" alt="Owl Image"&gt;&lt;/div&gt;
+&lt;div id="owl-demo" class="owl-carousel owl-theme"&gt;
+
+  &lt;div class="item"&gt;&lt;img src="assets/fullimage1.jpg" alt="The Last of us"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img src="assets/fullimage2.jpg" alt="GTA V"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img src="assets/fullimage3.jpg" alt="Mirror Edge"&gt;&lt;/div&gt;
 
 &lt;/div&gt;
 </pre>
@@ -133,13 +192,20 @@ $(document).ready(function() {
 
               <div class="tab-pane" id="CSS">
 <pre class="pre-show prettyprint linenums">
-#owl-demo .item{
-  margin: 3px;
-}
 #owl-demo .item img{
   display: block;
   width: 100%;
   height: auto;
+}
+#bar{
+  width: 0%;
+  max-width: 100%;
+  height: 4px;
+  background: #7fc242;
+}
+#progressBar{
+  width: 100%;
+  background: #EDEDED;
 }
 </pre>
               </div>
@@ -260,8 +326,6 @@ $(document).ready(function() {
       </div>
     </div>
 
-
- 
     <div id="footer">
       <div class="container">
         <div class="row">
@@ -291,26 +355,108 @@ $(document).ready(function() {
     <!-- Demo -->
 
     <style>
-    #owl-demo .item{
-        margin: 3px;
-    }
     #owl-demo .item img{
-        display: block;
-        width: 100%;
-        height: auto;
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    #bar{
+      width: 0%;
+      max-width: 100%;
+      height: 4px;
+      background: #7fc242;
+    }
+    #progressBar{
+      width: 100%;
+      background: #EDEDED;
     }
     </style>
 
 
     <script>
     $(document).ready(function() {
-      $("#owl-demo").owlCarousel({
-        autoPlay: 3000,
-        items : 4,
-        itemsDesktop : [1199,3],
-        itemsDesktopSmall : [979,3]
-      });
 
+      var time = 7; // time in seconds
+
+      var $progressBar,
+          $bar, 
+          $elem, 
+          isPause, 
+          tick,
+          percentTime;
+
+        //Init the carousel
+        $("#owl-demo").owlCarousel({
+          slideSpeed : 500,
+          paginationSpeed : 500,
+          singleItem : true,
+          afterInit : progressBar,
+          afterMove : moved,
+          startDragging : pauseOnDragging
+        });
+
+        //Init progressBar where elem is $("#owl-demo")
+        function progressBar(elem){
+          $elem = elem;
+          //build progress bar elements
+          buildProgressBar();
+          //start counting
+          start();
+        }
+
+        //create div#progressBar and div#bar then prepend to $("#owl-demo")
+        function buildProgressBar(){
+          $progressBar = $("<div>",{
+            id:"progressBar"
+          });
+          $bar = $("<div>",{
+            id:"bar"
+          });
+          $progressBar.append($bar).prependTo($elem);
+        }
+
+        function start() {
+          //reset timer
+          percentTime = 0;
+          isPause = false;
+          //run interval every 0.01 second
+          tick = setInterval(interval, 10);
+        };
+
+        function interval() {
+          if(isPause === false){
+            percentTime += 1 / time;
+            $bar.css({
+               width: percentTime+"%"
+             });
+            //if percentTime is equal or greater than 100
+            if(percentTime >= 100){
+              //slide to next item 
+              $elem.trigger('owl.next')
+            }
+          }
+        }
+
+        //pause while dragging 
+        function pauseOnDragging(){
+          isPause = true;
+        }
+
+        //moved callback
+        function moved(){
+          //clear interval
+          clearTimeout(tick);
+          //start again
+          start();
+        }
+
+        //uncomment this to make pause on mouseover 
+        // $elem.on('mouseover',function(){
+        //   isPause = true;
+        // })
+        // $elem.on('mouseout',function(){
+        //   isPause = false;
+        // })
     });
     </script>
 
@@ -319,7 +465,7 @@ $(document).ready(function() {
     <script src="../assets/js/bootstrap-tab.js"></script>
 
     <script src="../assets/js/google-code-prettify/prettify.js"></script>
-	  <script src="../assets/js/application.js"></script>
+    <script src="../assets/js/application.js"></script>
 
   </body>
 </html>

@@ -2,11 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Owl Carousel - Images Demo</title>
+    <title>Owl Carousel - CSS3 Transitions</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="jQuery Responsive Carousel - Owl Carusel">
     <meta name="author" content="Bartosz Wojciechowski">
-    
+
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600,700' rel='stylesheet' type='text/css'>
     <link href="../assets/css/bootstrapTheme.css" rel="stylesheet">
     <link href="../assets/css/custom.css" rel="stylesheet">
@@ -14,11 +14,10 @@
     <!-- Owl Carousel Assets -->
     <link href="../owl-carousel/owl.carousel.css" rel="stylesheet">
     <link href="../owl-carousel/owl.theme.css" rel="stylesheet">
+    <link href="../owl-carousel/owl.transitions.css" rel="stylesheet">
 
-    <!-- Prettify -->
     <link href="../assets/js/google-code-prettify/prettify.css" rel="stylesheet">
-    
-
+  
     <!-- Le fav and touch icons -->
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
@@ -53,7 +52,7 @@
       <div class="container">
         <div class="row">
           <div class="span12">
-            <h1>Content with Images</h1>
+            <h1>CSS3 Transitions</h1>
           </div>
         </div>
       </div>
@@ -63,22 +62,25 @@
         <div class="container">
           <div class="row">
             <div class="span12">
-
               <div id="owl-demo" class="owl-carousel">
-                <div class="item"><img src="assets/owl1.jpg" alt="Owl Image"></div>
-                <div class="item"><img src="assets/owl2.jpg" alt="Owl Image"></div>
-                <div class="item"><img src="assets/owl3.jpg" alt="Owl Image"></div>
-                <div class="item"><img src="assets/owl4.jpg" alt="Owl Image"></div>
-                <div class="item"><img src="assets/owl5.jpg" alt="Owl Image"></div>
-                <div class="item"><img src="assets/owl6.jpg" alt="Owl Image"></div>
-                <div class="item"><img src="assets/owl7.jpg" alt="Owl Image"></div>
-                <div class="item"><img src="assets/owl8.jpg" alt="Owl Image"></div>
+                <div class="item"><img src="assets/fullimage4.jpg"></div>
+                <div class="item"><img src="assets/fullimage5.jpg"></div>
+                <div class="item"><img src="assets/fullimage6.jpg"></div>
+                <div class="item"><img src="assets/fullimage7.jpg"></div>
+                <div class="item"><img src="assets/fullimage1.jpg" ></div>
+                <div class="item"><img src="assets/fullimage2.jpg"></div>
+                <div class="item"><img src="assets/fullimage3.jpg"></div>
               </div>
-              
+              <label for="transitionType">Select Transition Type</label>
+              <select name="transitionType" id="transitionType">
+                <option value="fade">fade</option>
+                <option value="backSlide">backSlide</option>
+                <option value="goDown">goDown</option>
+                <option value="fadeUp">fadeUp</option>
+              </select>
             </div>
           </div>
         </div>
-
     </div>
 
     <div id="example-info">
@@ -86,7 +88,11 @@
         <div class="row">
           <div class="span12">
             <h1>Setup</h1>
-            <p>In order for the images to auto fit to slider containers use width 100% on &lt;img&gt;. Check CSS below</p>
+            <p>From update 1.3.2 all transitions styles are moved out from main owl.carousel.css file to owl.transitions.css</p>
+            <p><strong>Important! CSS3 transition works only in modern browsers that support CSS3 translate3d methods and only with single item on screen.</strong><br><br>
+            Use <code>transitionStyle</code> option to set transtion. There are four predefined transitions: <code>"fade"</code>, <code>"backSlide"</code>, <code>goDown</code> and <code>scaleUp</code>. 
+            <br><br>
+            You can also build your own transition styles easily. For example by adding "YourName" value <code>transitionStyle: "YourName"</code>, owlCarousel will add <code>.owl-YourName-out</code> class to previous slide and <code>.owl-YourName-in</code> to next slide. All transitions require "in" and "out" styles. Look into owl.carousel.css source for details. </p>
             <ul class="nav nav-tabs" id="myTab">
               <li class="active"><a href="#javascript">Javascript</a></li>
               <li><a href="#HTML">HTML</a></li>
@@ -99,14 +105,12 @@
 <pre class="pre-show prettyprint linenums">
 $(document).ready(function() {
 
-  $("#owl-demo").owlCarousel({
+  var owl = $("#owl-demo");
 
-      autoPlay: 3000, //Set AutoPlay to 3 seconds
-
-      items : 4,
-      itemsDesktop : [1199,3],
-      itemsDesktopSmall : [979,3]
-
+  owl.owlCarousel({
+    navigation : true,
+    singleItem : true,
+    transitionStyle : "fade"
   });
 
 });
@@ -116,16 +120,15 @@ $(document).ready(function() {
 
               <div class="tab-pane" id="HTML">
 <pre class="pre-show prettyprint linenums">
-&lt;div id="owl-demo"&gt;
-          
-  &lt;div class="item"&gt;&lt;img src="assets/owl1.jpg" alt="Owl Image"&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;img src="assets/owl2.jpg" alt="Owl Image"&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;img src="assets/owl3.jpg" alt="Owl Image"&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;img src="assets/owl4.jpg" alt="Owl Image"&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;img src="assets/owl5.jpg" alt="Owl Image"&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;img src="assets/owl6.jpg" alt="Owl Image"&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;img src="assets/owl7.jpg" alt="Owl Image"&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;img src="assets/owl8.jpg" alt="Owl Image"&gt;&lt;/div&gt;
+&lt;div id="owl-demo" class="owl-carousel owl-theme"&gt;
+
+  &lt;div class="item"&gt;&lt;img src="assets/fullimage4.jpg"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img src="assets/fullimage5.jpg"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img src="assets/fullimage6.jpg"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img src="assets/fullimage7.jpg"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img src="assets/fullimage1.jpg"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img src="assets/fullimage2.jpg"&gt;&lt;/div&gt;
+  &lt;div class="item"&gt;&lt;img src="assets/fullimage3.jpg"&gt;&lt;/div&gt;
 
 &lt;/div&gt;
 </pre>
@@ -133,13 +136,10 @@ $(document).ready(function() {
 
               <div class="tab-pane" id="CSS">
 <pre class="pre-show prettyprint linenums">
-#owl-demo .item{
-  margin: 3px;
-}
 #owl-demo .item img{
-  display: block;
-  width: 100%;
-  height: auto;
+    display: block;
+    width: 100%;
+    height: auto;
 }
 </pre>
               </div>
@@ -260,8 +260,6 @@ $(document).ready(function() {
       </div>
     </div>
 
-
- 
     <div id="footer">
       <div class="container">
         <div class="row">
@@ -283,17 +281,12 @@ $(document).ready(function() {
       </div>
     </div>
 
-
     <script src="../assets/js/jquery-1.9.1.min.js"></script> 
     <script src="../owl-carousel/owl.carousel.js"></script>
-
 
     <!-- Demo -->
 
     <style>
-    #owl-demo .item{
-        margin: 3px;
-    }
     #owl-demo .item img{
         display: block;
         width: 100%;
@@ -304,13 +297,25 @@ $(document).ready(function() {
 
     <script>
     $(document).ready(function() {
-      $("#owl-demo").owlCarousel({
-        autoPlay: 3000,
-        items : 4,
-        itemsDesktop : [1199,3],
-        itemsDesktopSmall : [979,3]
+
+      var owl = $("#owl-demo");
+
+      owl.owlCarousel({
+        navigation : true,
+        singleItem : true,
+        transitionStyle : "fade"
       });
 
+      //Select Transtion Type
+      $("#transitionType").change(function(){
+        var newValue = $(this).val();
+
+        //TransitionTypes is owlCarousel inner method.
+        owl.data("owlCarousel").transitionTypes(newValue);
+
+        //After change type go to next slide
+        owl.trigger("owl.next");
+      });
     });
     </script>
 
@@ -319,7 +324,7 @@ $(document).ready(function() {
     <script src="../assets/js/bootstrap-tab.js"></script>
 
     <script src="../assets/js/google-code-prettify/prettify.js"></script>
-	  <script src="../assets/js/application.js"></script>
+    <script src="../assets/js/application.js"></script>
 
   </body>
 </html>

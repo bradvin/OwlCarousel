@@ -2,11 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Owl Carousel - Images Demo</title>
+    <title>Owl Carousel - Click Event</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="jQuery Responsive Carousel - Owl Carusel">
     <meta name="author" content="Bartosz Wojciechowski">
-    
+
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600,700' rel='stylesheet' type='text/css'>
     <link href="../assets/css/bootstrapTheme.css" rel="stylesheet">
     <link href="../assets/css/custom.css" rel="stylesheet">
@@ -15,9 +15,7 @@
     <link href="../owl-carousel/owl.carousel.css" rel="stylesheet">
     <link href="../owl-carousel/owl.theme.css" rel="stylesheet">
 
-    <!-- Prettify -->
     <link href="../assets/js/google-code-prettify/prettify.css" rel="stylesheet">
-    
 
     <!-- Le fav and touch icons -->
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
@@ -53,7 +51,7 @@
       <div class="container">
         <div class="row">
           <div class="span12">
-            <h1>Content with Images</h1>
+            <h1>Click events inside content.</h1>
           </div>
         </div>
       </div>
@@ -65,16 +63,25 @@
             <div class="span12">
 
               <div id="owl-demo" class="owl-carousel">
-                <div class="item"><img src="assets/owl1.jpg" alt="Owl Image"></div>
-                <div class="item"><img src="assets/owl2.jpg" alt="Owl Image"></div>
-                <div class="item"><img src="assets/owl3.jpg" alt="Owl Image"></div>
-                <div class="item"><img src="assets/owl4.jpg" alt="Owl Image"></div>
-                <div class="item"><img src="assets/owl5.jpg" alt="Owl Image"></div>
-                <div class="item"><img src="assets/owl6.jpg" alt="Owl Image"></div>
-                <div class="item"><img src="assets/owl7.jpg" alt="Owl Image"></div>
-                <div class="item"><img src="assets/owl8.jpg" alt="Owl Image"></div>
+                
+                <a class="item link"><h1>1</h1></a>
+                <a class="item link"><h1>2</h1></a>
+                <a class="item link"><h1>3</h1></a>
+                <a class="item link"><h1>4</h1></a>
+                <a class="item link"><h1>5</h1></a>
+                <a class="item link"><h1>6</h1></a>
+                <a class="item link"><h1>7</h1></a>
+                <a class="item link"><h1>8</h1></a>
+                <a class="item link"><h1>9</h1></a>
+                <a class="item link"><h1>10</h1></a>
+                <a class="item link"><h1>11</h1></a>
+                <a class="item link"><h1>12</h1></a>
+                <a class="item link"><h1>13</h1></a>
+                <a class="item link"><h1>14</h1></a>
+                <a class="item link"><h1>15</h1></a>
+                <a class="item link"><h1>16</h1></a>
+
               </div>
-              
             </div>
           </div>
         </div>
@@ -86,7 +93,8 @@
         <div class="row">
           <div class="span12">
             <h1>Setup</h1>
-            <p>In order for the images to auto fit to slider containers use width 100% on &lt;img&gt;. Check CSS below</p>
+            <p>Enabling click events inside content was the biggest challenge while building this plugin. Please don't use mouseup and mousedown events, they are reserved for mouse dragging events unless you have to use them. In this case you can disable mouse draggable capabilities by adding<code>mouseDraggable:false</code> in options.
+            </p>
             <ul class="nav nav-tabs" id="myTab">
               <li class="active"><a href="#javascript">Javascript</a></li>
               <li><a href="#HTML">HTML</a></li>
@@ -100,33 +108,42 @@
 $(document).ready(function() {
 
   $("#owl-demo").owlCarousel({
-
-      autoPlay: 3000, //Set AutoPlay to 3 seconds
-
-      items : 4,
-      itemsDesktop : [1199,3],
-      itemsDesktopSmall : [979,3]
-
+    items : 10
   });
 
-});
-</pre>  
+  $('.link').on('click', function(event){
+    var $this = $(this);
+    if($this.hasClass('clicked')){
+      $this.removeAttr('style').removeClass('clicked');
+    } else{
+      $this.css('background','#7fc242').addClass('clicked');
+    }
+  });
+
+})&#59;
+</pre>
 
               </div>
 
               <div class="tab-pane" id="HTML">
 <pre class="pre-show prettyprint linenums">
-&lt;div id="owl-demo"&gt;
-          
-  &lt;div class="item"&gt;&lt;img src="assets/owl1.jpg" alt="Owl Image"&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;img src="assets/owl2.jpg" alt="Owl Image"&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;img src="assets/owl3.jpg" alt="Owl Image"&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;img src="assets/owl4.jpg" alt="Owl Image"&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;img src="assets/owl5.jpg" alt="Owl Image"&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;img src="assets/owl6.jpg" alt="Owl Image"&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;img src="assets/owl7.jpg" alt="Owl Image"&gt;&lt;/div&gt;
-  &lt;div class="item"&gt;&lt;img src="assets/owl8.jpg" alt="Owl Image"&gt;&lt;/div&gt;
-
+&lt;div id="owl-demo" class="owl-carousel"&gt;
+  &lt;a class="item link"&gt;&lt;h1&gt;1&lt;/h1&gt;&lt;/a&gt;
+  &lt;a class="item link"&gt;&lt;h1&gt;2&lt;/h1&gt;&lt;/a&gt;
+  &lt;a class="item link"&gt;&lt;h1&gt;3&lt;/h1&gt;&lt;/a&gt;
+  &lt;a class="item link"&gt;&lt;h1&gt;4&lt;/h1&gt;&lt;/a&gt;
+  &lt;a class="item link"&gt;&lt;h1&gt;5&lt;/h1&gt;&lt;/a&gt;
+  &lt;a class="item link"&gt;&lt;h1&gt;6&lt;/h1&gt;&lt;/a&gt;
+  &lt;a class="item link"&gt;&lt;h1&gt;7&lt;/h1&gt;&lt;/a&gt;
+  &lt;a class="item link"&gt;&lt;h1&gt;8&lt;/h1&gt;&lt;/a&gt;
+  &lt;a class="item link"&gt;&lt;h1&gt;9&lt;/h1&gt;&lt;/a&gt;
+  &lt;a class="item link"&gt;&lt;h1&gt;10&lt;/h1&gt;&lt;/a&gt;
+  &lt;a class="item link"&gt;&lt;h1&gt;11&lt;/h1&gt;&lt;/a&gt;
+  &lt;a class="item link"&gt;&lt;h1&gt;12&lt;/h1&gt;&lt;/a&gt;
+  &lt;a class="item link"&gt;&lt;h1&gt;13&lt;/h1&gt;&lt;/a&gt;
+  &lt;a class="item link"&gt;&lt;h1&gt;14&lt;/h1&gt;&lt;/a&gt;
+  &lt;a class="item link"&gt;&lt;h1&gt;15&lt;/h1&gt;&lt;/a&gt;
+  &lt;a class="item link"&gt;&lt;h1&gt;16&lt;/h1&gt;&lt;/a&gt;
 &lt;/div&gt;
 </pre>
               </div>
@@ -134,12 +151,20 @@ $(document).ready(function() {
               <div class="tab-pane" id="CSS">
 <pre class="pre-show prettyprint linenums">
 #owl-demo .item{
-  margin: 3px;
-}
-#owl-demo .item img{
   display: block;
-  width: 100%;
-  height: auto;
+  cursor: pointer;
+  background: #ffd800;
+  padding: 30px 0px;
+  margin: 5px;
+  color: #FFF;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  text-align: center;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); 
+}
+#owl-demo .item:hover{
+  background: #F2CD00;
 }
 </pre>
               </div>
@@ -172,6 +197,18 @@ $(document).ready(function() {
           </div>
 
           <div class="span3">
+            <a href="full.html" class="demo-box">
+              <div class="demo-wrapper demo-full clearfix">
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+                <div class="demo-slide"><div class="bg"></div></div>
+              </div>
+              <h3>Full Width</h3>
+            </a>
+          </div>
+
+          <div class="span3">
             <a href="custom.html" class="demo-box">
               <div class="demo-wrapper demo-custom clearfix">
                 <div class="demo-slide"><div class="bg"></div></div>
@@ -186,18 +223,6 @@ $(document).ready(function() {
                 <div class="demo-slide"><div class="bg"></div></div>
               </div>
               <h3>Custom</h3>
-            </a>
-          </div>
-
-          <div class="span3">
-            <a href="itemsCustom.html" class="demo-box">
-              <div class="demo-wrapper demo-full clearfix">
-                <div class="demo-slide"><div class="bg"></div></div>
-                <div class="demo-slide"><div class="bg"></div></div>
-                <div class="demo-slide"><div class="bg"></div></div>
-                <div class="demo-slide"><div class="bg"></div></div>
-              </div>
-              <h3>Custom 2</h3>
             </a>
           </div>
 
@@ -259,8 +284,6 @@ $(document).ready(function() {
         </div>
       </div>
     </div>
-
-
  
     <div id="footer">
       <div class="container">
@@ -292,27 +315,44 @@ $(document).ready(function() {
 
     <style>
     #owl-demo .item{
-        margin: 3px;
-    }
-    #owl-demo .item img{
         display: block;
-        width: 100%;
-        height: auto;
+        cursor: pointer;
+        background: #ffd800;
+        padding: 30px 0px;
+        margin: 5px;
+        color: #FFF;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        text-align: center;
+        -webkit-tap-highlight-color: rgba(255, 255, 255, 0); 
+    }
+    #owl-demo .item:hover{
+      background: #F2CD00;
     }
     </style>
 
 
     <script>
     $(document).ready(function() {
+
       $("#owl-demo").owlCarousel({
-        autoPlay: 3000,
-        items : 4,
-        itemsDesktop : [1199,3],
-        itemsDesktopSmall : [979,3]
+        items : 10
       });
+
+      $('.link').on('click', function(event){
+        var $this = $(this);
+        if($this.hasClass('clicked')){
+          $this.removeAttr('style').removeClass('clicked');
+        } else{
+          $this.css('background','#7fc242').addClass('clicked');
+        }
+      });
+
 
     });
     </script>
+
 
     <script src="../assets/js/bootstrap-collapse.js"></script>
     <script src="../assets/js/bootstrap-transition.js"></script>

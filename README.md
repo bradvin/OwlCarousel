@@ -1,19 +1,25 @@
-# OwlCarousel #
-Touch enabled jQuery plugin that lets you create beautiful responsive carousel slider.
+##New version 2.0.0-beta now available for testers. [Check it](http://www.owlgraphic.com/owlcarousel2/)
 
-## [OwlCarousel landing page](http://owlgraphic.com/owlcarousel)
+### OwlCarousel ###
+>v.1.3.3
+
+Touch enabled jQuery plugin that lets you create beautiful responsive carousel slider.
+[Visit Owl Carousel landing page](http://owlgraphic.com/owlcarousel)
 
 ###Features:
 * Responsive
-* Touch Event 
+* Touch Events
 * Mouse Slide Events
 * Fully Customizable
 * Choose the number of items to be displayed
 * Multiple Sliders
 * CSS3 3d Transitions
-* Custimizable controlls
+* Custimizable controls
+* JSON 
+* Custom events
+* Helpful callbacks
 
-> Tested on IE7, IE8, IE9, IE10, Chrome, Safari, Firefox, Opera, Dolphin, iPhone, iPad, Google Nexus.
+> Tested on IE7, IE8, IE9, IE10, Chrome, Safari, Firefox, Opera, iPhone, iPad, Chrome on Google Nexus.
 
 
 ### More Demos
@@ -22,8 +28,9 @@ See what Owl can do:
 * [Full Width](http://owlgraphic.com/owlcarousel/demos/full.html)
 * [Custom Widths](http://owlgraphic.com/owlcarousel/demos/custom.html)
 * [One Item](http://owlgraphic.com/owlcarousel/demos/one.html)
+* [More demos](http://owlgraphic.com/owlcarousel/#more-demos)
 
-## 1.Getting Started
+### 1.Getting Started
 Load jQuery(1.7+) and include Owl Carousel plugin files
 
 ```html
@@ -34,13 +41,13 @@ Load jQuery(1.7+) and include Owl Carousel plugin files
 <link rel="stylesheet" href="owl-carousel/owl.theme.css">
  
 <!-- Include js plugin -->
-<script src="assets/owl-carousel/owl.carousel.js"></script>
+<script src="owl-carousel/owl.carousel.js"></script>
 ```
-## 2.Set up your HTML
+### 2.Set up your HTML
 You don't need any special markup. All you need is to wrap your divs inside the container element <div class="owl-carousel">. Class "owl-carousel" is mandatory to apply proper styles that come from owl.carousel.css file.
 
 ```html
-<div class="owl-carousel owl-theme">
+<div class="owl-carousel">
   <div> Your Content </div>
   <div> Your Content </div>
   <div> Your Content </div>
@@ -51,12 +58,17 @@ You don't need any special markup. All you need is to wrap your divs inside the 
   ...
 </div>
 ```
-## 3.Call the plugin
+### 3.Call the plugin
 Now call the Owl initializer function and your carousel is ready.
 
 ```html
 $(".owl-carousel").owlCarousel();
 ```
+### 4. For more details visit [OwlCarousel landing page](http://owlgraphic.com/owlcarousel)
+##### Changelog available [here](http://owlgraphic.com/owlcarousel/changelog.html)
 
-### For more information visit [OwlCarousel landing page](http://owlgraphic.com/owlcarousel)
 
+
+License
+------------
+The MIT License (MIT)
