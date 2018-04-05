@@ -487,9 +487,8 @@ if (typeof Object.create !== "function") {
 
                     if(base.options.paginationNumbers){
                         label = counter;
-                    }else if(base.options.paginationTitle){
+                    }else if(base.options.singleItem && base.options.paginationTitle){
                         userItem = base.$userItems.eq(counter - 1);
-                        console.log(userItem);
                         label = userItem.attr('alt') || userItem.data('title') || '';
                     }else{
                         label = '';
